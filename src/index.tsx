@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from './routes/Home';
 import { initializeApp } from 'firebase/app';
 import Login from './routes/Login';
+import Error from './routes/Error';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home app={app} />,
+    errorElement: <Error />,
   },
 ]);
 

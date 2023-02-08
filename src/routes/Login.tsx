@@ -9,8 +9,8 @@ function Login(params: { app: FirebaseApp }) {
     const navigate = useNavigate();
 
     function sign() {
-        signInWithPopup(auth, provider).then((res: UserCredential) => {
-            navigate("/home", { state: res });
+        signInWithPopup(auth, provider).then((result: UserCredential) => {
+            navigate("/home", { state: result });
         }).catch((error) => {
             alert(error.message);
         });
