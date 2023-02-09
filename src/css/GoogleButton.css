@@ -1,0 +1,32 @@
+.Container {
+    height: 36px;
+    width: 200px;
+    background-color: #1a73e8;
+    border-radius: 99px;
+    padding: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.Image-Container {
+    height: 36px;
+    width: 36px;
+    background-color: white;
+    border-radius: 99px;
+}
+
+img {
+    height: 16px;
+    width: 16px;
+    padding: 10px;
+}
+
+p {
+    float: right;
+    color: white;
+    font-family: Arial;
+    font-weight: 600;
+    margin-left: 10px;
+    font-size: 14px;
+}

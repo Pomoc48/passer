@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
 import { initializeApp } from 'firebase/app';
-import Login from './routes/Login';
+import App from './routes/App';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
@@ -20,5 +20,5 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <Login app={app} />
+  <App app={app} />
 );

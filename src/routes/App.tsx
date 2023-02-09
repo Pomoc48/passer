@@ -2,8 +2,9 @@ import { FirebaseApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth";
 import { useState } from "react";
 import Home from './Home';
+import GoogleButton from "../widgets/google";
 
-function Login(params: { app: FirebaseApp }) {
+function App(params: { app: FirebaseApp }) {
   const [user, updateUser] = useState(null as UserCredential | null);
 
   const provider = new GoogleAuthProvider();
@@ -19,8 +20,8 @@ function Login(params: { app: FirebaseApp }) {
 
   if (user === null) {
     return (
-      <div className="Login">
-        <button onClick={sign}>Google login</button>
+      <div className="App">
+        <GoogleButton onclick={sign} />
       </div>
     )
   }
@@ -28,4 +29,4 @@ function Login(params: { app: FirebaseApp }) {
   return <Home app={params.app} user={user} />;
 }
 
-export default Login;
+export default App;
