@@ -1,26 +1,31 @@
 import { FirebaseApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Home from './Home';
 
 function Login(params: { app: FirebaseApp }) {
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
+  const [user, updateUser] = useState(null as UserCredential | null);
 
-    const navigate = useNavigate();
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
 
-    function sign() {
-        signInWithPopup(auth, provider).then((result: UserCredential) => {
-            navigate("/home", { state: result });
-        }).catch((error) => {
-            alert(error.message);
-        });
-    }
+  function sign() {
+    signInWithPopup(auth, provider).then((result: UserCredential) => {
+      updateUser(result);
+    }).catch((error) => {
+      alert(error.message);
+    });
+  }
 
+  if (user === null) {
     return (
-        <div className="Login">
-            <button onClick={sign}>Google login</button>
-        </div>
-    );
+      <div className="Login">
+        <button onClick={sign}>Google login</button>
+      </div>
+    )
+  }
+
+  return <Home app={params.app} user={user} />;
 }
 
 export default Login;

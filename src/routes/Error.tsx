@@ -1,7 +1,7 @@
 function Error() {
-    return (
-        <h2>Error!</h2>
-    );
+  return (
+    <h2>Error!</h2>
+  );
 }
 
 export default Error;
