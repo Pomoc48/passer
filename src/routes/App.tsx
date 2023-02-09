@@ -3,6 +3,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential } from "fi
 import { useState } from "react";
 import Home from './Home';
 import GoogleButton from "../widgets/GoogleButton";
+import "../css/App.css";
 
 function App(params: { app: FirebaseApp }) {
   const [user, updateUser] = useState(null as UserCredential | null);
@@ -20,7 +21,7 @@ function App(params: { app: FirebaseApp }) {
 
   if (user === null) {
     return <div className="App">
-      <h1>Welcome</h1>
+      <p className="Title">Welcome</p>
       <GoogleButton onclick={sign} />
     </div>
   }
