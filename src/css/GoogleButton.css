@@ -5,6 +5,7 @@
     border-radius: 99px;
     padding: 2px;
     cursor: pointer;
+    user-select: none;
     display: flex;
     align-items: center;
 }
@@ -16,13 +17,13 @@
     border-radius: 99px;
 }
 
-img {
+.Image-Container > img {
     height: 16px;
     width: 16px;
     padding: 10px;
 }
 
-p {
+.Container > p {
     float: right;
     color: white;
     font-family: Arial;
