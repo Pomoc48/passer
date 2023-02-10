@@ -32,7 +32,7 @@ function UserProfile(params: {
   return <>
     <div className='UserProfile' onClick={params.signOut}>
       <img src={image} alt="Profile" />
-      <p>{params.user.user.displayName}</p>
+      <p>Sign out</p>
     </div>
   </>
 }

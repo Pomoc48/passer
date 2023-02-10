@@ -10,7 +10,7 @@ function TopBar(params: {
 }) {
 
   return <div className='TopBar'>
-    <p>Passwords</p>
+    <p>{params.user === null ? "Password Manager" : "Saved passwords"}</p>
     <div className='Spacer' />
     {params.user === null ? null : <input placeholder='Search passwords' />}
     <UserProfile user={params.user} signIn={params.signIn} signOut={params.signOut} />
