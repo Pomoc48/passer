@@ -1,4 +1,5 @@
 import { FirebaseApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential, signOut } from "firebase/auth";
 import { useState } from "react";
 import Home from './Home';
@@ -10,6 +11,7 @@ function App(params: { app: FirebaseApp }) {
 
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
+  const db = getFirestore(params.app);
 
   function signIn() {
     signInWithPopup(auth, provider).then((result: UserCredential) => {
@@ -29,7 +31,7 @@ function App(params: { app: FirebaseApp }) {
 
   return <>
     <TopBar user={user} signIn={signIn} signOut={out} />
-    <Home app={params.app} user={user} />
+    <Home db={db} user={user} />
   </>
 }
 
