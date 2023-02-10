@@ -18,7 +18,7 @@
     margin: 0;
     line-height: 40px;
     font-size: 24px;
-    font-family: Arial;
+    font-weight: bold;
 }
 
 .TopBar > input {
@@ -29,7 +29,6 @@
     padding-left: 10px;
     padding-right: 10px;
     border: 2px solid hsla(225, 6%, 13%, 0.33);
-    font-family: Arial;
     font-size: 14px;
     font-weight: 600;
     margin-right: var(--spacing);
