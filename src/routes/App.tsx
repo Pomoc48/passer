@@ -2,8 +2,8 @@ import { FirebaseApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth";
 import { useState } from "react";
 import Home from './Home';
-import GoogleButton from "../widgets/GoogleButton";
 import "../css/App.css";
+import TopBar from "../widgets/TopBar";
 
 function App(params: { app: FirebaseApp }) {
   const [user, updateUser] = useState(null as UserCredential | null);
@@ -11,7 +11,7 @@ function App(params: { app: FirebaseApp }) {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
-  function sign() {
+  function signIn() {
     signInWithPopup(auth, provider).then((result: UserCredential) => {
       updateUser(result);
     }).catch((error) => {
@@ -19,14 +19,14 @@ function App(params: { app: FirebaseApp }) {
     });
   }
 
-  if (user === null) {
-    return <div className="App">
-      <p className="Title">Welcome</p>
-      <GoogleButton onclick={sign} />
-    </div>
+  function signOut() {
+
   }
 
-  return <Home app={params.app} user={user} />;
+  return <>
+    <TopBar user={user} signIn={signIn} signOut={signOut} />
+    <Home app={params.app} />
+  </>
 }
 
 export default App;

@@ -1,0 +1,7 @@
+.TopBar {
+    padding: 16px;
+}
+
+.TopBar > .UserProfile {
+    float: right;
+}
