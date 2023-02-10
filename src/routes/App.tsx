@@ -1,5 +1,5 @@
 import { FirebaseApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential, signOut } from "firebase/auth";
 import { useState } from "react";
 import Home from './Home';
 import "../css/App.css";
@@ -19,13 +19,17 @@ function App(params: { app: FirebaseApp }) {
     });
   }
 
-  function signOut() {
-
+  function out() {
+    signOut(auth).then(() => {
+      updateUser(null);
+    }).catch((error) => {
+      alert(error.message);
+    });
   }
 
   return <>
-    <TopBar user={user} signIn={signIn} signOut={signOut} />
-    <Home app={params.app} />
+    <TopBar user={user} signIn={signIn} signOut={out} />
+    <Home app={params.app} user={user} />
   </>
 }
 

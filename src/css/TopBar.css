@@ -1,7 +1,40 @@
-.TopBar {
-    padding: 16px;
+:root {
+    --spacing: 16px;
 }
 
-.TopBar > .UserProfile {
-    float: right;
+.TopBar {
+    display: flex;
+    padding: var(--spacing);
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+}
+
+.TopBar > p {
+    width: fit-content;
+    height: 40px;
+    margin: 0;
+    line-height: 40px;
+    font-size: 24px;
+    font-family: Arial;
+}
+
+.TopBar > input {
+    width: 320px;
+    height: 36px;
+    padding: 0;
+    border-radius: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 2px solid hsla(225, 6%, 13%, 0.33);
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: var(--spacing);
+}
+
+.TopBar > .Spacer {
+    flex-grow: 1;
 }

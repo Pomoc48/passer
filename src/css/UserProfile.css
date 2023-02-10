@@ -2,7 +2,7 @@
     height: 36px;
     width: fit-content;
     background-color: #202124;
-    border-radius: 99px;
+    border-radius: 36px;
     padding: 2px;
     cursor: pointer;
     user-select: none;
@@ -30,7 +30,7 @@
     height: 36px;
     width: 36px;
     background-color: white;
-    border-radius: 99px;
+    border-radius: 36px;
 }
 
 .LogoContainer > img {
