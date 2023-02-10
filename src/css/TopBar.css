@@ -33,6 +33,12 @@
     font-size: 14px;
     font-weight: 600;
     margin-right: var(--spacing);
+    transition: 0.3s;
+}
+
+.TopBar > input:focus {
+    border: 2px solid hsla(225, 6%, 13%, 1);
+    outline: 0;
 }
 
 .TopBar > .Spacer {
