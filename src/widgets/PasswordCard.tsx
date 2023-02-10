@@ -1,3 +1,5 @@
+import '../css/PasswordCard.css'
+
 function PasswordCard(params: {
   name: string,
   username: string,
