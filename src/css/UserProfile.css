@@ -12,7 +12,7 @@
 }
 
 .UserProfile:hover {
-    background-color: hsla(225, 6%, 13%, 0.9);
+    background-color: hsla(225, 6%, 13%, 0.8);
 }
 
 .UserProfile > img {

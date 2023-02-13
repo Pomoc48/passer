@@ -7,10 +7,16 @@ function PasswordCard(params: {
   website: string,
 }) {
   return <div className='PasswordCard'>
-    <div>{params.name}</div>
-    <div>{params.website}</div>
-    <div>{params.username}</div>
-    <div>{params.password}</div>
+    <div className='Name'>{params.name}</div>
+    <div className='Info'>
+      <div>{params.website}</div>
+      <div>{params.username}</div>
+    </div>
+
+    <div>
+      <button>Visit</button>
+      <button>Copy</button>
+    </div>
   </div>
 }
 
