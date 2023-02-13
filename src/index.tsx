@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client';
 import './css/index.css';
 import { initializeApp } from 'firebase/app';
 import App from './routes/App';
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
@@ -14,6 +15,11 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider('6LcRunAkAAAAAB4FgijGqmLFKlwg4L4eFmerB_CQ'),
+  isTokenAutoRefreshEnabled: true
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
