@@ -2,9 +2,9 @@ import '../css/Marketing.css';
 
 function Marketing() {
   return <div className="Marketing">
-    <div className='Title'>Passer</div>
-    <div className='Subtitle'>Firebase-hosted, Google-authenticated, client-side encrypted password manager by Mikołaj Łukawski</div>
-    <div className='Subtitle'>Your passwords are client-side SHA256-encrypted before sending them to the Firestore database. </div>
+    <div className='Title'>Open-source password manager</div>
+    <div className='Subtitle'>presented by Mikołaj Łukawski</div>
+    <div className='Info'>Your passwords are client-side encrypted before being sent to the Firebase Firestore database</div>
   </div>
 }
 
