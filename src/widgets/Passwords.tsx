@@ -2,7 +2,7 @@ import { UserCredential } from 'firebase/auth';
 import { Firestore, doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import PasswordCard from './PasswordCard';
-import '../css/Passwords.css'
+import '../scss/Passwords.scss'
 
 function Passwords(params: { db: Firestore, user: UserCredential }) {
   const [passwords, updatePasswords] = useState([]);

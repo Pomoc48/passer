@@ -1,0 +1,46 @@
+:root {
+    --spacing: 16px;
+}
+
+.TopBar {
+    display: flex;
+    padding: var(--spacing);
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+
+    p {
+        width: fit-content;
+        height: 40px;
+        margin: 0;
+        margin-left: 16px;
+        line-height: 40px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 320px;
+        height: 36px;
+        padding: 0;
+        border-radius: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border: 2px solid hsla(225, 6%, 13%, 0.33);
+        font-size: 14px;
+        font-weight: 600;
+        margin-right: var(--spacing);
+        transition: 0.3s;
+    }
+
+    input:focus {
+        border: 2px solid hsla(225, 6%, 13%, 1);
+        outline: 0;
+    }
+
+    .Spacer {
+        flex-grow: 1;
+    }
+}

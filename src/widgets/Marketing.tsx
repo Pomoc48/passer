@@ -1,4 +1,4 @@
-import '../css/Marketing.css';
+import '../scss/Marketing.scss';
 
 function Marketing() {
   return <div className="Marketing">

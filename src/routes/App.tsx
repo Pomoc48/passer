@@ -3,7 +3,6 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential, signOut } from "firebase/auth";
 import { useState } from "react";
 import Home from './Home';
-import "../css/App.css";
 import TopBar from "../widgets/TopBar";
 
 function App(params: { app: FirebaseApp }) {

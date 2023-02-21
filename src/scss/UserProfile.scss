@@ -1,0 +1,45 @@
+.UserProfile {
+    height: 36px;
+    width: fit-content;
+    background-color: #202124;
+    border-radius: 36px;
+    padding: 2px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+
+    img {
+        height: 36px;
+        width: 36px;
+        border-radius: 100%;
+    }
+
+    p {
+        float: right;
+        color: white;
+        font-family: Arial;
+        font-weight: 600;
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+}
+
+.UserProfile:hover {
+    background-color: hsla(225, 6%, 13%, 0.8);
+}
+
+.LogoContainer {
+    height: 36px;
+    width: 36px;
+    background-color: white;
+    border-radius: 36px;
+
+    img {
+        height: 16px;
+        width: 16px;
+        padding: 10px;
+    }
+}

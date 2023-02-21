@@ -1,6 +1,6 @@
 import { UserCredential } from "firebase/auth";
 import { Firestore } from "firebase/firestore";
-import '../css/Home.css';
+import '../scss/Home.scss';
 import Marketing from "../widgets/Marketing";
 import Passwords from "../widgets/Passwords";
 
