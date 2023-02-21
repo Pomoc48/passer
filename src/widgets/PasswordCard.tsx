@@ -13,9 +13,9 @@ function PasswordCard(params: {
       <div>{params.username}</div>
     </div>
 
-    <div>
-      <button>Visit</button>
-      <button>Copy</button>
+    <div className='Actions'>
+      <button type='button'>Visit</button>
+      <button type='button'>Copy</button>
     </div>
   </div>
 }

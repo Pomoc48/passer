@@ -21,34 +21,16 @@ function Passwords(params: { db: Firestore, user: UserCredential }) {
   }, []);
 
   return <div className='Passwords'>
-    {passwords.map((item) =>
-      <PasswordCard
-        name={item["name"]}
-        website={item["website"]}
-        username={item["username"]}
-        password={item["password"]}
-      />)}
-    {passwords.map((item) =>
-      <PasswordCard
-        name={item["name"]}
-        website={item["website"]}
-        username={item["username"]}
-        password={item["password"]}
-      />)}
-    {passwords.map((item) =>
-      <PasswordCard
-        name={item["name"]}
-        website={item["website"]}
-        username={item["username"]}
-        password={item["password"]}
-      />)}
-    {passwords.map((item) =>
-      <PasswordCard
-        name={item["name"]}
-        website={item["website"]}
-        username={item["username"]}
-        password={item["password"]}
-      />)}
+    {
+      passwords.map((item) =>
+        <PasswordCard
+          name={item["name"]}
+          website={item["website"]}
+          username={item["username"]}
+          password={item["password"]}
+        />
+      )
+    }
   </div>
 }
 
