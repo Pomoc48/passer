@@ -1,4 +1,4 @@
-import '../scss/PasswordCard.scss'
+import '../scss/widgets/PasswordCard.scss'
 
 function PasswordCard(params: {
   name: string,

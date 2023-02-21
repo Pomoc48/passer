@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import './css/index.css';
+import './scss/index.scss';
 import { initializeApp } from 'firebase/app';
 import App from './routes/App';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";

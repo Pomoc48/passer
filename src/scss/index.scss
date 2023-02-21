@@ -1,0 +1,12 @@
+@use "reuse/Variables.scss";
+
+body {
+  margin: 0;
+  font-family: Arial;
+  background-color: Variables.$surfaceColor;
+  color: Variables.$onSurfaceColor;
+}
+
+#root {
+  min-height: 100vh;
+}

@@ -3,6 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential, signOut } from "firebase/auth";
 import { useState } from "react";
 import Home from './Home';
+import "../scss/App.scss";
 import TopBar from "../widgets/TopBar";
 
 function App(params: { app: FirebaseApp }) {
@@ -28,10 +29,10 @@ function App(params: { app: FirebaseApp }) {
     });
   }
 
-  return <>
+  return <div className="App">
     <TopBar user={user} signIn={signIn} signOut={out} />
     <Home db={db} user={user} />
-  </>
+  </div>
 }
 
 export default App;

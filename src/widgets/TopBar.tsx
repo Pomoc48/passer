@@ -1,6 +1,6 @@
 import { UserCredential } from 'firebase/auth';
 import { MouseEventHandler } from 'react';
-import '../scss/TopBar.scss';
+import '../scss/widgets/TopBar.scss';
 import UserProfile from './UserProfile';
 
 function TopBar(params: {

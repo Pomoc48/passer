@@ -1,4 +1,4 @@
-import '../scss/Marketing.scss';
+import '../scss/widgets/Marketing.scss';
 
 function Marketing() {
   return <div className="Marketing">

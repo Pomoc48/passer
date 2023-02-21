@@ -1,6 +1,6 @@
 import { MouseEventHandler } from 'react';
 import GoogleLogo from '../media/google.png';
-import '../scss/UserProfile.scss';
+import '../scss/widgets/UserProfile.scss';
 import { UserCredential } from 'firebase/auth';
 
 function UserProfile(params: {
