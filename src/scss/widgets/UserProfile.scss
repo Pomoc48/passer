@@ -1,7 +1,9 @@
+@use "../reuse/Variables.scss";
+
 .UserProfile {
     height: 36px;
     width: fit-content;
-    background-color: #202124;
+    background-color: white;
     border-radius: 36px;
     padding: 2px;
     cursor: pointer;
@@ -18,17 +20,13 @@
 
     p {
         float: right;
-        color: white;
+        color: rgb(60, 64, 67);
         font-family: Arial;
         font-weight: 600;
-        margin-left: 10px;
+        margin-left: 0px;
         margin-right: 10px;
         font-size: 14px;
     }
-}
-
-.UserProfile:hover {
-    background-color: hsla(225, 6%, 13%, 0.8);
 }
 
 .LogoContainer {

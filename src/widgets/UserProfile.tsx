@@ -31,8 +31,8 @@ function UserProfile(params: {
 
   return <>
     <div className='UserProfile' onClick={params.signOut}>
-      <img src={image} alt="Profile" />
-      <p>Sign out</p>
+      <img src={image} draggable="false" alt="Profile" />
+      <p style={{marginLeft: "10px"}}>Sign out</p>
     </div>
   </>
 }
