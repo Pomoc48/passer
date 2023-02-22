@@ -2,6 +2,7 @@ import { UserCredential } from 'firebase/auth';
 import { MouseEventHandler } from 'react';
 import '../scss/widgets/TopBar.scss';
 import GoogleSignIn from './GoogleSignIn';
+import Search from './Search';
 import UserProfile from './UserProfile';
 
 function TopBar(params: {
@@ -27,11 +28,8 @@ function TopBar(params: {
     }
 
     content = <>
-      <div className="Search">
-        <span className="material-icons">search</span>
-        {/* <input placeholder='Search passwords' /> */}
-      </div>
-      <UserProfile user={params.user} signOut={params.signOut} />
+      <Search user={params.user} signOut={params.signOut} />
+      {/* <UserProfile user={params.user} signOut={params.signOut} /> */}
     </> ;
   }
 

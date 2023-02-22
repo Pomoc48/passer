@@ -1,13 +1,9 @@
 @use "../reuse/Variables.scss";
 @use "../reuse/Elevation.scss";
 
-:root {
-    --spacing: 16px;
-}
-
 .TopBar {
     display: flex;
-    padding: var(--spacing);
+    padding: 16px;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -18,7 +14,7 @@
         width: fit-content;
         height: 40px;
         margin: 0;
-        margin-left: 16px;
+        margin-left: 8px;
         line-height: 40px;
         font-size: 24px;
         font-weight: bold;
@@ -26,22 +22,5 @@
 
     .Spacer {
         flex-grow: 1;
-    }
-
-    .Search {
-        @include Elevation.elev3;
-        color: Variables.$onSurfaceVariantColor;
-        width: 250px;
-        height: 40px;
-        border-radius: 40px;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin-right: 8px;
-    }
-
-    .material-icons {
-        margin-top: 9px;
-        margin-left: 4px;
-        float: left;
     }
 }
