@@ -1,0 +1,41 @@
+.GoogleSignIn {
+    height: 36px;
+    width: fit-content;
+    background-color: white;
+    border-radius: 36px;
+    padding: 2px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+
+    img {
+        height: 36px;
+        width: 36px;
+        border-radius: 100%;
+    }
+
+    p {
+        float: right;
+        color: rgb(60, 64, 67);
+        font-family: Arial;
+        font-weight: 600;
+        margin-left: 0px;
+        margin-right: 12px;
+        font-size: 14px;
+    }
+}
+
+.LogoContainer {
+    height: 36px;
+    width: 36px;
+    background-color: white;
+    border-radius: 36px;
+
+    img {
+        height: 16px;
+        width: 16px;
+        padding: 10px;
+    }
+}

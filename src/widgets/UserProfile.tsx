@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react';
-import GoogleLogo from '../media/google.png';
 import '../scss/widgets/UserProfile.scss';
 import { UserCredential } from 'firebase/auth';
+import GoogleSignIn from './GoogleSignIn';
 
 function UserProfile(params: {
   signIn: MouseEventHandler<HTMLDivElement>,
@@ -10,14 +10,7 @@ function UserProfile(params: {
 }) {
 
   if (params.user === null) {
-    return <>
-      <div className='UserProfile' onClick={params.signIn}>
-        <div className='LogoContainer'>
-          <img src={GoogleLogo} draggable="false" alt="Google Logo" />
-        </div>
-        <p>Sign in with Google</p>
-      </div>
-    </>
+    return <GoogleSignIn signIn={params.signIn} />
   }
 
   let image: string | undefined;
@@ -32,7 +25,7 @@ function UserProfile(params: {
   return <>
     <div className='UserProfile' onClick={params.signOut}>
       <img src={image} draggable="false" alt="Profile" />
-      <p style={{marginLeft: "10px"}}>Sign out</p>
+      <p style={{marginLeft: "10px"}}>{params.user.user.displayName}</p>
     </div>
   </>
 }
