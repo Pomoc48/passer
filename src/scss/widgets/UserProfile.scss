@@ -1,9 +1,10 @@
 @use "../reuse/Variables.scss";
+@use "../reuse/Elevation.scss";
 
 .UserProfile {
     height: 36px;
     width: fit-content;
-    background-color: white;
+    @include Elevation.elev3;
     border-radius: 36px;
     padding: 2px;
     cursor: pointer;
@@ -20,11 +21,11 @@
 
     p {
         float: right;
-        color: rgb(60, 64, 67);
+        color: Variables.$onSurfaceVariantColor;
         font-family: Arial;
         font-weight: 600;
-        margin-left: 0px;
-        margin-right: 10px;
+        margin-left: 10px;
+        margin-right: 12px;
         font-size: 14px;
     }
 }
