@@ -1,9 +1,8 @@
-import { MouseEventHandler } from 'react';
 import '../scss/widgets/UserProfile.scss';
 import { UserCredential } from 'firebase/auth';
 
 function UserProfile(params: {
-  signOut: MouseEventHandler<HTMLDivElement>,
+  signOut: () => void,
   user: UserCredential,
 }) {
   let image: string | undefined;

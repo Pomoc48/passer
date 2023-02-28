@@ -1,11 +1,7 @@
 import { UserCredential } from 'firebase/auth';
-import { MouseEventHandler } from 'react';
 import '../scss/widgets/Search.scss';
 
-function Search(params: {
-  user: UserCredential,
-  signOut: MouseEventHandler<HTMLDivElement>,
-}) {
+function Search(params: { user: UserCredential, signOut: () => void }) {
 
   let image: string | undefined;
 

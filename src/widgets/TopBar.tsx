@@ -1,16 +1,13 @@
 import { UserCredential } from 'firebase/auth';
-import { MouseEventHandler } from 'react';
 import '../scss/widgets/TopBar.scss';
 import GoogleSignIn from './GoogleSignIn';
 import Search from './Search';
-import UserProfile from './UserProfile';
 
 function TopBar(params: {
   user: UserCredential | null,
-  signIn: MouseEventHandler<HTMLDivElement>,
-  signOut: MouseEventHandler<HTMLDivElement>,
+  signIn: () => void,
+  signOut: () => void,
 }) {
-
   let content;
 
   if (params.user === null) {
@@ -29,7 +26,6 @@ function TopBar(params: {
 
     content = <>
       <Search user={params.user} signOut={params.signOut} />
-      {/* <UserProfile user={params.user} signOut={params.signOut} /> */}
     </> ;
   }
 
