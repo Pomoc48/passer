@@ -3,6 +3,7 @@ import { Firestore, doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import PasswordCard from './PasswordCard';
 import '../scss/widgets/Passwords.scss'
+import CreatePassword from './CreatePassword';
 
 function Passwords(params: { db: Firestore, user: UserCredential }) {
   const [passwords, updatePasswords] = useState([]);
@@ -21,26 +22,11 @@ function Passwords(params: { db: Firestore, user: UserCredential }) {
   }, []);
 
   return <div className='Passwords'>
-    {
-      passwords.map((item) =>
-        <PasswordCard
-          name={item["name"]}
-          website={item["website"]}
-          username={item["username"]}
-          password={item["password"]}
-        />
-      )
-    }
-    {
-      passwords.map((item) =>
-        <PasswordCard
-          name={item["name"]}
-          website={item["website"]}
-          username={item["username"]}
-          password={item["password"]}
-        />
-      )
-    }
+    <CreatePassword
+      reference={docRef}
+      refresh={getPasswords} 
+      hasPasswords={passwords.length > 0}
+    />
     {
       passwords.map((item) =>
         <PasswordCard
