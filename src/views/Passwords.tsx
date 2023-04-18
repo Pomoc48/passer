@@ -7,7 +7,7 @@ import CreatePassword from '../widgets/CreatePassword';
 import { Password } from '../types/Password';
 
 export default function Passwords(params: { db: Firestore, user: UserCredential }) {
-  const [passwords, updatePasswords] = useState([]);
+  const [passwords, updatePasswords] = useState<Password[]>([]);
   const docRef = doc(params.db, "passwords", params.user.user.uid);
 
   async function getPasswords() {
@@ -30,20 +30,9 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
       hasPasswords={passwords.length > 0}
     />
     {
-      passwords.map((item, index) => {
-        let password: Password = {
-          name: item["name"],
-          password: item["password"],
-          website: item["website"],
-          username: item["username"],
-          note: item["note"],
-        };
-
-        return <PasswordCard
-          key={index}
-          password={password}
-        />
-      })
+      passwords.map((password, index) => 
+        <PasswordCard key={index} password={password}/>
+      )
     }
   </div>
 }
