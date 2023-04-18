@@ -9,7 +9,6 @@ function Search(params: { user: UserCredential, signOut: () => void }) {
     image = undefined;
   } else {
     image = params.user.user.photoURL;
-    console.log(image);
   }
 
   return <div className="Search">

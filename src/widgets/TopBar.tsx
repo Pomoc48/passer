@@ -8,25 +8,12 @@ function TopBar(params: {
   signIn: () => void,
   signOut: () => void,
 }) {
-  let content;
+  let content: JSX.Element;
 
   if (params.user === null) {
     content = <GoogleSignIn signIn={params.signIn} />
-  }
-
-  else {
-    let image: string | undefined;
-
-    if (params.user.user.photoURL === null) {
-      image = undefined;
-    } else {
-      image = params.user.user.photoURL;
-      console.log(image);
-    }
-
-    content = <>
-      <Search user={params.user} signOut={params.signOut} />
-    </> ;
+  } else {
+    content = <Search user={params.user} signOut={params.signOut} />;
   }
 
   return <div className='TopBar'>
