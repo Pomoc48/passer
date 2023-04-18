@@ -1,7 +1,7 @@
 import { UserCredential } from 'firebase/auth';
 import '../scss/widgets/Search.scss';
 
-function Search(params: { user: UserCredential, signOut: () => void }) {
+export default function Search(params: { user: UserCredential, signOut: () => void }) {
 
   let image: string | undefined;
 
@@ -9,16 +9,15 @@ function Search(params: { user: UserCredential, signOut: () => void }) {
     image = undefined;
   } else {
     image = params.user.user.photoURL;
-    console.log(image);
   }
 
-  return <div className="Search">
-    <span className="material-icons">search</span>
-    <div>
-      <input placeholder='Search passwords' />
+  return (
+    <div className="Search">
+      <span className="material-icons">search</span>
+      <div>
+        <input placeholder='Search passwords' />
+      </div>
+      <img onClick={params.signOut} src={image} draggable="false" alt="Profile" />
     </div>
-    <img onClick={params.signOut} src={image} draggable="false" alt="Profile" />
-  </div>
+  );
 }
-
-export default Search

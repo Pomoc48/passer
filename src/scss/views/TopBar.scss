@@ -4,11 +4,8 @@
 .TopBar {
     display: flex;
     padding: 16px;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    align-content: stretch;
 
     p {
         width: fit-content;
@@ -18,9 +15,5 @@
         line-height: 40px;
         font-size: 24px;
         font-weight: bold;
-    }
-
-    .Spacer {
-        flex-grow: 1;
     }
 }

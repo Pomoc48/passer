@@ -2,12 +2,12 @@ import { FirebaseApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider, UserCredential, signOut } from "firebase/auth";
 import { useState } from "react";
-import Home from './Home';
-import "../scss/App.scss";
-import TopBar from "../widgets/TopBar";
+import TopBar from "./TopBar";
+import Marketing from "../widgets/Marketing";
+import Passwords from "./Passwords";
 
-function App(params: { app: FirebaseApp }) {
-  const [user, updateUser] = useState(null as UserCredential | null);
+export default function App(params: { app: FirebaseApp }) {
+  const [user, updateUser] = useState<UserCredential | null>(null);
 
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
@@ -29,10 +29,12 @@ function App(params: { app: FirebaseApp }) {
     });
   }
 
-  return <div className="App">
-    <TopBar user={user} signIn={signIn} signOut={out} />
-    <Home db={db} user={user} />
-  </div>
+  return (
+    <div className="App">
+      <TopBar user={user} signIn={signIn} signOut={out} />
+      <div className="Home">
+        { user === null ? <Marketing /> : <Passwords db={db} user={user} /> }
+      </div>
+    </div>
+  );
 }
-
-export default App;

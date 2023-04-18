@@ -23,12 +23,10 @@
         width: 200px;
         box-sizing: border-box;
         display: block;
-        transition: 0.3s;
     }
 
     input:focus {
         outline: 0;
-        width: 280px;
     }
 
     img {
@@ -48,7 +46,7 @@
 
 @media only screen and (max-width: 500px) {
     .Search {
-        input, input:focus {
+        input {
             width: 100px;
         }
     }
