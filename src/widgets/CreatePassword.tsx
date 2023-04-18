@@ -1,7 +1,7 @@
 import { arrayUnion, DocumentReference, updateDoc } from "firebase/firestore"
 import { Password } from "../types/Password";
 
-function CreatePassword(params: {
+export default function CreatePassword(params: {
     reference: DocumentReference,
     refresh: () => Promise<void>,
     hasPasswords: boolean,
@@ -37,5 +37,3 @@ function CreatePassword(params: {
       </div>
     </>
 }
-
-export default CreatePassword

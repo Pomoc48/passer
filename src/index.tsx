@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import './scss/index.scss';
 import { initializeApp } from 'firebase/app';
-import App from './routes/App';
+import App from './views/App';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 const firebaseConfig = {

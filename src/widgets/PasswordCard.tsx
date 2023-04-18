@@ -1,16 +1,14 @@
 import '../scss/widgets/PasswordCard.scss'
+import { Password } from '../types/Password'
 
-function PasswordCard(params: {
-  name: string,
-  username: string,
-  password: string,
-  website: string,
+export default function PasswordCard(params: {
+  password: Password,
 }) {
   return <div className='PasswordCard'>
-    <div className='Name'>{params.name}</div>
+    <div className='Name'>{params.password.name}</div>
     <div className='Info'>
-      <div>{params.website}</div>
-      <div>{params.username}</div>
+      <div>{params.password.website}</div>
+      <div>{params.password.username}</div>
     </div>
 
     <div className='Actions'>
@@ -19,5 +17,3 @@ function PasswordCard(params: {
     </div>
   </div>
 }
-
-export default PasswordCard

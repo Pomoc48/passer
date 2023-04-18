@@ -1,7 +1,7 @@
 import GoogleLogo from '../media/google.png';
 import '../scss/widgets/GoogleSignIn.scss';
 
-function GoogleSignIn(params: {signIn: () => void}) {
+export default function GoogleSignIn(params: {signIn: () => void}) {
 
     return <>
       <div className='GoogleSignIn' onClick={params.signIn}>
@@ -12,5 +12,3 @@ function GoogleSignIn(params: {signIn: () => void}) {
       </div>
     </>
 }
-
-export default GoogleSignIn

@@ -1,9 +1,9 @@
 import { UserCredential } from 'firebase/auth';
-import '../scss/widgets/TopBar.scss';
-import GoogleSignIn from './GoogleSignIn';
-import Search from './Search';
+import '../scss/views/TopBar.scss';
+import GoogleSignIn from '../widgets/GoogleSignIn';
+import Search from '../widgets/Search';
 
-function TopBar(params: {
+export default function TopBar(params: {
   user: UserCredential | null,
   signIn: () => void,
   signOut: () => void,
@@ -18,9 +18,6 @@ function TopBar(params: {
 
   return <div className='TopBar'>
     <p>Passer</p>
-    <div className='Spacer' />
     {content}
   </div>
 }
-
-export default TopBar
