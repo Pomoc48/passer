@@ -29,10 +29,12 @@ export default function App(params: { app: FirebaseApp }) {
     });
   }
 
-  return <div className="App">
-    <TopBar user={user} signIn={signIn} signOut={out} />
-    <div className="Home">
-      {user === null ? <Marketing /> : <Passwords db={db} user={user} />}
+  return (
+    <div className="App">
+      <TopBar user={user} signIn={signIn} signOut={out} />
+      <div className="Home">
+        { user === null ? <Marketing /> : <Passwords db={db} user={user} /> }
+      </div>
     </div>
-  </div>
+  );
 }

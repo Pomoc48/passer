@@ -11,11 +11,13 @@ export default function Search(params: { user: UserCredential, signOut: () => vo
     image = params.user.user.photoURL;
   }
 
-  return <div className="Search">
-    <span className="material-icons">search</span>
-    <div>
-      <input placeholder='Search passwords' />
+  return (
+    <div className="Search">
+      <span className="material-icons">search</span>
+      <div>
+        <input placeholder='Search passwords' />
+      </div>
+      <img onClick={params.signOut} src={image} draggable="false" alt="Profile" />
     </div>
-    <img onClick={params.signOut} src={image} draggable="false" alt="Profile" />
-  </div>
+  );
 }

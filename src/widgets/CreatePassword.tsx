@@ -2,38 +2,35 @@ import { arrayUnion, DocumentReference, updateDoc } from "firebase/firestore"
 import { Password } from "../types/Password";
 
 export default function CreatePassword(params: {
-    reference: DocumentReference,
-    refresh: () => Promise<void>,
-    hasPasswords: boolean,
+  reference: DocumentReference,
+  hasPasswords: boolean,
 }) {
 
-    const testPassword: Password = {
-        name: "testPassword",
-        password: "testPassword",
-        note: "testPassword",
-        username: "testPassword",
-        website: "testPassword",
+  const testPassword: Password = {
+    name: "testPassword",
+    password: "testPassword",
+    note: "testPassword",
+    username: "testPassword",
+    website: "testPassword",
+  }
+
+  async function addPassword(password: Password) {
+    if (params.hasPasswords) {
+      await updateDoc(params.reference, {
+        passwords: arrayUnion({
+          name: password.name,
+          password: password.password,
+          note: password.note,
+          username: password.username,
+          website: password.website,
+        }),
+      });
     }
+  }
 
-    async function addPassword(password: Password) {
-        if (params.hasPasswords) {
-          await updateDoc(params.reference, {
-            passwords: arrayUnion({
-              name: password.name,
-              password: password.password,
-              note: password.note,
-              username: password.username,
-              website: password.website,
-            }),
-          });
-        }
-    
-        await params.refresh();
-      }
-
-    return <>
-      <div className='CreatePassword' onClick={async () => addPassword(testPassword)}>
-        <p>Add new password</p>
-      </div>
-    </>
+  return (
+    <div className='CreatePassword' onClick={async () => addPassword(testPassword)}>
+      <p>Add new password</p>
+    </div>
+  );
 }

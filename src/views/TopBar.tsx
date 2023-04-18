@@ -8,6 +8,7 @@ export default function TopBar(params: {
   signIn: () => void,
   signOut: () => void,
 }) {
+  
   let content: JSX.Element;
 
   if (params.user === null) {
@@ -16,8 +17,10 @@ export default function TopBar(params: {
     content = <Search user={params.user} signOut={params.signOut} />;
   }
 
-  return <div className='TopBar'>
-    <p>Passer</p>
-    {content}
-  </div>
+  return (
+    <div className='TopBar'>
+      <p>Passer</p>
+      {content}
+    </div>
+  );
 }
