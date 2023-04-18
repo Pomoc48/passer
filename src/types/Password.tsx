@@ -1,4 +1,4 @@
-export interface Password {
+export type Password = {
     name: string;
     password: string;
     note: string;

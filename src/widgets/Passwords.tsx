@@ -19,6 +19,7 @@ function Passwords(params: { db: Firestore, user: UserCredential }) {
 
   useEffect(() => {
     getPasswords();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div className='Passwords'>

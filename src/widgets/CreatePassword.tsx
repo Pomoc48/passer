@@ -1,5 +1,5 @@
 import { arrayUnion, DocumentReference, updateDoc } from "firebase/firestore"
-import { Password } from "../interfaces/Password";
+import { Password } from "../types/Password";
 
 function CreatePassword(params: {
     reference: DocumentReference,
