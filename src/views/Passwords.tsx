@@ -5,10 +5,12 @@ import PasswordCard from '../widgets/PasswordCard';
 import '../scss/views/Passwords.scss'
 import CreatePassword from '../widgets/CreatePassword';
 import { SiteData } from '../types/SiteData';
+import { createPortal } from 'react-dom';
 
 export default function Passwords(params: { db: Firestore, user: UserCredential }) {
   const [websites, updateWebsites] = useState<SiteData[]>([]);
   const docRef = doc(params.db, "passwords", params.user.user.uid);
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     onSnapshot(docRef, (doc) => {
@@ -33,10 +35,11 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
+  return <>
     <div className='Passwords'>
       <CreatePassword reference={docRef} />
       { websites.map((website, index) => <PasswordCard key={index} website={website} />) }
     </div>
-  );
+    { showModal ? createPortal(<div onClick={() => setShowModal(false)}>Test</div>, document.body) : null }
+  </>
 }
