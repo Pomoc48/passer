@@ -6,6 +6,7 @@ import '../scss/views/Passwords.scss'
 import CreatePassword from '../widgets/CreatePassword';
 import { SiteData } from '../types/SiteData';
 import { createPortal } from 'react-dom';
+import Dialog from '../widgets-common/Dialog';
 
 export default function Passwords(params: { db: Firestore, user: UserCredential }) {
   const [websites, updateWebsites] = useState<SiteData[]>([]);
@@ -40,6 +41,20 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
       <CreatePassword reference={docRef} />
       { websites.map((website, index) => <PasswordCard key={index} website={website} />) }
     </div>
-    { showModal ? createPortal(<div onClick={() => setShowModal(false)}>Test</div>, document.body) : null }
+    {
+      showModal
+        ? createPortal(
+          <Dialog
+            title="Test dialog"
+            content="Test content"
+            closeFunction={() => setShowModal(false)}
+            actions={
+              [{name: "Confirm", onClick: () => {} }]
+            }
+          />,
+          document.body
+        )
+        : null
+    }
   </>
 }

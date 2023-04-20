@@ -1,5 +1,6 @@
 import '../scss/widgets/PasswordCard.scss'
 import { SiteData } from '../types/SiteData'
+import MaterialButton from '../widgets-common/Button';
 
 export default function PasswordCard(params: {website: SiteData}) {
   
@@ -12,8 +13,8 @@ export default function PasswordCard(params: {website: SiteData}) {
       </div>
 
       <div className='Actions'>
-        <button type='button'>Visit</button>
-        <button type='button'>Copy</button>
+        <MaterialButton name='Visit' onClick={() => {}}/>
+        <MaterialButton name='Copy' onClick={() => {}}/>
       </div>
     </div>
   );
