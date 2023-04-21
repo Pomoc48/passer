@@ -58,7 +58,12 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
             content={
               <>
                 <div>Please enter your master password used for encrypting and decrypting your data.</div>
-                <input type='password' className='DialogInput' ref={passwordRef} />
+                <input
+                  type='password'
+                  className='DialogInput'
+                  placeholder='SecretPassword123'
+                  ref={passwordRef}
+                />
               </>
             }
             closeFunction={() => {}}
