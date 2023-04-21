@@ -11,7 +11,7 @@ export default function Dialog(params: DialogParameters) {
       <div className='Actions'>
         {
           params.actions.map((action, index) => {
-            return <MaterialButton name={action.name} onClick={action.onClick} />
+            return <MaterialButton key={index} name={action.name} onClick={action.onClick} />
           })
         }
       </div>
