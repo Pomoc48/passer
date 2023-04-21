@@ -7,6 +7,7 @@ import CreatePassword from '../widgets/CreatePassword';
 import { SiteData } from '../types/SiteData';
 import { createPortal } from 'react-dom';
 import Dialog from '../widgets-common/Dialog';
+import { digestMessage } from '../functions/Digest';
 
 export default function Passwords(params: { db: Firestore, user: UserCredential }) {
   const [websites, updateWebsites] = useState<SiteData[]>([]);
@@ -54,7 +55,7 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
       showModal
         ? createPortal(
           <Dialog
-            title="Test dialog"
+            title="Master password setup"
             content={
               <>
                 <div>Please enter your master password used for encrypting and decrypting your data.</div>
@@ -68,11 +69,16 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
             }
             closeFunction={() => {}}
             actions={
-              [{name: "Confirm", onClick: () => {
-                console.log(passwordRef.current?.value);
+              [{name: "Confirm", onClick: async () => {
+                if (passwordRef.current === null) {
+                  return;
+                }
+
+                console.log(await digestMessage(passwordRef.current.value));
+                
                 setPasswordEntered(true);
                 setShowModal(false);
-              } }]
+              }}]
             }
           />,
           document.body
