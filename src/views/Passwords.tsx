@@ -1,6 +1,6 @@
 import { UserCredential } from 'firebase/auth';
 import { Firestore, doc, onSnapshot } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PasswordCard from '../widgets/PasswordCard';
 import '../scss/views/Passwords.scss'
 import CreatePassword from '../widgets/CreatePassword';
@@ -12,8 +12,17 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
   const [websites, updateWebsites] = useState<SiteData[]>([]);
   const docRef = doc(params.db, "passwords", params.user.user.uid);
   const [showModal, setShowModal] = useState(true);
+  const [passwordEntered, setPasswordEntered] = useState(false);
+
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  console.log("rerender");
 
   useEffect(() => {
+    if (!passwordEntered) {
+      return;
+    }
+
     onSnapshot(docRef, (doc) => {
       if (doc.exists() && doc.data().passwords !== undefined) {
         let passwords = doc.data().passwords;
@@ -34,7 +43,7 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
       }
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [passwordEntered]);
 
   return <>
     <div className='Passwords'>
@@ -46,10 +55,19 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
         ? createPortal(
           <Dialog
             title="Test dialog"
-            content="Test content"
-            closeFunction={() => setShowModal(false)}
+            content={
+              <>
+                <div>Please enter your master password used for encrypting and decrypting your data.</div>
+                <input type='password' className='DialogInput' ref={passwordRef} />
+              </>
+            }
+            closeFunction={() => {}}
             actions={
-              [{name: "Confirm", onClick: () => {} }]
+              [{name: "Confirm", onClick: () => {
+                console.log(passwordRef.current?.value);
+                setPasswordEntered(true);
+                setShowModal(false);
+              } }]
             }
           />,
           document.body
