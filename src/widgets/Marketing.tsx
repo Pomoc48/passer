@@ -8,7 +8,7 @@ export default function Marketing() {
       <div className="Texts">
         <div className='Title'>Open-source password manager</div>
         <div className='Subtitle'>presented by Mikołaj Łukawski</div>
-        <div className='Info'>Your passwords are client-side encrypted before being sent to the Firebase Firestore database.</div>
+        <div className='Info'>Your passwords and site details are client-side encrypted. Everything can be self-hosted.</div>
       </div>
     </div>
   );
