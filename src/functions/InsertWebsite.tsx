@@ -6,11 +6,11 @@ export async function insertWebsite(reference: DocumentReference, website: SiteD
   await setDoc(reference, {
     passwords: {
       [uuidv4()]: {
-        name: website.name,
-        password: website.password,
-        note: website.note,
-        username: website.username,
-        url: website.url,
+        name: website.name.iv+website.name.value,
+        password: website.password.iv+website.password.value,
+        note: website.note.iv+website.note.value,
+        username: website.username.iv+website.username.value,
+        url: website.url.iv+website.url.value,
       }
     },
   }, { merge: true });
