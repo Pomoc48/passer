@@ -33,6 +33,25 @@ $dialogWidth: min(calc(100vw - (2 * 16px)), 500px);
     .Content {
         padding-top: 16px;
         padding-bottom: 24px;
+        display: flex;
+        flex-direction: column;
+
+        .DialogInput {
+            all: unset;
+            box-sizing: border-box;
+            margin-top: 16px;
+            color: Variables.$onSurfaceColor;
+            border-radius: 4px;
+            padding: 0 16px;
+            height: 56px;
+            border: 2px solid #79747E;
+            font-size: 16px;
+            transition: 0.3s;
+
+            &:focus {
+                border: 2px solid Variables.$primaryColor;
+            }
+        }
     }
 
     .Actions {
