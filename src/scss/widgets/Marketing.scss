@@ -1,32 +1,27 @@
 .Marketing {
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-top: 64px;
-    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    padding: 64px;
+    gap: 32px;
 
-    .Title {
-        font-size: 48px;
+    img {
+        width: 50%;
     }
 
-    .Subtitle {
-        margin-top: 8px;
-        font-size: 20px;
-        opacity: 0.75;
-    }
-
-    .Info {
-        margin-top: 64px;
-        font-size: 32px;
-    }
-}
-
-@media screen and (min-width: 970px) {
-    .Marketing {
-        margin-top: 25vh;
-        margin-bottom: 128px;
-
-        .Title, .Subtitle, .Info {
-            text-align: center;
+    .Texts {
+        .Title {
+            font-size: 48px;
+        }
+    
+        .Subtitle {
+            margin-top: 8px;
+            font-size: 20px;
+            opacity: 0.75;
+        }
+    
+        .Info {
+            margin-top: 64px;
+            font-size: 32px;
         }
     }
 }
