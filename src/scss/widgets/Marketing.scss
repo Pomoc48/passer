@@ -1,58 +1,78 @@
-$mobileBreak: 1000px;
+@use "../reuse/Elevation.scss";
+
+$pageWidth: 1200px;
+$mobileWidth: 700px;
 
 .Marketing {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 200px;
-    gap: 64px;
-    box-sizing: border-box;
+    width: $pageWidth;
+    margin-left: auto;
+    margin-right: auto;
 
-    @media only screen and (max-width: $mobileBreak) {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-        padding: 16px;
-        gap: 16px;
-        padding-top: 10vh;
+    @media only screen and (max-width: $pageWidth) {
+        width: 100%
     }
 
-    img {
-        width: calc(100% / 2.5);
-        flex-shrink: 0;
+    section {
+        padding: 20vh 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 64px;
 
-        @media only screen and (max-width: $mobileBreak) {
-            width: 100%;
+        @media only screen and (max-width: $mobileWidth) {
+            padding: 64px 0;
+            flex-direction: column;
+            justify-content: normal;
+            align-items: flex-start;
+            gap: 32px;
+
+            &:nth-of-type(odd) {
+                flex-direction: column-reverse;
+            }
+        }
+
+        img {
+            width: calc(100px + 25%);
+            flex-shrink: 0;
+
+            @media only screen and (max-width: $mobileWidth) {
+                width: 100%
+            }
+        }
+    
+        .Texts {
+            flex-grow: 1;
+            padding: 48px;
+
+            @media only screen and (max-width: $mobileWidth) {
+                padding: 16px;
+            }
+    
+            .Title {
+                font-size: 32px;
+            }
+    
+            .Info {
+                margin-top: 16px;
+                font-size: 18px;
+            }
+        }
+
+        &:first-child {
+            .Title {
+                font-size: 45px;
+            }
+
+            .Info {
+                margin-top: 32px;
+                font-size: 22px;
+            }
         }
     }
 
-    .Texts {
-
-        .Title {
-            font-size: calc(1vw + 20px);
-
-            @media only screen and (max-width: $mobileBreak) {
-                font-size: 28px;
-            }
-        }
-
-        .Subtitle {
-            margin-top: 8px;
-            font-size: calc(0.5vw + 10px);
-            opacity: 0.75;
-
-            @media only screen and (max-width: $mobileBreak) {
-                font-size: 16px;
-            }
-        }
-
-        .Info {
-            margin-top: 64px;
-            font-size: calc(0.5vw + 16px);
-
-            @media only screen and (max-width: $mobileBreak) {
-                font-size: 20px;
-            }
-        }
+    .separator {
+        @include Elevation.elev1;
+        height: 5px;
+        border-radius: 5px;
     }
 }
