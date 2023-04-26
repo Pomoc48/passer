@@ -1,4 +1,5 @@
 @use "../reuse/Elevation.scss";
+@use "../reuse/Variables.scss";
 
 $pageWidth: 1200px;
 $mobileWidth: 700px;
@@ -50,6 +51,7 @@ $mobileWidth: 700px;
     
             .Title {
                 font-size: 32px;
+                color: Variables.$primaryColor;
             }
     
             .Info {
@@ -71,7 +73,7 @@ $mobileWidth: 700px;
     }
 
     .separator {
-        @include Elevation.elev1;
+        @include Elevation.elev2;
         height: 5px;
         border-radius: 5px;
     }
