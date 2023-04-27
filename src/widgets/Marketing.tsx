@@ -16,7 +16,7 @@ export default function Marketing() {
       <section>
         <div className="Texts">
           <div className='Title'>Secure</div>
-          <div className='Info'>Your passwords and all site data are client-side encrypted, using your master password, before being stored on the database.</div>
+          <div className='Info'>Your passwords and all site data are client-side encrypted, before being safely stored on the database. The encryption/decryption key is generated locally using your master password and never leaves your device.</div>
         </div>
         <img src={Key} alt="Key" />
       </section>
@@ -25,7 +25,7 @@ export default function Marketing() {
         <img src={Padlock} alt="Key" />
         <div className="Texts">
           <div className='Title'>Transparent</div>
-          <div className='Info'>Source code is fully available in the GitHub repo, and the entire solution is easily self-hostable using the free tier of Firebase.</div>
+          <div className='Info'>The source code is fully available with it's documentation and step by step instructions in the GitHub repo, and the entire solution is easily self-hostable using the free tier of Firebase.</div>
         </div>
       </section>
     </div>
