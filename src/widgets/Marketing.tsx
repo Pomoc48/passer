@@ -1,6 +1,7 @@
 import '../scss/widgets/Marketing.scss';
 import Padlock from '../media/padlock.png';
 import Key from '../media/key.png';
+import Magnify from '../media/magnify.png';
 
 export default function Marketing() {
   return (
@@ -22,7 +23,7 @@ export default function Marketing() {
       </section>
       <div className="separator"/>
       <section>
-        <img src={Padlock} alt="Key" />
+        <img src={Magnify} alt="Key" />
         <div className="Texts">
           <div className='Title'>Transparent</div>
           <div className='Info'>The source code is fully available with it's documentation and step by step instructions in the GitHub repo, and the entire solution is easily self-hostable using the free tier of Firebase.</div>
