@@ -6,6 +6,12 @@
     padding: 16px;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    @include Elevation.elev2;
 
     p {
         width: fit-content;
