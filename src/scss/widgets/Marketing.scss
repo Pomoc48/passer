@@ -5,77 +5,107 @@ $pageWidth: 1200px;
 $mobileWidth: 700px;
 
 .Marketing {
-    width: $pageWidth;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
     margin-top: 72px;
 
-    @media only screen and (max-width: $pageWidth) {
-        width: 100%
-    }
+    .SectionContainer {
+        width: inherit;
+        box-sizing: border-box;
+        padding: 16px;
 
-    section {
-        padding: 20vh 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 64px;
-
-        @media only screen and (max-width: $mobileWidth) {
+        section {
+            height: inherit;
+            width: $pageWidth;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 64px;
+            box-sizing: border-box;
             padding: 64px 0;
-            flex-direction: column;
-            justify-content: normal;
-            align-items: flex-start;
-            gap: 32px;
 
-            &:nth-of-type(odd) {
-                flex-direction: column-reverse;
+            @media only screen and (max-width: $pageWidth) {
+                width: 100%;
             }
-        }
-
-        img {
-            width: calc(100px + 25%);
-            flex-shrink: 0;
+    
+            img {
+                width: calc(50px + 25%);
+                flex-shrink: 0;
+            }
+        
+            .Texts {
+                flex-grow: 1;
+                padding: 56px;
+        
+                .Title {
+                    font-size: 32px;
+                    color: Variables.$primaryColor;
+                }
+        
+                .Info {
+                    margin-top: 16px;
+                    font-size: 18px;
+                    color: rgba(white, 0.75);
+                }
+            }
 
             @media only screen and (max-width: $mobileWidth) {
-                width: 100%
-            }
-        }
-    
-        .Texts {
-            flex-grow: 1;
-            padding: 48px;
+                padding: 64px 0;
+                flex-direction: column;
+                justify-content: normal;
+                align-items: flex-start;
+                gap: 32px;
 
-            @media only screen and (max-width: $mobileWidth) {
-                padding: 16px;
-            }
-    
-            .Title {
-                font-size: 32px;
-                color: Variables.$primaryColor;
-            }
-    
-            .Info {
-                margin-top: 16px;
-                font-size: 18px;
+                img {
+                    width: 100%
+                }
+                
+                .Texts {
+                    padding: 0px;
+                }
             }
         }
 
         &:first-child {
-            .Title {
-                font-size: 45px;
+            height: calc(100vh - 72px);
+
+            .Texts {
+                .Title {
+                    font-size: 64px;
+                }
+        
+                .Info {
+                    margin-top: 32px;
+                    font-size: 24px;
+                }
             }
 
-            .Info {
-                margin-top: 32px;
-                font-size: 22px;
+            @media only screen and (max-width: $mobileWidth) {
+                height: auto;
+
+                .Texts {
+                    .Title {
+                        font-size: 48px;
+                    }
+            
+                    .Info {
+                        font-size: 20px;
+                    }
+                }
             }
         }
-    }
 
-    .separator {
-        @include Elevation.elev2;
-        height: 5px;
-        border-radius: 5px;
+        &:nth-of-type(even) {
+            @include Elevation.elev1;
+        }
+
+        &:nth-of-type(odd) {
+            @media only screen and (max-width: $mobileWidth) {
+                section {
+                    flex-direction: column-reverse;
+                }
+            }
+        }
     }
 }
