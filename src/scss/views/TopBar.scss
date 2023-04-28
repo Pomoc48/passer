@@ -11,7 +11,12 @@
     left: 0;
     width: 100%;
     box-sizing: border-box;
-    @include Elevation.elev2;
+    background-color: Variables.$surfaceColor;
+
+    @supports (backdrop-filter: blur(12px)) {
+        background-color: rgba(Variables.$surfaceColor, 0.75);
+        backdrop-filter: blur(12px);
+    }
 
     p {
         width: fit-content;
