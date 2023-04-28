@@ -1,57 +1,113 @@
-$mobileBreak: 1000px;
+@use "../reuse/Elevation.scss";
+@use "../reuse/Variables.scss";
+
+$pageWidth: 1200px;
+$mobileWidth: 700px;
 
 .Marketing {
     width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 200px;
-    gap: 64px;
-    box-sizing: border-box;
 
-    @media only screen and (max-width: $mobileBreak) {
-        flex-direction: column-reverse;
-        align-items: flex-start;
+    .SectionContainer {
+        width: inherit;
+        box-sizing: border-box;
         padding: 16px;
-        gap: 16px;
-        padding-top: 10vh;
-    }
 
-    img {
-        width: calc(100% / 2.5);
-        flex-shrink: 0;
+        section {
+            height: inherit;
+            width: $pageWidth;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 64px;
+            box-sizing: border-box;
+            padding: 64px 0;
 
-        @media only screen and (max-width: $mobileBreak) {
-            width: 100%;
-        }
-    }
+            @media only screen and (max-width: $pageWidth) {
+                width: 100%;
+            }
+    
+            img {
+                width: calc(50px + 25%);
+                flex-shrink: 0;
+            }
+        
+            .Texts {
+                flex-grow: 1;
+                padding: 56px;
+        
+                .Title {
+                    font-size: 32px;
+                    color: Variables.$primaryColor;
+                }
+        
+                .Info {
+                    margin-top: 16px;
+                    font-size: 18px;
+                    color: rgba(white, 0.75);
+                }
+            }
 
-    .Texts {
+            @media only screen and (max-width: $mobileWidth) {
+                padding: 64px 0;
+                flex-direction: column;
+                justify-content: normal;
+                align-items: flex-start;
+                gap: 32px;
 
-        .Title {
-            font-size: calc(1vw + 20px);
-
-            @media only screen and (max-width: $mobileBreak) {
-                font-size: 28px;
+                img {
+                    width: 100%
+                }
+                
+                .Texts {
+                    padding: 0px;
+                }
             }
         }
 
-        .Subtitle {
-            margin-top: 8px;
-            font-size: calc(0.5vw + 10px);
-            opacity: 0.75;
+        &:first-child {
+            height: 100vh;
 
-            @media only screen and (max-width: $mobileBreak) {
-                font-size: 16px;
+            @supports (height: 100dvh) {
+                height: 100dvh;
+            }
+
+            .Texts {
+                .Title {
+                    font-size: 64px;
+                }
+        
+                .Info {
+                    margin-top: 32px;
+                    font-size: 24px;
+                }
+            }
+
+            @media only screen and (max-width: $mobileWidth) {
+                height: auto;
+
+                .Texts {
+                    .Title {
+                        font-size: 48px;
+                    }
+            
+                    .Info {
+                        font-size: 20px;
+                    }
+                }
             }
         }
 
-        .Info {
-            margin-top: 64px;
-            font-size: calc(0.5vw + 16px);
+        &:nth-of-type(even) {
+            @include Elevation.elev1;
+        }
 
-            @media only screen and (max-width: $mobileBreak) {
-                font-size: 20px;
+        &:nth-of-type(odd) {
+            @media only screen and (max-width: $mobileWidth) {
+                section {
+                    flex-direction: column-reverse;
+                }
             }
         }
     }

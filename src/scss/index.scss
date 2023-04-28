@@ -8,11 +8,3 @@ body {
   background-color: Variables.$surfaceColor;
   color: Variables.$onSurfaceColor;
 }
-
-#root {
-  min-height: 100vh;
-
-  .Home {
-    padding: 0 16px;
-  }
-}
