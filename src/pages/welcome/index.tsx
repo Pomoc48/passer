@@ -1,7 +1,7 @@
 import './style.scss';
-import Padlock from '../../media/padlock.png';
-import Key from '../../media/key.png';
-import Magnify from '../../media/magnify.png';
+import Padlock from '../../assets/padlock.png';
+import Key from '../../assets/key.png';
+import Magnify from '../../assets/magnify.png';
 import Navbar from '../../components/navbar';
 import GoogleSignIn from '../../components/google-login';
 

@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, UserCredential, getAuth, signInWithPopup } from 'firebase/auth';
-import GoogleLogo from '../../media/google.png';
+import GoogleLogo from '../../assets/google.png';
 import './style.scss';
 import { useGoogleUserUpdate } from '../../context/UserProvider';
 
