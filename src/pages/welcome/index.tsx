@@ -1,10 +1,15 @@
-import '../scss/widgets/Marketing.scss';
-import Padlock from '../media/padlock.png';
-import Key from '../media/key.png';
-import Magnify from '../media/magnify.png';
+import './style.scss';
+import Padlock from '../../media/padlock.png';
+import Key from '../../media/key.png';
+import Magnify from '../../media/magnify.png';
+import Navbar from '../../components/navbar';
+import GoogleSignIn from '../../components/google-login';
 
-export default function Marketing() {
-  return (
+export default function WelcomePage() {
+  return <>
+    <Navbar>
+      <GoogleSignIn/>
+    </Navbar>
     <div className="Marketing">
       <div className="SectionContainer Welcome">
         <section>
@@ -34,5 +39,5 @@ export default function Marketing() {
         </section>
       </div>
     </div>
-  );
+  </>
 }

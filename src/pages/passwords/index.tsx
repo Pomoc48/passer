@@ -1,18 +1,28 @@
-import { UserCredential } from 'firebase/auth';
 import { Firestore, doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
-import PasswordCard from '../widgets/PasswordCard';
-import '../scss/views/Passwords.scss'
-import CreatePassword from '../widgets/CreatePassword';
-import { SiteData } from '../types/SiteData';
+import './style.scss'
 import { createPortal } from 'react-dom';
-import { testCaseMatch, updateTestCase } from '../functions/PasswordTestCase';
-import { exportKey, generateKey, importKey } from '../functions/Crypto';
-import MaterialDialog from '../components/dialog';
+import { SiteData } from '../../types/SiteData';
+import { exportKey, generateKey, importKey } from '../../functions/Crypto';
+import { testCaseMatch, updateTestCase } from '../../functions/PasswordTestCase';
+import PasswordCard from '../../components/password-card';
+import CreatePassword from '../../components/password-card-new';
+import MaterialDialog from '../../components/dialog';
+import Search from '../../components/search';
+import { useGoogleUser } from '../../context/UserProvider';
+import Navbar from '../../components/navbar';
 
-export default function Passwords(params: { db: Firestore, user: UserCredential }) {
+export default function PasswordsPage(params: { db: Firestore }) {
+  const user = useGoogleUser()!;
+  console.log(user);
+
+  // if (user === null) {
+  //   window.location.href = "/";
+  //   throw new Response("Unauthorized", {status: 401});
+  // }
+
   const [websites, updateWebsites] = useState<SiteData[]>([]);
-  const docRef = doc(params.db, "passwords", params.user.user.uid);
+  const docRef = doc(params.db, "passwords", user.user.uid);
   const [showModal, setShowModal] = useState(true);
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
 
@@ -83,6 +93,9 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
   }, [cryptoKey]);
 
   return <>
+    <Navbar>
+      <Search user={user} />
+    </Navbar>
     {
       cryptoKey !== null
         ? <div className='Passwords'>

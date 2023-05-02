@@ -1,9 +1,12 @@
 import ReactDOM from 'react-dom/client';
-import './scss/index.scss';
+import './index.scss';
 import { initializeApp } from 'firebase/app';
-import App from './views/App';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { getFirestore } from 'firebase/firestore';
+import WelcomePage from './pages/welcome';
+import { UserProvider } from './context/UserProvider';
+import PasswordsPage from './pages/passwords';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
@@ -22,17 +25,25 @@ initializeAppCheck(app, {
   isTokenAutoRefreshEnabled: true
 });
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App app={app} />,
-    errorElement: <div>404</div>,
-  },
-]);
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const db = getFirestore(app);
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <WelcomePage />,
+    errorElement: <div>404</div>,
+  },
+  {
+    path: "/passwords",
+    element: <UserProvider>
+      <PasswordsPage db={db} />
+    </UserProvider>,
+  },
+]);
 
 root.render(
   <RouterProvider router={router} />

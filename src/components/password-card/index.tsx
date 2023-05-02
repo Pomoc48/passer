@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import '../scss/widgets/PasswordCard.scss'
-import { SiteData } from '../types/SiteData'
-import { decrypt } from '../functions/Crypto';
-import MaterialButton from '../components/button';
+import './style.scss'
+import { SiteData } from '../../types/SiteData';
+import { decrypt } from '../../functions/Crypto';
+import MaterialButton from '../button';
 
 export default function PasswordCard(params: {website: SiteData, cryptoKey: CryptoKey}) {
   const [name, setName] = useState("?");
