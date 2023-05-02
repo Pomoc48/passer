@@ -1,15 +1,18 @@
 import { UserCredential, getAuth, signOut } from 'firebase/auth';
 import './style.scss';
-import { useGoogleUserUpdate } from '../../context/UserProvider';
+import { useGoogleUser } from '../../context/UserProvider';
+import { useNavigate } from 'react-router-dom';
 
 export default function Search(params: {user: UserCredential}) {
   const auth = getAuth();
-  const userUpdater = useGoogleUserUpdate();
+  const { update } = useGoogleUser();
+
+  const navigate = useNavigate();
 
   function signUserOut() {
     signOut(auth).then(() => {
-      userUpdater(null);
-      window.location.href = "/";
+      update(null);
+      navigate("/");
     }).catch((error) => {
       alert(error.message);
     });

@@ -1,15 +1,13 @@
 import { UserCredential } from "firebase/auth";
 import { createContext, useContext, useState } from "react";
 
-const UserContext = createContext<UserCredential | null>(null);
-const UserUpdateContext = createContext<((user: UserCredential | null) => void)>(() => {});
+const UserContext = createContext({
+  user: null as UserCredential | null,
+  update: (user: UserCredential | null) => {},
+});
 
 export function useGoogleUser() {
   return useContext(UserContext);
-}
-
-export function useGoogleUserUpdate() {
-  return useContext(UserUpdateContext);
 }
 
 export function UserProvider({children} : any) {
@@ -21,10 +19,8 @@ export function UserProvider({children} : any) {
   }
 
   return (
-    <UserContext.Provider value={user}>
-      <UserUpdateContext.Provider value={updateUser}>
-        {children}
-      </UserUpdateContext.Provider>
+    <UserContext.Provider value={{user: user, update: updateUser}}>
+      {children}
     </UserContext.Provider>
   )
 }

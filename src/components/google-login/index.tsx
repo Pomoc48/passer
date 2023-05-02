@@ -1,18 +1,20 @@
 import { GoogleAuthProvider, UserCredential, getAuth, signInWithPopup } from 'firebase/auth';
 import GoogleLogo from '../../assets/google.png';
 import './style.scss';
-import { useGoogleUserUpdate } from '../../context/UserProvider';
+import { useGoogleUser } from '../../context/UserProvider';
+import { useNavigate } from 'react-router-dom';
 
 export default function GoogleSignIn() {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   
-  const userUpdater = useGoogleUserUpdate();
+  const { update } = useGoogleUser();
+  const navigate = useNavigate();
   
   function signUserIn() {
     signInWithPopup(auth, provider).then((result: UserCredential) => {
-      userUpdater(result);
-      window.location.href = "/passwords";
+      update(result);
+      navigate("/manager");
 
     }).catch((error) => {
       console.log(error.message);

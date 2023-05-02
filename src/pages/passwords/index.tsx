@@ -13,13 +13,7 @@ import { useGoogleUser } from '../../context/UserProvider';
 import Navbar from '../../components/navbar';
 
 export default function PasswordsPage(params: { db: Firestore }) {
-  const user = useGoogleUser()!;
-  console.log(user);
-
-  // if (user === null) {
-  //   window.location.href = "/";
-  //   throw new Response("Unauthorized", {status: 401});
-  // }
+  const user = useGoogleUser().user!;
 
   const [websites, updateWebsites] = useState<SiteData[]>([]);
   const docRef = doc(params.db, "passwords", user.user.uid);
@@ -32,6 +26,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   useEffect(() => {
     const keyData = localStorage.getItem("keyData");
+
     if (keyData !== null) {
       validateKey(keyData);
     }
@@ -39,7 +34,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
     async function validateKey(keyData: string) {
       let key: CryptoKey = await importKey(keyData);
       
-      if (await testCaseMatch(docRef, key)) {
+      if (await testCaseMatch(docRef!, key)) {
         setCryptoKey(key);
         setShowModal(false);
       } else {
@@ -55,7 +50,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
       return;
     }
 
-    onSnapshot(docRef, (doc) => {
+    onSnapshot(docRef!, (doc) => {
       if (doc.exists() && doc.data().passwords !== undefined) {
         let passwords = doc.data().passwords;
         let newPasswords: SiteData[] = [];

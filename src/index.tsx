@@ -5,8 +5,9 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { getFirestore } from 'firebase/firestore';
 import WelcomePage from './pages/welcome';
-import { UserProvider } from './context/UserProvider';
 import PasswordsPage from './pages/passwords';
+import { RequireAuth } from './pages/passwords/extra/RequireAuth';
+import { UserProvider } from './context/UserProvider';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
@@ -38,13 +39,15 @@ const router = createBrowserRouter([
     errorElement: <div>404</div>,
   },
   {
-    path: "/passwords",
-    element: <UserProvider>
+    path: "/manager",
+    element: <RequireAuth redirectTo="/">
       <PasswordsPage db={db} />
-    </UserProvider>,
+    </RequireAuth>,
   },
 ]);
 
 root.render(
-  <RouterProvider router={router} />
+  <UserProvider>
+    <RouterProvider router={router} />
+  </UserProvider>
 );
