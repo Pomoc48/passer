@@ -1,4 +1,4 @@
-import '../scss/widgets-common/Button.scss';
+import './style.scss';
 
 export default function MaterialButton(params: {name: string, onClick: () => void}) {
   return (

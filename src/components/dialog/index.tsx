@@ -1,8 +1,8 @@
-import '../scss/widgets-common/Dialog.scss';
-import { DialogParameters } from '../types/DialogParameters';
-import MaterialButton from './Button';
+import { DialogParameters } from '../../types/DialogParameters';
+import MaterialButton from '../button';
+import './style.scss';
 
-export default function Dialog(params: DialogParameters) {
+export default function MaterialDialog(params: DialogParameters) {
   return <>
     <div className="Scrim" onClick={params.closeFunction}/>
     <div className="Dialog">

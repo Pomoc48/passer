@@ -6,9 +6,9 @@ import '../scss/views/Passwords.scss'
 import CreatePassword from '../widgets/CreatePassword';
 import { SiteData } from '../types/SiteData';
 import { createPortal } from 'react-dom';
-import Dialog from '../widgets-common/Dialog';
 import { testCaseMatch, updateTestCase } from '../functions/PasswordTestCase';
 import { exportKey, generateKey, importKey } from '../functions/Crypto';
+import MaterialDialog from '../components/dialog';
 
 export default function Passwords(params: { db: Firestore, user: UserCredential }) {
   const [websites, updateWebsites] = useState<SiteData[]>([]);
@@ -94,7 +94,7 @@ export default function Passwords(params: { db: Firestore, user: UserCredential 
     {
       showModal
         ? createPortal(
-          <Dialog
+          <MaterialDialog
             title="Master password setup"
             content={
               <>
