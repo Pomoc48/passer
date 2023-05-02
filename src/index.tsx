@@ -3,6 +3,7 @@ import './scss/index.scss';
 import { initializeApp } from 'firebase/app';
 import App from './views/App';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
@@ -21,10 +22,18 @@ initializeAppCheck(app, {
   isTokenAutoRefreshEnabled: true
 });
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App app={app} />,
+    errorElement: <div>404</div>,
+  },
+]);
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  <App app={app} />
+  <RouterProvider router={router} />
 );
