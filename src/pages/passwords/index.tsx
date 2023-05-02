@@ -22,8 +22,6 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  console.log("rerender");
-
   useEffect(() => {
     const keyData = localStorage.getItem("keyData");
 

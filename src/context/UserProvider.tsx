@@ -14,7 +14,6 @@ export function UserProvider({children} : any) {
   const [user, setUser] = useState<UserCredential | null>(null);
 
   function updateUser(user: UserCredential | null) {
-    console.log("setting user");
     setUser(user);
   }
 
