@@ -1,8 +1,13 @@
 import ReactDOM from 'react-dom/client';
-import './scss/index.scss';
+import './index.scss';
 import { initializeApp } from 'firebase/app';
-import App from './views/App';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { getFirestore } from 'firebase/firestore';
+import WelcomePage from './pages/welcome';
+import PasswordsPage from './pages/passwords';
+import { RequireAuth } from './pages/passwords/extra/RequireAuth';
+import { UserProvider } from './context/UserProvider';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
@@ -25,6 +30,24 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const db = getFirestore(app);
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <WelcomePage />,
+    errorElement: <div>404</div>,
+  },
+  {
+    path: "/manager",
+    element: <RequireAuth redirectTo="/">
+      <PasswordsPage db={db} />
+    </RequireAuth>,
+  },
+]);
+
 root.render(
-  <App app={app} />
+  <UserProvider>
+    <RouterProvider router={router} />
+  </UserProvider>
 );

@@ -1,0 +1,31 @@
+@use "../../scss/Variables.scss";
+@use "../../scss/Elevation.scss";
+
+.Navbar {
+    display: flex;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    box-sizing: border-box;
+    background-color: Variables.$surfaceColor;
+
+    @supports (backdrop-filter: blur(12px)) {
+        background-color: rgba(Variables.$surfaceColor, 0.75);
+        backdrop-filter: blur(12px);
+    }
+
+    p {
+        width: fit-content;
+        height: 40px;
+        margin: 0;
+        margin-left: 8px;
+        line-height: 40px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+}
