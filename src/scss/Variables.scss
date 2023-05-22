@@ -11,3 +11,8 @@ $secondaryColor: #b7c9d9;
 $onSecondaryColor: #21323f;
 
 $onSurfaceVariantColor: #c9c5d0;
+
+@mixin clickable {
+    user-select: none;
+    cursor: pointer;
+}

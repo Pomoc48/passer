@@ -10,9 +10,8 @@
         margin-left: 8px;
         font-size: 14px;
         transition: 0.3s;
-        cursor: pointer;
-        user-select: none;
         color: Variables.$primaryColor;
+        @include Variables.clickable;
     }
     
     button:hover  {

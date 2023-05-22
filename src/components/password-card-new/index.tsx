@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { encrypt } from "../../functions/Crypto";
 import { SiteData } from "../../types/SiteData";
 import { insertWebsite } from "../../functions/InsertWebsite";
+import './style.scss'
 
 export default function CreatePassword(params: {reference: DocumentReference, cryptoKey: CryptoKey}) {
 
@@ -27,7 +28,8 @@ export default function CreatePassword(params: {reference: DocumentReference, cr
 
   return (
     <div className='CreatePassword' onClick={prepareEncryptedData}>
-      <p>Add new password</p>
+      <span className="material-icons">add</span>
+      <p>New password</p>
     </div>
   );
 }
