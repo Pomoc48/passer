@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, UserCredential, getAuth, signInWithPopup } from 'firebase/auth';
 import GoogleLogo from '../../assets/google.png';
-import './style.scss';
+import './style.css';
 import { useGoogleUser } from '../../context/UserProvider';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,9 +22,9 @@ export default function GoogleSignIn() {
   }
   
   return (
-    <div className='GoogleSignIn' onClick={signUserIn}>
-      <div className='LogoContainer'>
-        <img src={GoogleLogo} draggable="false" alt="Google Logo" />
+    <div className='google-sign-in clickable' onClick={signUserIn}>
+      <div className='logo-container'>
+        <img src={GoogleLogo} draggable="false" alt="Google Logo" width={16} />
       </div>
       <p>Sign in with Google</p>
     </div>
