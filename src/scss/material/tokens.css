@@ -36,6 +36,7 @@
   --md-sys-color-elevation3-light: rgba(0, 97, 166, 0.011);
   --md-sys-color-elevation4-light: rgba(0, 97, 166, 0.012);
   --md-sys-color-elevation5-light: rgba(0, 97, 166, 0.14);
+  --md-sys-color-navbar-light: rgba(253, 252, 255, 0.5);
   /* dark */
   --md-sys-color-primary-dark: #a0c9ff;
   --md-sys-color-on-primary-dark: #003259;
@@ -72,6 +73,7 @@
   --md-sys-color-elevation3-dark: rgba(160, 201, 255, 0.011);
   --md-sys-color-elevation4-dark: rgba(160, 201, 255, 0.012);
   --md-sys-color-elevation5-dark: rgba(160, 201, 255, 0.014);
+  --md-sys-color-navbar-dark: rgba(26, 28, 30, 0.5);
   /* display - large */
   --md-sys-typescale-display-large-font-family-name: Roboto;
   --md-sys-typescale-display-large-font-family-style: Regular;
