@@ -16,6 +16,7 @@ export default function CreatePassword(params: {reference: DocumentReference, cr
 
     const testPassword: SiteData = {
       uuid: uuidv4(),
+      date: new Date(),
       name: name,
       password: password,
       note: note,

@@ -17,7 +17,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   const [websites, updateWebsites] = useState<SiteData[]>([]);
   const docRef = doc(params.db, "passwords", user.user.uid);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -56,6 +56,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
         Object.keys(passwords).forEach(key => {
           newPasswords.push({
             uuid: key,
+            date: passwords[key].date,
             name: {
               value: passwords[key].name.slice(24),
               iv: passwords[key].name.slice(0, 24),

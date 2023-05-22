@@ -3,6 +3,7 @@ import './style.scss'
 import { SiteData } from '../../types/SiteData';
 import { decrypt } from '../../functions/Crypto';
 import MaterialButton from '../button';
+import { Timestamp } from 'firebase/firestore';
 
 export default function PasswordCard(params: {website: SiteData, cryptoKey: CryptoKey}) {
   const [name, setName] = useState("?");
@@ -37,6 +38,10 @@ export default function PasswordCard(params: {website: SiteData, cryptoKey: Cryp
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  console.log(
+    (params.website.date as Timestamp).toDate().toLocaleString()
+  );
   
   return (
     <div className='PasswordCard'>
