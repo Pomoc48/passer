@@ -1,0 +1,60 @@
+@import "css/material/theme.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+body {
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+}
+
+.clickable {
+    user-select: none;
+    cursor: pointer;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    border: none;
+    height: 40px;
+    border-radius: 20px;
+    padding-inline: 24px;
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.75;
+}
+
+button.text {
+    color: var(--md-sys-color-primary);
+    background-color: unset;
+}
+
+button.text:hover {
+    background-color: var(--md-sys-color-elevation2);
+}
+
+button span.material-icons {
+    font-size: var(--md-sys-typescale-label-large-font-weight)
+}
+
+button.icon {
+    padding-left: 18px;
+    gap: 8px;
+}
+
+.card {
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0;
+    transition: 0.3s;
+    background-color: var(--md-sys-color-elevation1);
+}
+
+.card:hover {
+    background-color: var(--md-sys-color-elevation2);
+}

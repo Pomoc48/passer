@@ -1,10 +1,10 @@
-import './style.scss';
+import './style.css';
 
 export default function Navbar({children} : any) {
   return (
-    <div className='Navbar'>
-      <p>Passer</p>
+    <header>
+      <h1 className='headline-small on-surface-text'>Passer</h1>
       {children}
-    </div>
+    </header>
   );
 }
