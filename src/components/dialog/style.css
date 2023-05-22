@@ -10,8 +10,8 @@
 
 .dialog {
     top: calc((100% - 250px) / 2);
-    left: calc(calc(100% - min(calc(100vw - (2 * 16px)), 500px)) / 2);
-    width: min(calc(100vw - (2 * 16px)), 500px);
+    left: calc(100% - min(100vw - 32px, 500px) / 2);
+    width: min(100vw - 32px, 500px);
     z-index: 3;
     position: fixed;
     padding: 24px;
