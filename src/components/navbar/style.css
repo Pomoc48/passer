@@ -10,6 +10,7 @@ header {
     height: 72px;
     box-sizing: border-box;
     background-color: var(--md-sys-color-surface);
+    z-index: 1;
 }
 
 @supports (backdrop-filter: blur(12px)) {

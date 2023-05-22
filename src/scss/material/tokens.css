@@ -33,8 +33,8 @@
   --md-sys-color-scrim-light: #000000;
   --md-sys-color-elevation1-light: rgba(0, 97, 166, 0.05);
   --md-sys-color-elevation2-light: rgba(0, 97, 166, 0.08);
-  --md-sys-color-elevation3-light: rgba(0, 97, 166, 0.011);
-  --md-sys-color-elevation4-light: rgba(0, 97, 166, 0.012);
+  --md-sys-color-elevation3-light: rgba(0, 97, 166, 0.11);
+  --md-sys-color-elevation4-light: rgba(0, 97, 166, 0.12);
   --md-sys-color-elevation5-light: rgba(0, 97, 166, 0.14);
   --md-sys-color-navbar-light: rgba(253, 252, 255, 0.5);
   /* dark */
@@ -70,9 +70,9 @@
   --md-sys-color-scrim-dark: #000000;
   --md-sys-color-elevation1-dark: rgba(160, 201, 255, 0.05);
   --md-sys-color-elevation2-dark: rgba(160, 201, 255, 0.08);
-  --md-sys-color-elevation3-dark: rgba(160, 201, 255, 0.011);
-  --md-sys-color-elevation4-dark: rgba(160, 201, 255, 0.012);
-  --md-sys-color-elevation5-dark: rgba(160, 201, 255, 0.014);
+  --md-sys-color-elevation3-dark: rgba(160, 201, 255, 0.11);
+  --md-sys-color-elevation4-dark: rgba(160, 201, 255, 0.12);
+  --md-sys-color-elevation5-dark: rgba(160, 201, 255, 0.14);
   --md-sys-color-navbar-dark: rgba(26, 28, 30, 0.5);
   /* display - large */
   --md-sys-typescale-display-large-font-family-name: Roboto;

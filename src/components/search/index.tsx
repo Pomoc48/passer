@@ -1,5 +1,5 @@
 import { UserCredential, getAuth, signOut } from 'firebase/auth';
-import './style.scss';
+import './style.css';
 import { useGoogleUser } from '../../context/UserProvider';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,12 +27,12 @@ export default function Search(params: {user: UserCredential}) {
   }
 
   return (
-    <div className="Search">
+    <div className="search">
       <span className="material-icons">search</span>
       <div>
-        <input placeholder='Search passwords' />
+        <input className='body-medium' placeholder='Search passwords' />
       </div>
-      <img onClick={signUserOut} src={image} draggable="false" alt="Profile" />
+      <img className='clickable' onClick={signUserOut} src={image} draggable="false" alt="Profile" />
     </div>
   );
 }
