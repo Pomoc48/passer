@@ -1,0 +1,15 @@
+.password-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.password-card h2 {
+    margin-top: 4px;
+}
+
+.password-card .actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}

@@ -1,10 +1,13 @@
 .Passwords {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    grid-template-rows: 180px;
     grid-gap: 16px;
     margin-top: 72px;
     padding: 16px;
+}
+
+.Passwords div.card {
+    height: 150px;
 }
 
 @media only screen and (max-width: 500px) {

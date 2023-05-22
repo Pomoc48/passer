@@ -29,4 +29,9 @@
  --md-sys-color-surface-tint: var(--md-sys-color-surface-tint-dark);
  --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-dark);
  --md-sys-color-scrim: var(--md-sys-color-scrim-dark);
+ --md-sys-color-elevation1: var(--md-sys-color-elevation1-dark);
+ --md-sys-color-elevation2: var(--md-sys-color-elevation2-dark);
+ --md-sys-color-elevation3: var(--md-sys-color-elevation3-dark);
+ --md-sys-color-elevation4: var(--md-sys-color-elevation4-dark);
+ --md-sys-color-elevation5: var(--md-sys-color-elevation5-dark);
 }

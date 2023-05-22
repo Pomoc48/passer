@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import './style.scss'
+import './style.css'
 import { SiteData } from '../../types/SiteData';
 import { decrypt } from '../../functions/Crypto';
-import MaterialButton from '../button';
 import { Timestamp } from 'firebase/firestore';
 
 export default function PasswordCard(params: {website: SiteData, cryptoKey: CryptoKey}) {
@@ -44,16 +43,20 @@ export default function PasswordCard(params: {website: SiteData, cryptoKey: Cryp
   );
   
   return (
-    <div className='PasswordCard'>
-      <div className='Name'>{name}</div>
-      <div className='Info'>
-        <div>{url}</div>
-        <div>{username}</div>
+    <div className='card password-card clickable'>
+      <div>
+        <h2 className='title-large'>{name}</h2>
+        <p className='body-medium'>{url}<br/>{username}</p>
       </div>
-
-      <div className='Actions'>
-        <MaterialButton name='Visit' onClick={() => {}}/>
-        <MaterialButton name='Copy' onClick={() => {}}/>
+      <div className='actions'>
+        <button type='button' className='text icon label-large clickable' onClick={() => {}}>
+          <span className="material-icons">open_in_new</span>
+          Visit
+        </button>
+        <button type='button' className='icon label-large clickable' onClick={() => {}}>
+          <span className="material-icons">content_copy</span>
+          Copy
+        </button>
       </div>
     </div>
   );
