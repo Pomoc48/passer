@@ -1,4 +1,4 @@
-.Passwords {
+.passwords {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     grid-gap: 16px;
@@ -6,12 +6,12 @@
     padding: 16px;
 }
 
-.Passwords div.card {
+.passwords div.card {
     height: 150px;
 }
 
 @media only screen and (max-width: 500px) {
-    .Passwords {
+    .passwords {
         grid-template-columns: 1fr;
     }
 }

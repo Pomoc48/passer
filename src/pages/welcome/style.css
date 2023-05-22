@@ -1,0 +1,78 @@
+main {
+    width: 100%;
+}
+
+.section-container {
+    width: inherit;
+    box-sizing: border-box;
+    padding: 16px;
+}
+
+.section-container:nth-of-type(even) {
+    background-color: var(--md-sys-color-elevation1);
+}
+
+.section-container section {
+    height: inherit;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 64px;
+    box-sizing: border-box;
+    padding: 64px 0;
+}
+
+.section-container section img {
+    width: calc(50px + 25%);
+    flex-shrink: 0;
+}
+
+.section-container section .text {
+    flex-grow: 1;
+    padding: 56px;
+}
+
+.section-container:first-child section {
+    height: 100vh;
+}
+
+@supports (height: 100dvh) {
+    .section-container:first-child section {
+        height: 100dvh;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .section-container section {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .section-container section {
+        padding: 64px 0;
+        flex-direction: column;
+        justify-content: normal;
+        align-items: flex-start;
+        gap: 32px;
+    }
+    
+    .section-container:nth-of-type(odd) section {
+        flex-direction: column-reverse;
+    }
+    
+    .section-container:first-child section {
+        height: auto;
+    }
+    
+    .section-container section img {
+        width: 100%;
+    }
+    
+    .section-container section .text {
+        padding: 0;
+    }
+}

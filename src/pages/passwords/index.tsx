@@ -1,6 +1,6 @@
 import { Firestore, doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
-import './style.scss'
+import './style.css'
 import { createPortal } from 'react-dom';
 import { SiteData } from '../../types/SiteData';
 import { exportKey, generateKey, importKey } from '../../functions/Crypto';
@@ -92,7 +92,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
     </Navbar>
     {
       cryptoKey !== null
-        ? <div className='Passwords'>
+        ? <div className='passwords'>
             <CreatePassword reference={docRef} cryptoKey={cryptoKey} />
             { websites.map((website, index) => <PasswordCard key={index} website={website} cryptoKey={cryptoKey} />) }
           </div>
