@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import './style.css'
 import { createPortal } from 'react-dom';
 import { SiteData } from '../../types/SiteData';
-import { exportKey, generateKey, importKey } from '../../functions/Crypto';
-import { testCaseMatch, updateTestCase } from '../../functions/PasswordTestCase';
+import { exportKey, generateKey, importKey } from '../../functions/crypto';
+import { testCaseMatch, updateTestCase } from '../../functions/passwordTestCase';
 import PasswordCard from '../../components/password-card';
 import CreatePassword from '../../components/password-card-new';
 import MaterialDialog from '../../components/dialog';
 import Search from '../../components/search';
-import { useGoogleUser } from '../../context/UserProvider';
+import { useGoogleUser } from '../../context/userProvider';
 import Navbar from '../../components/navbar';
 
 export default function PasswordsPage(params: { db: Firestore }) {

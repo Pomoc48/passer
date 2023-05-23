@@ -6,7 +6,30 @@ import { getFirestore } from 'firebase/firestore';
 import WelcomePage from './pages/welcome';
 import PasswordsPage from './pages/passwords';
 import { RequireAuth } from './pages/passwords/extra/RequireAuth';
-import { UserProvider } from './context/UserProvider';
+import { UserProvider } from './context/userProvider';
+
+let matcher = window.matchMedia("(prefers-color-scheme: dark)");
+
+matcher.addEventListener("change", () => onUpdate());
+
+let lightSchemeIcon = document.querySelector("link#light-scheme-icon");
+let darkSchemeIcon = document.querySelector("link#dark-scheme-icon");
+
+function onUpdate() {
+  if (lightSchemeIcon === null || darkSchemeIcon === null) {
+    return;
+  }
+
+  if (matcher.matches) {
+    document.head.append(darkSchemeIcon);
+    lightSchemeIcon.remove();
+  } else {
+    document.head.append(lightSchemeIcon);
+    darkSchemeIcon.remove();
+  }
+}
+
+onUpdate();
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
