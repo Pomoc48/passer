@@ -23,7 +23,7 @@ export default function WelcomePage() {
             <h3 className='primary-text headline-large'>Secure</h3>
             <p className='body-large'>Your passwords and all site data are client-side encrypted, before being safely stored on the database. The encryption/decryption key is generated locally using your master password and never leaves your device.</p>
           </div>
-          <span className="material-icons">lock_outline</span>
+          <span className="material-icons">key</span>
         </section>
       </div>
       <div className="section-container">
