@@ -6,7 +6,7 @@ import { getFirestore } from 'firebase/firestore';
 import WelcomePage from './pages/welcome';
 import PasswordsPage from './pages/passwords';
 import { RequireAuth } from './pages/passwords/extra/RequireAuth';
-import { UserProvider } from './context/UserProvider';
+import { UserProvider } from './context/userProvider';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",

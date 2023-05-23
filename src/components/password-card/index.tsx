@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import './style.css'
 import { SiteData } from '../../types/SiteData';
-import { decrypt } from '../../functions/Crypto';
-import { Timestamp } from 'firebase/firestore';
+import { decrypt } from '../../functions/crypto';
+// import { Timestamp } from 'firebase/firestore';
 
 export default function PasswordCard(params: {website: SiteData, cryptoKey: CryptoKey}) {
   const [name, setName] = useState("?");
@@ -38,9 +38,9 @@ export default function PasswordCard(params: {website: SiteData, cryptoKey: Cryp
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
-  console.log(
-    (params.website.date as Timestamp).toDate().toLocaleString()
-  );
+  // console.log(
+  //   (params.website.date as Timestamp).toDate().toLocaleString()
+  // );
   
   return (
     <div className='card password-card clickable'>

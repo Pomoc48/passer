@@ -1,7 +1,7 @@
 import { GoogleAuthProvider, UserCredential, getAuth, signInWithPopup } from 'firebase/auth';
 import GoogleLogo from '../../assets/google.png';
 import './style.css';
-import { useGoogleUser } from '../../context/UserProvider';
+import { useGoogleUser } from '../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
 
 export default function GoogleSignIn() {

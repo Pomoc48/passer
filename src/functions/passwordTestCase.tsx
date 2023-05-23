@@ -1,5 +1,5 @@
 import { DocumentReference, getDoc, setDoc } from "firebase/firestore";
-import { decrypt, encrypt } from "./Crypto";
+import { decrypt, encrypt } from "./crypto";
 import { EncryptedData } from "../types/EncryptedData";
 
 export async function updateTestCase(reference: DocumentReference, key: CryptoKey) {

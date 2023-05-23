@@ -1,8 +1,8 @@
 import { DocumentReference } from "firebase/firestore"
 import { v4 as uuidv4 } from 'uuid';
-import { encrypt } from "../../functions/Crypto";
+import { encrypt } from "../../functions/crypto";
 import { SiteData } from "../../types/SiteData";
-import { insertWebsite } from "../../functions/InsertWebsite";
+import { insertWebsite } from "../../functions/insertWebsite";
 import './style.css'
 
 export default function CreatePassword(params: {reference: DocumentReference, cryptoKey: CryptoKey}) {
