@@ -9,11 +9,12 @@
 }
 
 .dialog {
-    top: calc((100% - 250px) / 2);
-    left: calc(100% - min(100vw - 32px, 500px) / 2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: min(100vw - 32px, 500px);
     z-index: 3;
-    position: fixed;
     padding: 24px;
     border-radius: 28px;
     box-sizing: border-box;
