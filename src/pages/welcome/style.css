@@ -14,25 +14,27 @@ main {
 
 .section-container section {
     height: inherit;
-    width: 1200px;
+    width: 1100px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 64px;
+    gap: 128px;
     box-sizing: border-box;
     padding: 64px 0;
 }
 
-.section-container section img {
-    width: calc(50px + 25%);
+.section-container section span.material-icons {
+    font-size: 180px;
+    color: var(--md-sys-color-primary);
+    text-align: center;
     flex-shrink: 0;
+    padding: 86px 0;
 }
 
 .section-container section .text {
     flex-grow: 1;
-    padding: 56px;
 }
 
 .section-container:first-child section {
@@ -57,7 +59,7 @@ main {
         flex-direction: column;
         justify-content: normal;
         align-items: flex-start;
-        gap: 32px;
+        gap: 64px;
     }
     
     .section-container:nth-of-type(odd) section {
@@ -68,8 +70,10 @@ main {
         height: auto;
     }
     
-    .section-container section img {
+    .section-container section span.material-icons {
         width: 100%;
+        text-align: center;
+        padding: 0;
     }
     
     .section-container section .text {
