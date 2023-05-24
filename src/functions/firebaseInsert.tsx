@@ -1,11 +1,13 @@
 import { DocumentReference, setDoc } from "firebase/firestore";
-import { v4 as uuidv4 } from 'uuid';
 import { UploadData } from "../types/uploadData";
+import ShortUniqueId from "short-unique-id";
 
 export async function firebaseInsert(reference: DocumentReference, uploadData: UploadData) {
+  const uid = new ShortUniqueId({ length: 12 });
+
   await setDoc(reference, {
     passwords: {
-      [uuidv4()]: {
+      [uid()]: {
         name: uploadData.name,
         date: new Date(),
         password: uploadData.password,

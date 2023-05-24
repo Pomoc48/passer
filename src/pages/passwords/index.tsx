@@ -16,7 +16,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
 
   const [websites, updateWebsites] = useState<EncryptedSiteData[]>([]);
-  const docRef = doc(params.db, "passwords", user.user.uid);
+  const docRef = doc(params.db, "users", user.user.uid);
   const [showModal, setShowModal] = useState(true);
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
 

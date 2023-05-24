@@ -18,7 +18,7 @@ export async function testCaseMatch(reference: DocumentReference, key: CryptoKey
         return false;
     }
 
-    if (docSnap.data().controlPassword !== undefined) {
+    if (docSnap.data().keyTest !== undefined) {
         let controlString = docSnap.data().keyTest;
 
         const decrypted = await decrypt(
