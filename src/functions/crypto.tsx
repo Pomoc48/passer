@@ -1,7 +1,7 @@
-import { EncryptedData } from "../types/EncryptedData";
+import { EncryptedData } from "../types/encryptedData";
 
 async function hashMessage(message: string): Promise<string> {
-    const msgUint8 = new TextEncoder().encode(message+"h@v&b!/.9^fo%=");
+    const msgUint8 = new TextEncoder().encode(message + "h@v&b!/.9^fo%=");
     const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
 
     return encodeHexString(hashBuffer);
@@ -26,7 +26,7 @@ export async function generateKey(password: string, initial: boolean = true): Pr
     );
 }
 
-export async function encrypt(key: CryptoKey, message: string): Promise<EncryptedData> {
+export async function encrypt(key: CryptoKey, message: string): Promise<string> {
     const encodedMessage = new TextEncoder().encode(message);
     const iv = crypto.getRandomValues(new Uint8Array(12));
 
@@ -36,17 +36,14 @@ export async function encrypt(key: CryptoKey, message: string): Promise<Encrypte
         encodedMessage,
     );
 
-    return {
-        value: encodeHexString(encryptedBuffer),
-        iv: encodeHexString(iv),
-    };
+    return encodeHexString(iv) + encodeHexString(encryptedBuffer);
 }
 
-export async function decrypt(key: CryptoKey, message: string, iv: string): Promise<string> {
+export async function decrypt(key: CryptoKey, data: EncryptedData): Promise<string> {
     const decryptedBuffer = await crypto.subtle.decrypt(
-        { name: "AES-GCM", iv: decodeHexString(iv) },
+        { name: "AES-GCM", iv: decodeHexString(data.iv) },
         key,
-        decodeHexString(message),
+        decodeHexString(data.data),
     );
 
     return new TextDecoder("utf-8").decode(decryptedBuffer);

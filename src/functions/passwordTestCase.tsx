@@ -1,15 +1,12 @@
 import { DocumentReference, getDoc, setDoc } from "firebase/firestore";
 import { decrypt, encrypt } from "./crypto";
-import { EncryptedData } from "../types/EncryptedData";
+import stringToEncType from "./stringToEnc";
 
 export async function updateTestCase(reference: DocumentReference, key: CryptoKey) {
-    let encrypted = await encrypt(key, "Test Message");
+    let encrypted = await encrypt(key, "Test Message 123");
 
     await setDoc(reference, {
-        controlPassword: {
-            password: encrypted.value,
-            iv: encrypted.iv,
-        },
+        keyTest: encrypted,
     }, { merge: true });
 }
 
@@ -22,18 +19,14 @@ export async function testCaseMatch(reference: DocumentReference, key: CryptoKey
     }
 
     if (docSnap.data().controlPassword !== undefined) {
-        let encryptedData: EncryptedData = {
-            value: docSnap.data().controlPassword["password"],
-            iv: docSnap.data().controlPassword["iv"],
-        }
+        let controlString = docSnap.data().keyTest;
 
         const decrypted = await decrypt(
             key,
-            encryptedData.value,
-            encryptedData.iv,
+            stringToEncType(controlString),
         );
 
-        if (decrypted === "Test Message") {
+        if (decrypted === "Test Message 123") {
             return true;
         }
     }
