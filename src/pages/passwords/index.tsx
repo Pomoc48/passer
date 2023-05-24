@@ -17,13 +17,13 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   const [websites, updateWebsites] = useState<SiteData[]>([]);
   const docRef = doc(params.db, "passwords", user.user.uid);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    const keyData = localStorage.getItem("keyData");
+    const keyData = localStorage.getItem(user.user.uid);
 
     if (keyData !== null) {
       validateKey(keyData);
@@ -31,7 +31,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
     async function validateKey(keyData: string) {
       let key: CryptoKey = await importKey(keyData);
-      
+
       if (await testCaseMatch(docRef!, key)) {
         setCryptoKey(key);
         setShowModal(false);
@@ -40,7 +40,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
         setShowModal(true);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -79,11 +79,11 @@ export default function PasswordsPage(params: { db: Firestore }) {
             },
           });
         });
-        
+
         updateWebsites(newPasswords);
       }
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cryptoKey]);
 
   return <>
@@ -93,9 +93,9 @@ export default function PasswordsPage(params: { db: Firestore }) {
     {
       cryptoKey !== null
         ? <div className='passwords'>
-            <CreatePassword reference={docRef} cryptoKey={cryptoKey} />
-            { websites.map((website, index) => <PasswordCard key={index} website={website} cryptoKey={cryptoKey} />) }
-          </div>
+          <CreatePassword reference={docRef} cryptoKey={cryptoKey} />
+          {websites.map((website, index) => <PasswordCard key={index} website={website} cryptoKey={cryptoKey} />)}
+        </div>
         : null
     }
     {
@@ -114,26 +114,28 @@ export default function PasswordsPage(params: { db: Firestore }) {
                 />
               </>
             }
-            closeFunction={() => {}}
+            closeFunction={() => { }}
             actions={
-              [{name: "Confirm", onClick: async () => {
-                if (passwordRef.current === null) {
-                  return;
+              [{
+                name: "Confirm", onClick: async () => {
+                  if (passwordRef.current === null) {
+                    return;
+                  }
+
+                  if (passwordRef.current.value === "") {
+                    return;
+                  }
+
+                  let key: CryptoKey = await generateKey(passwordRef.current.value);
+                  await updateTestCase(docRef, key);
+
+                  const keyData = await exportKey(key);
+                  localStorage.setItem(user.user.uid, keyData)
+
+                  setCryptoKey(key);
+                  setShowModal(false);
                 }
-
-                if (passwordRef.current.value === "") {
-                  return;
-                }
-
-                let key: CryptoKey = await generateKey(passwordRef.current.value);
-                await updateTestCase(docRef, key);
-
-                const keyData = await exportKey(key);
-                localStorage.setItem("keyData", keyData)
-
-                setCryptoKey(key);
-                setShowModal(false);
-              }}]
+              }]
             }
           />,
           document.body
