@@ -1,9 +1,9 @@
-import { DialogParameters } from '../../types/DialogParameters';
+import { DialogParameters } from '../../types/dialogParameters';
 import './style.css';
 
 export default function MaterialDialog(params: DialogParameters) {
   return <>
-    <div className="scrim" onClick={params.closeFunction}/>
+    <div className="scrim" onClick={params.closeFunction} />
     <div className="dialog">
       <h3 className='title-large'>{params.title}</h3>
       <div className='content body-medium'>{params.content}</div>

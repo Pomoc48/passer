@@ -1,4 +1,4 @@
 export type EncryptedData = {
-    value: string;
+    data: string;
     iv: string;
 }

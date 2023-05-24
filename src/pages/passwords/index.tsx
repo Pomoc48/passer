@@ -2,7 +2,7 @@ import { Firestore, doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import './style.css'
 import { createPortal } from 'react-dom';
-import { SiteData } from '../../types/SiteData';
+import EncryptedSiteData from '../../types/encryptedSiteData';
 import { exportKey, generateKey, importKey } from '../../functions/crypto';
 import { testCaseMatch, updateTestCase } from '../../functions/passwordTestCase';
 import PasswordCard from '../../components/password-card';
@@ -15,7 +15,7 @@ import Navbar from '../../components/navbar';
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
 
-  const [websites, updateWebsites] = useState<SiteData[]>([]);
+  const [websites, updateWebsites] = useState<EncryptedSiteData[]>([]);
   const docRef = doc(params.db, "passwords", user.user.uid);
   const [showModal, setShowModal] = useState(true);
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
@@ -50,34 +50,20 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
     onSnapshot(docRef!, (doc) => {
       if (doc.exists() && doc.data().passwords !== undefined) {
-        let passwords = doc.data().passwords;
-        let newPasswords: SiteData[] = [];
+        let pData = doc.data().passwords;
+        let newPasswords: EncryptedSiteData[] = [];
 
-        Object.keys(passwords).forEach(key => {
-          newPasswords.push({
-            uuid: key,
-            date: passwords[key].date,
-            name: {
-              value: passwords[key].name.slice(24),
-              iv: passwords[key].name.slice(0, 24),
-            },
-            note: {
-              value: passwords[key].note.slice(24),
-              iv: passwords[key].note.slice(0, 24),
-            },
-            password: {
-              value: passwords[key].password.slice(24),
-              iv: passwords[key].password.slice(0, 24),
-            },
-            username: {
-              value: passwords[key].username.slice(24),
-              iv: passwords[key].username.slice(0, 24),
-            },
-            url: {
-              value: passwords[key].url.slice(24),
-              iv: passwords[key].url.slice(0, 24),
-            },
-          });
+        Object.keys(pData).forEach(key => {
+          newPasswords.push(new EncryptedSiteData(
+            cryptoKey,
+            key,
+            pData[key].date,
+            pData[key].name,
+            pData[key].note,
+            pData[key].password,
+            pData[key].url,
+            pData[key].username,
+          ));
         });
 
         updateWebsites(newPasswords);
@@ -94,7 +80,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
       cryptoKey !== null
         ? <div className='passwords'>
           <CreatePassword reference={docRef} cryptoKey={cryptoKey} />
-          {websites.map((website, index) => <PasswordCard key={index} website={website} cryptoKey={cryptoKey} />)}
+          {websites.map((data, index) => <PasswordCard key={index} encryptedData={data} />)}
         </div>
         : null
     }

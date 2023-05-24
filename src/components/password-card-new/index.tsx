@@ -1,30 +1,26 @@
 import { DocumentReference } from "firebase/firestore"
-import { v4 as uuidv4 } from 'uuid';
 import { encrypt } from "../../functions/crypto";
-import { SiteData } from "../../types/SiteData";
-import { insertWebsite } from "../../functions/insertWebsite";
+import { firebaseInsert } from "../../functions/firebaseInsert";
+import { UploadData } from "../../types/uploadData";
 import './style.css'
 
-export default function CreatePassword(params: {reference: DocumentReference, cryptoKey: CryptoKey}) {
+export default function CreatePassword(params: { reference: DocumentReference, cryptoKey: CryptoKey }) {
 
   async function prepareEncryptedData() {
     const password = await encrypt(params.cryptoKey, "testPassword");
     const name = await encrypt(params.cryptoKey, "testName");
     const note = await encrypt(params.cryptoKey, "testNote");
     const username = await encrypt(params.cryptoKey, "testUsername");
-    const url = await encrypt(params.cryptoKey, "testUrl");
 
-    const testPassword: SiteData = {
-      uuid: uuidv4(),
-      date: new Date(),
+    const uploadData: UploadData = {
       name: name,
       password: password,
       note: note,
       username: username,
-      url: url,
+      url: new URL("https://mlukawski.com"),
     }
 
-    await insertWebsite(params.reference, testPassword);
+    await firebaseInsert(params.reference, uploadData);
   }
 
   return (
