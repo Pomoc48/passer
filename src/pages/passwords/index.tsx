@@ -2,7 +2,7 @@ import { Firestore, collection, doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import './style.css'
 import { createPortal } from 'react-dom';
-import { exportKey, generateKey, importKey } from '../../functions/crypto';
+import { decrypt, exportKey, generateKey, importKey } from '../../functions/crypto';
 import { testCaseMatch, updateTestCase } from '../../functions/passwordTestCase';
 import PasswordCard from '../../components/password-card';
 import CreatePassword from '../../components/password-card-new';
@@ -10,19 +10,21 @@ import MaterialDialog from '../../components/dialog';
 import Search from '../../components/search';
 import { useGoogleUser } from '../../context/userProvider';
 import Navbar from '../../components/navbar';
-import { EncryptedWebsite } from '../../types/encryptedWebsite';
 import { useCryptoKey } from '../../context/cryptoKey';
+import { Website } from '../../types/website';
+import { EncryptedData } from '../../types/encryptedData';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
   const cryptoKey = useCryptoKey();
 
-  const [websites, updateWebsites] = useState<EncryptedWebsite[]>([]);
-  const userDocRef = doc(params.db, "users", user.user.uid);
-  const websitesColRef = collection(params.db, "users", user.user.uid, "websites");
+  const [websites, updateWebsites] = useState<Website[]>([]);
   const [showModal, setShowModal] = useState(true);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const userDocRef = doc(params.db, "users", user.user.uid);
+  const websitesColRef = collection(params.db, "users", user.user.uid, "websites");
 
   useEffect(() => {
     const keyData = localStorage.getItem(user.user.uid);
@@ -50,11 +52,24 @@ export default function PasswordsPage(params: { db: Firestore }) {
       return;
     }
 
-    onSnapshot(websitesColRef, (snapshot) => {
-      let websites: EncryptedWebsite[] = [];
+    let websites: Website[] = [];
 
-      snapshot.forEach((doc) => {
-        websites.push(doc.data() as EncryptedWebsite);
+    onSnapshot(websitesColRef, (snapshot) => {
+      snapshot.forEach(async (doc) => {
+        const decrypted = await decrypt(cryptoKey.key!, new EncryptedData(doc.data().data));
+
+        let website: Website = {
+          uuid: doc.id,
+          data: JSON.parse(decrypted),
+          favorite: doc.data().favorite,
+          time: {
+            created: doc.data().time.created.toDate(),
+            modified: doc.data().time.modified.toDate(),
+            used: doc.data().time.used.toDate(),
+          }
+        }
+
+        websites.push(website);
       });
 
       updateWebsites(websites);
