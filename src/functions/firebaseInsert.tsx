@@ -1,18 +1,15 @@
-import { DocumentReference, setDoc } from "firebase/firestore";
-import { v4 as uuidv4 } from 'uuid';
+import { CollectionReference, doc, setDoc } from "firebase/firestore";
 import { UploadData } from "../types/uploadData";
 
-export async function firebaseInsert(reference: DocumentReference, uploadData: UploadData) {
-  await setDoc(reference, {
-    passwords: {
-      [uuidv4()]: {
-        name: uploadData.name,
-        date: new Date(),
-        password: uploadData.password,
-        note: uploadData.note,
-        username: uploadData.username,
-        url: uploadData.url === null ? null : uploadData.url.toString(),
-      }
-    },
+export async function firebaseInsert(reference: CollectionReference, uploadData: UploadData) {
+
+  await setDoc(doc(reference, uploadData.uuid), {
+    data: uploadData.websiteData,
+    favorite: uploadData.favorite,
+    time: {
+      created: new Date(),
+      modified: new Date(),
+      used: new Date(),
+    }
   }, { merge: true });
 }
