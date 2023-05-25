@@ -16,10 +16,16 @@ export default function PasswordCard(params: { website: Website }) {
         <p className='body-medium'>{params.website.data.username}</p>
       </div>
       <div className='actions'>
-        <button type='button' className='text icon label-large clickable' onClick={() => { }}>
-          <span className="material-icons">open_in_new</span>
-          Visit
-        </button>
+        {
+          params.website.data.url === null
+            ? null
+            : <button type='button' className='text icon label-large clickable' onClick={() => {
+              window.open(params.website.data.url!);
+            }}>
+              <span className="material-icons">open_in_new</span>
+              Visit
+            </button>
+        }
         <button type='button' className='icon label-large clickable' onClick={() => { }}>
           <span className="material-icons">content_copy</span>
           Copy

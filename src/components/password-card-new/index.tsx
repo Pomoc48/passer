@@ -13,10 +13,10 @@ export default function CreatePassword(params: { reference: CollectionReference 
     const uid = new ShortUniqueId({ length: 16 });
 
     const data = {
-      name: "testName",
+      name: "My Website",
       note: "testNote",
       password: "testPassword",
-      url: "http://localhost:3000",
+      url: "https://mlukawski.com",
       username: "testUsername",
     };
 

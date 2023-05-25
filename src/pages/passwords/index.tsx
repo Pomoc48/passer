@@ -28,17 +28,6 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const userDocRef = doc(params.db, "users", user.user.uid);
   const websitesColRef = collection(params.db, "users", user.user.uid, "websites");
 
-  const filteredWebsites = websites.filter(
-    website => {
-      function norm(value: string): string {
-        return value.trim().toLowerCase();
-      }
-
-      const checkName = norm(website.data.name).includes(norm(search.value));
-      return checkName;
-    }
-  );
-
   useEffect(() => {
     const keyData = localStorage.getItem(user.user.uid);
 
@@ -65,13 +54,13 @@ export default function PasswordsPage(params: { db: Firestore }) {
       return;
     }
 
-    let websites: Website[] = [];
+    const unsubscribe = onSnapshot(websitesColRef, (snapshot) => {
+      let websiteList: Website[] = [];
 
-    onSnapshot(websitesColRef, (snapshot) => {
       snapshot.forEach(async (doc) => {
         const decrypted = await decrypt(cryptoKey.key!, new EncryptedData(doc.data().data));
 
-        let website: Website = {
+        let newWebsite: Website = {
           uuid: doc.id,
           data: JSON.parse(decrypted),
           favorite: doc.data().favorite,
@@ -82,14 +71,38 @@ export default function PasswordsPage(params: { db: Firestore }) {
           }
         }
 
-        websites.push(website);
+        websiteList.push(newWebsite);
       });
 
-      updateWebsites(websites);
+      updateWebsites(websiteList);
     });
+
+    return () => {
+      unsubscribe();
+    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cryptoKey.key]);
+
+  function getFiltered(): Website[] {
+    return websites.filter(
+      website => {
+        function normalize(value: string): string {
+          return value.trim().toLowerCase();
+        }
+
+        function checkMatch(value: string | null | undefined): boolean {
+          if (value === null || value === undefined) {
+            return false;
+          }
+
+          return normalize(value).includes(normalize(search.value));
+        }
+
+        return checkMatch(website.data.name) || checkMatch(website.data.username) || checkMatch(website.data.url?.toString());
+      }
+    );
+  }
 
   return <>
     <Navbar>
@@ -99,7 +112,9 @@ export default function PasswordsPage(params: { db: Firestore }) {
       cryptoKey.key !== null
         ? <div className='passwords'>
           <CreatePassword reference={websitesColRef} />
-          {filteredWebsites.map((data, index) => <PasswordCard key={index} website={data} />)}
+          {
+            getFiltered().map((data, index) => <PasswordCard key={index} website={data} />)
+          }
         </div>
         : null
     }
