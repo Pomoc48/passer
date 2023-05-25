@@ -2,10 +2,12 @@ import { UserCredential, getAuth, signOut } from 'firebase/auth';
 import './style.css';
 import { useGoogleUser } from '../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
+import { useSearch } from '../../context/searchProvider';
 
-export default function Search(params: {user: UserCredential}) {
+export default function Search(params: { user: UserCredential }) {
   const auth = getAuth();
   const { update } = useGoogleUser();
+  const search = useSearch();
 
   const navigate = useNavigate();
 
@@ -30,7 +32,12 @@ export default function Search(params: {user: UserCredential}) {
     <div className="search">
       <span className="material-icons">search</span>
       <div>
-        <input className='body-medium' placeholder='Search passwords' />
+        <input
+          value={search.value}
+          className='body-medium'
+          placeholder='Search passwords'
+          onChange={e => search.update(e.target.value)}
+        />
       </div>
       <img className='clickable' onClick={signUserOut} src={image} draggable="false" alt="Profile" />
     </div>

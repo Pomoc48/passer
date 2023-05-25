@@ -13,10 +13,12 @@ import Navbar from '../../components/navbar';
 import { useCryptoKey } from '../../context/cryptoKey';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
+import { useSearch } from '../../context/searchProvider';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
   const cryptoKey = useCryptoKey();
+  const search = useSearch();
 
   const [websites, updateWebsites] = useState<Website[]>([]);
   const [showModal, setShowModal] = useState(true);
@@ -25,6 +27,17 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   const userDocRef = doc(params.db, "users", user.user.uid);
   const websitesColRef = collection(params.db, "users", user.user.uid, "websites");
+
+  const filteredWebsites = websites.filter(
+    website => {
+      function norm(value: string): string {
+        return value.trim().toLowerCase();
+      }
+
+      const checkName = norm(website.data.name).includes(norm(search.value));
+      return checkName;
+    }
+  );
 
   useEffect(() => {
     const keyData = localStorage.getItem(user.user.uid);
@@ -86,7 +99,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
       cryptoKey.key !== null
         ? <div className='passwords'>
           <CreatePassword reference={websitesColRef} />
-          {websites.map((data, index) => <PasswordCard key={index} website={data} />)}
+          {filteredWebsites.map((data, index) => <PasswordCard key={index} website={data} />)}
         </div>
         : null
     }
