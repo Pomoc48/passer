@@ -4,8 +4,10 @@ import { firebaseInsert } from "../../functions/firebaseInsert";
 import { UploadData } from "../../types/uploadData";
 import ShortUniqueId from "short-unique-id";
 import './style.css'
+import { useCryptoKey } from "../../context/cryptoKey";
 
-export default function CreatePassword(params: { reference: CollectionReference, cryptoKey: CryptoKey }) {
+export default function CreatePassword(params: { reference: CollectionReference }) {
+  const cryptoKey = useCryptoKey().key!;
 
   async function prepareEncryptedData() {
     const uid = new ShortUniqueId({ length: 16 });
@@ -19,7 +21,7 @@ export default function CreatePassword(params: { reference: CollectionReference,
     };
 
     const serialized = JSON.stringify(data);
-    const encrypted = await encrypt(params.cryptoKey, serialized);
+    const encrypted = await encrypt(cryptoKey, serialized);
 
     const uploadData: UploadData = {
       uuid: uid(),

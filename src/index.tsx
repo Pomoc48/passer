@@ -7,6 +7,7 @@ import WelcomePage from './pages/welcome';
 import PasswordsPage from './pages/passwords';
 import { RequireAuth } from './pages/passwords/extra/RequireAuth';
 import { UserProvider } from './context/userProvider';
+import { KeyProvider } from './context/cryptoKey';
 
 let matcher = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -58,7 +59,9 @@ const router = createBrowserRouter([
   {
     path: "/manager",
     element: <RequireAuth redirectTo="/">
-      <PasswordsPage db={db} />
+      <KeyProvider>
+        <PasswordsPage db={db} />
+      </KeyProvider>
     </RequireAuth>,
   },
 ]);

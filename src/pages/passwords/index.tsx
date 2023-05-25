@@ -11,15 +11,16 @@ import Search from '../../components/search';
 import { useGoogleUser } from '../../context/userProvider';
 import Navbar from '../../components/navbar';
 import { EncryptedWebsite } from '../../types/encryptedWebsite';
+import { useCryptoKey } from '../../context/cryptoKey';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
+  const cryptoKey = useCryptoKey();
 
   const [websites, updateWebsites] = useState<EncryptedWebsite[]>([]);
   const userDocRef = doc(params.db, "users", user.user.uid);
-  const siteDataColRef = collection(params.db, "users", user.user.uid, "websites");
+  const websitesColRef = collection(params.db, "users", user.user.uid, "websites");
   const [showModal, setShowModal] = useState(true);
-  const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -34,10 +35,10 @@ export default function PasswordsPage(params: { db: Firestore }) {
       let key: CryptoKey = await importKey(keyData);
 
       if (await testCaseMatch(userDocRef!, key)) {
-        setCryptoKey(key);
+        cryptoKey.update(key);
         setShowModal(false);
       } else {
-        setCryptoKey(null);
+        cryptoKey.update(null);
         setShowModal(true);
       }
     }
@@ -45,43 +46,32 @@ export default function PasswordsPage(params: { db: Firestore }) {
   }, []);
 
   useEffect(() => {
-    if (cryptoKey === null) {
+    if (cryptoKey.key === null) {
       return;
     }
 
-    // onSnapshot(userDocRef!, (doc) => {
-    //   if (doc.exists() && doc.data().passwords !== undefined) {
-    //     let pData = doc.data().passwords;
-    //     let newPasswords: EncryptedSiteData[] = [];
+    onSnapshot(websitesColRef, (snapshot) => {
+      let websites: EncryptedWebsite[] = [];
 
-    //     Object.keys(pData).forEach(key => {
-    //       newPasswords.push(new EncryptedSiteData(
-    //         cryptoKey,
-    //         key,
-    //         pData[key].date,
-    //         pData[key].name,
-    //         pData[key].note,
-    //         pData[key].password,
-    //         pData[key].url,
-    //         pData[key].username,
-    //       ));
-    //     });
+      snapshot.forEach((doc) => {
+        websites.push(doc.data() as EncryptedWebsite);
+      });
 
-    //     updateWebsites(newPasswords);
-    //   }
-    // });
+      updateWebsites(websites);
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cryptoKey]);
+  }, [cryptoKey.key]);
 
   return <>
     <Navbar>
       <Search user={user} />
     </Navbar>
     {
-      cryptoKey !== null
+      cryptoKey.key !== null
         ? <div className='passwords'>
-          <CreatePassword reference={siteDataColRef} cryptoKey={cryptoKey} />
-          {websites.map((data, index) => <PasswordCard key={index} encryptedData={data} />)}
+          <CreatePassword reference={websitesColRef} />
+          {websites.map((data, index) => <PasswordCard key={index} website={data} />)}
         </div>
         : null
     }
@@ -119,7 +109,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
                   const keyData = await exportKey(key);
                   localStorage.setItem(user.user.uid, keyData)
 
-                  setCryptoKey(key);
+                  cryptoKey.update(key);
                   setShowModal(false);
                 }
               }]
