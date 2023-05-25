@@ -1,20 +1,15 @@
-import { DocumentReference, setDoc } from "firebase/firestore";
+import { CollectionReference, doc, setDoc } from "firebase/firestore";
 import { UploadData } from "../types/uploadData";
-import ShortUniqueId from "short-unique-id";
 
-export async function firebaseInsert(reference: DocumentReference, uploadData: UploadData) {
-  const uid = new ShortUniqueId({ length: 12 });
+export async function firebaseInsert(reference: CollectionReference, uploadData: UploadData) {
 
-  await setDoc(reference, {
-    passwords: {
-      [uid()]: {
-        name: uploadData.name,
-        date: new Date(),
-        password: uploadData.password,
-        note: uploadData.note,
-        username: uploadData.username,
-        url: uploadData.url === null ? null : uploadData.url.toString(),
-      }
-    },
+  await setDoc(doc(reference, uploadData.uuid), {
+    data: uploadData.websiteData,
+    favorite: uploadData.favorite,
+    time: {
+      created: new Date(),
+      modified: new Date(),
+      used: new Date(),
+    }
   }, { merge: true });
 }

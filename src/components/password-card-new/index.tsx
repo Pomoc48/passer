@@ -1,23 +1,35 @@
-import { DocumentReference } from "firebase/firestore"
+import { CollectionReference } from "firebase/firestore"
 import { encrypt } from "../../functions/crypto";
 import { firebaseInsert } from "../../functions/firebaseInsert";
 import { UploadData } from "../../types/uploadData";
+import ShortUniqueId from "short-unique-id";
 import './style.css'
 
-export default function CreatePassword(params: { reference: DocumentReference, cryptoKey: CryptoKey }) {
+export default function CreatePassword(params: { reference: CollectionReference, cryptoKey: CryptoKey }) {
 
   async function prepareEncryptedData() {
-    const password = await encrypt(params.cryptoKey, "testPassword");
-    const name = await encrypt(params.cryptoKey, "testName");
-    const note = await encrypt(params.cryptoKey, "testNote");
-    const username = await encrypt(params.cryptoKey, "testUsername");
+    const uid = new ShortUniqueId({ length: 16 });
+
+    const data = {
+      name: "testName",
+      note: "testNote",
+      password: "testPassword",
+      url: "http://localhost:3000",
+      username: "testUsername",
+    };
+
+    const serialized = JSON.stringify(data);
+    const encrypted = await encrypt(params.cryptoKey, serialized);
 
     const uploadData: UploadData = {
-      name: name,
-      password: password,
-      note: note,
-      username: username,
-      url: new URL("https://mlukawski.com"),
+      uuid: uid(),
+      websiteData: encrypted,
+      favorite: false,
+      time: {
+        created: new Date(),
+        modified: new Date(),
+        used: new Date(),
+      }
     }
 
     await firebaseInsert(params.reference, uploadData);

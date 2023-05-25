@@ -1,8 +1,7 @@
-import { Firestore, doc, onSnapshot } from 'firebase/firestore';
+import { Firestore, collection, doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import './style.css'
 import { createPortal } from 'react-dom';
-import EncryptedSiteData from '../../types/encryptedSiteData';
 import { exportKey, generateKey, importKey } from '../../functions/crypto';
 import { testCaseMatch, updateTestCase } from '../../functions/passwordTestCase';
 import PasswordCard from '../../components/password-card';
@@ -11,12 +10,14 @@ import MaterialDialog from '../../components/dialog';
 import Search from '../../components/search';
 import { useGoogleUser } from '../../context/userProvider';
 import Navbar from '../../components/navbar';
+import { EncryptedWebsite } from '../../types/encryptedWebsite';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
 
-  const [websites, updateWebsites] = useState<EncryptedSiteData[]>([]);
-  const docRef = doc(params.db, "users", user.user.uid);
+  const [websites, updateWebsites] = useState<EncryptedWebsite[]>([]);
+  const userDocRef = doc(params.db, "users", user.user.uid);
+  const siteDataColRef = collection(params.db, "users", user.user.uid, "websites");
   const [showModal, setShowModal] = useState(true);
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
 
@@ -32,7 +33,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
     async function validateKey(keyData: string) {
       let key: CryptoKey = await importKey(keyData);
 
-      if (await testCaseMatch(docRef!, key)) {
+      if (await testCaseMatch(userDocRef!, key)) {
         setCryptoKey(key);
         setShowModal(false);
       } else {
@@ -48,27 +49,27 @@ export default function PasswordsPage(params: { db: Firestore }) {
       return;
     }
 
-    onSnapshot(docRef!, (doc) => {
-      if (doc.exists() && doc.data().passwords !== undefined) {
-        let pData = doc.data().passwords;
-        let newPasswords: EncryptedSiteData[] = [];
+    // onSnapshot(userDocRef!, (doc) => {
+    //   if (doc.exists() && doc.data().passwords !== undefined) {
+    //     let pData = doc.data().passwords;
+    //     let newPasswords: EncryptedSiteData[] = [];
 
-        Object.keys(pData).forEach(key => {
-          newPasswords.push(new EncryptedSiteData(
-            cryptoKey,
-            key,
-            pData[key].date,
-            pData[key].name,
-            pData[key].note,
-            pData[key].password,
-            pData[key].url,
-            pData[key].username,
-          ));
-        });
+    //     Object.keys(pData).forEach(key => {
+    //       newPasswords.push(new EncryptedSiteData(
+    //         cryptoKey,
+    //         key,
+    //         pData[key].date,
+    //         pData[key].name,
+    //         pData[key].note,
+    //         pData[key].password,
+    //         pData[key].url,
+    //         pData[key].username,
+    //       ));
+    //     });
 
-        updateWebsites(newPasswords);
-      }
-    });
+    //     updateWebsites(newPasswords);
+    //   }
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cryptoKey]);
 
@@ -79,7 +80,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
     {
       cryptoKey !== null
         ? <div className='passwords'>
-          <CreatePassword reference={docRef} cryptoKey={cryptoKey} />
+          <CreatePassword reference={siteDataColRef} cryptoKey={cryptoKey} />
           {websites.map((data, index) => <PasswordCard key={index} encryptedData={data} />)}
         </div>
         : null
@@ -113,7 +114,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
                   }
 
                   let key: CryptoKey = await generateKey(passwordRef.current.value);
-                  await updateTestCase(docRef, key);
+                  await updateTestCase(userDocRef, key);
 
                   const keyData = await exportKey(key);
                   localStorage.setItem(user.user.uid, keyData)

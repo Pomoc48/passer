@@ -1,7 +1,10 @@
 export type UploadData = {
-    name: string;
-    note: string | null;
-    password: string | null;
-    url: URL | null;
-    username: string | null;
+    uuid: string;
+    websiteData: string;
+    favorite: boolean;
+    time: {
+        created: Date;
+        modified: Date;
+        used: Date;
+    };
 }

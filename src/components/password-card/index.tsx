@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import EncryptedSiteData from '../../types/encryptedSiteData';
 import './style.css'
+import { EncryptedWebsite } from '../../types/encryptedWebsite';
 
-export default function PasswordCard(params: { encryptedData: EncryptedSiteData }) {
+export default function PasswordCard(params: { encryptedData: EncryptedWebsite }) {
   const [name, setName] = useState("…");
   const [url, setUrl] = useState("…");
   const [username, setUsername] = useState("…");
@@ -11,11 +11,11 @@ export default function PasswordCard(params: { encryptedData: EncryptedSiteData 
     performDecryption();
 
     async function performDecryption() {
-      let siteData = await params.encryptedData.decrypt();
+      // let siteData = await params.encryptedData.decrypt();
 
-      setName(siteData.name);
-      setUrl(siteData.url === null ? "" : siteData.url.toString());
-      setUsername(siteData.username === null ? "" : siteData.username);
+      // setName(siteData.name);
+      // setUrl(siteData.url === null ? "" : siteData.url.toString());
+      // setUsername(siteData.username === null ? "" : siteData.username);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
