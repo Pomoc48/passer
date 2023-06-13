@@ -35,4 +35,5 @@
  --md-sys-color-elevation4: var(--md-sys-color-elevation4-light);
  --md-sys-color-elevation5: var(--md-sys-color-elevation5-light);
  --md-sys-color-navbar: var(--md-sys-color-navbar-light);
+ --md-sys-color-dialog: var(--md-sys-color-dialog-light);
 }
