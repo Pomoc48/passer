@@ -1,4 +1,5 @@
 .scrim {
+    opacity: 0;
     top: 0;
     left: 0;
     position: fixed;
@@ -6,9 +7,11 @@
     height: 100%;
     z-index: 2;
     background-color: rgba(0,0,0, 0.4);
+    transition: all 0.3s;
 }
 
 .dialog {
+    opacity: 0;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -19,6 +22,11 @@
     border-radius: 28px;
     box-sizing: border-box;
     background-color: var(--md-sys-color-dialog);
+    transition: all 0.3s;
+}
+
+.dialog.open, .scrim.open {
+    opacity: 1;
 }
 
 .dialog .content {
@@ -36,10 +44,15 @@
     height: 56px;
     border: 2px solid #79747E;
     transition: 0.3s;
+    margin-bottom: 16px;
 }
 
 .dialog .content input:focus {
     border: 2px solid var(--md-sys-color-primary);
+}
+
+.dialog .content label {
+    color: var(--md-sys-color-primary);
 }
 
 .dialog .actions {
