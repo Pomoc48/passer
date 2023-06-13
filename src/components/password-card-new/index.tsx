@@ -122,12 +122,18 @@ export default function CreatePassword(params: { reference: CollectionReference 
               [{
                 name: "Confirm",
                 onClick: async () => {
-                  if (nameRef.current === null) {
+                  let urlInput = urlRef.current!.value.trim();
+
+                  if (nameRef.current!.value.trim() === "") {
                     return;
                   }
 
-                  if (nameRef.current.value.trim() === "") {
-                    return;
+                  if (urlInput !== "") {
+                    try {
+                      new URL(urlInput);
+                    } catch (_) {
+                      return;
+                    }
                   }
 
                   prepareEncryptedData();
