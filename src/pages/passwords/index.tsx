@@ -23,8 +23,8 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const [websites, updateWebsites] = useState<Website[]>([]);
   const [showModal, setShowModal] = useState(true);
 
-  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
-  const passwordDialogRef = useRef<Website | null>(null);
+  // const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  // const passwordDialogRef = useRef<Website | null>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
