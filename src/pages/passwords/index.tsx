@@ -23,6 +23,9 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const [websites, updateWebsites] = useState<Website[]>([]);
   const [showModal, setShowModal] = useState(true);
 
+  // const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  // const passwordDialogRef = useRef<Website | null>(null);
+
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const userDocRef = doc(params.db, "users", user.user.uid);
@@ -84,26 +87,6 @@ export default function PasswordsPage(params: { db: Firestore }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cryptoKey.key]);
 
-  function getFiltered(): Website[] {
-    return websites.filter(
-      website => {
-        function normalize(value: string): string {
-          return value.trim().toLowerCase();
-        }
-
-        function checkMatch(value: string | null | undefined): boolean {
-          if (value === null || value === undefined) {
-            return false;
-          }
-
-          return normalize(value).includes(normalize(search.value));
-        }
-
-        return checkMatch(website.data.name) || checkMatch(website.data.username) || checkMatch(website.data.url?.toString());
-      }
-    );
-  }
-
   return <>
     <Navbar>
       <Search user={user} />
@@ -113,7 +96,33 @@ export default function PasswordsPage(params: { db: Firestore }) {
         ? <div className='passwords'>
           <CreatePassword reference={websitesColRef} />
           {
-            getFiltered().map((data, index) => <PasswordCard key={index} website={data} />)
+            websites.filter(
+              website => {
+                function normalize(value: string): string {
+                  return value.trim().toLowerCase();
+                }
+
+                function checkMatch(value: string | null | undefined): boolean {
+                  if (value === null || value === undefined) {
+                    return false;
+                  }
+
+                  return normalize(value).includes(normalize(search.value));
+                }
+
+                return checkMatch(website.data.name) || checkMatch(website.data.username) || checkMatch(website.data.url?.toString());
+              }
+            ).map((data, index) => {
+              return (
+                <PasswordCard
+                  key={index}
+                  website={data}
+                  onClick={() => {
+
+                  }}
+                />
+              );
+            })
           }
         </div>
         : null

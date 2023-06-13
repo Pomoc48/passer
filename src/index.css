@@ -47,6 +47,17 @@ button.icon {
     gap: 8px;
 }
 
+button.icon-button {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 40px;
+}
+
+button.icon-button span.material-icons {
+    font-size: 24px;
+}
+
 .card {
     border-radius: 12px;
     padding: 16px;
