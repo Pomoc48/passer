@@ -38,13 +38,11 @@
 .dialog .content input {
     all: unset;
     box-sizing: border-box;
-    margin-top: 16px;
     border-radius: 4px;
     padding: 0 16px;
     height: 56px;
     border: 2px solid #79747E;
     transition: 0.3s;
-    margin-bottom: 16px;
 }
 
 .dialog .content input:focus {
@@ -53,6 +51,18 @@
 
 .dialog .content label {
     color: var(--md-sys-color-primary);
+    margin-bottom: 8px;
+    margin-top: 16px;
+}
+
+.dialog .content label:first-child {
+    margin-top: 0;
+}
+
+.dialog .content button {
+    position: relative;
+    top: -48px;
+    left: calc(100% - 48px);
 }
 
 .dialog .actions {
