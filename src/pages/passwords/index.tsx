@@ -89,7 +89,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   return <>
     <Navbar>
-      <Search user={user} />
+      <Search />
     </Navbar>
     {
       cryptoKey.key !== null

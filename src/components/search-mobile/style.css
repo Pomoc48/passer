@@ -3,6 +3,7 @@
     color: var(--md-sys-color-on-surface);
     height: 40px;
     border-radius: 40px;
+    margin-left: 16px;
     display: flex;
     transition: 0.3s;
 }
@@ -25,10 +26,17 @@
     width: max(min(35vw, 250px), 120px);
     box-sizing: border-box;
     display: block;
-    padding: 0;
-    padding-right: 16px;
 }
 
 .search input:focus {
     outline: 0;
+}
+
+.search img {
+    margin-left: 8px;
+    margin-right: 4px;
+    margin-top: 4px;
+    height: 32px;
+    width: 32px;
+    border-radius: 100%;
 }
