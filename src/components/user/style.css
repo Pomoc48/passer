@@ -1,22 +1,4 @@
-.navbar-user {
-    background-color: var(--md-sys-color-elevation3);
-    color: var(--md-sys-color-on-surface);
-    height: 40px;
-    border-radius: 40px;
-    display: flex;
-    padding-right: 16px;
-    transition: 0.3s;
-    align-items: center;
-}
-
-.navbar-user:hover {
-    background-color: var(--md-sys-color-elevation5);
-}
-
 .navbar-user img {
     margin-left: 4px;
     margin-right: 8px;
-    height: 32px;
-    width: 32px;
-    border-radius: 100%;
 }

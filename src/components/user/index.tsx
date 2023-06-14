@@ -27,7 +27,7 @@ export default function UserPill(params: { user: UserCredential }) {
   }
 
   return (
-    <div className="navbar-user clickable" onClick={signUserOut}>
+    <div className="navbar-user pill clickable" onClick={signUserOut}>
       <img className='clickable' src={image} draggable="false" alt="Profile" />
       <p className='label-large'>{params.user.user.displayName}</p>
     </div>

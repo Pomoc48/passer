@@ -69,3 +69,43 @@ button.icon-button span.material-icons {
 .card:hover {
     background-color: var(--md-sys-color-elevation2);
 }
+
+.pill {
+    background-color: var(--md-sys-color-elevation3);
+    color: var(--md-sys-color-on-surface);
+    height: 40px;
+    border-radius: 40px;
+    display: flex;
+    padding-right: 16px;
+    transition: 0.3s;
+    align-items: center;
+}
+
+.pill:focus-within, .pill:hover {
+    background-color: var(--md-sys-color-elevation5);
+}
+
+.pill .material-icons {
+    margin-left: 12px;
+    margin-right: 8px;
+    user-select: none;
+}
+
+.pill img {
+    height: 32px;
+    width: 32px;
+    border-radius: 100%;
+}
+
+.pill input {
+    background-color: transparent;
+    color: var(--md-sys-color-on-surface);
+    border: 0;
+    height: 40px;
+    box-sizing: border-box;
+    display: block;
+}
+    
+.pill input:focus {
+    outline: 0;
+}

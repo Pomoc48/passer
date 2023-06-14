@@ -5,7 +5,7 @@ export default function Search() {
   const search = useSearch();
 
   return (
-    <div className="search">
+    <div className="search pill">
       <span className="material-icons">search</span>
       <div>
         <input

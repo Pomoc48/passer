@@ -15,6 +15,7 @@ import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/searchProvider';
 import UserPill from '../../components/user';
+// import SearchMobile from '../../components/search-mobile';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
@@ -92,6 +93,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
     <Navbar>
       <Search />
       <UserPill user={user} />
+      {/* <SearchMobile user={user} /> */}
     </Navbar>
     {
       cryptoKey.key !== null
