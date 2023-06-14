@@ -15,6 +15,7 @@ import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/searchProvider';
 import UserPill from '../../components/user';
+import Sorting from '../../components/sorting';
 // import SearchMobile from '../../components/search-mobile';
 
 export default function PasswordsPage(params: { db: Firestore }) {
@@ -91,6 +92,11 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   return <>
     <Navbar>
+      <div className="pill clickable">
+        <span className="material-icons">add</span>
+        <p className='label-large'>New password</p>
+      </div>
+      <Sorting />
       <Search />
       <UserPill user={user} />
       {/* <SearchMobile user={user} /> */}
