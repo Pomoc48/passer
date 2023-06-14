@@ -14,6 +14,7 @@ import { useCryptoKey } from '../../context/cryptoKey';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/searchProvider';
+import UserPill from '../../components/user';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
@@ -90,6 +91,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
   return <>
     <Navbar>
       <Search />
+      <UserPill user={user} />
     </Navbar>
     {
       cryptoKey.key !== null
