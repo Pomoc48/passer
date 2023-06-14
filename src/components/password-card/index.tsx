@@ -1,4 +1,5 @@
 import { Website } from '../../types/website';
+import MaterialButton from '../button';
 import './style.css'
 
 export default function PasswordCard(params: { website: Website, onClick: () => void }) {
@@ -20,35 +21,43 @@ export default function PasswordCard(params: { website: Website, onClick: () => 
 
   return (
     <div
-      className='card password-card clickable'
+      className='card password-card'
       onClick={params.onClick}
     >
-      <div>
-        <h2 className='title-large'>{params.website.data.name}</h2>
-        {
-          url !== null
-            ? <p className='body-medium'>{url.host}</p>
-            : null
-        }
-        <p className='body-medium'>{params.website.data.username}</p>
+      <div className='content'>
+        <p className='title'>{params.website.data.name}</p>
+        <p className='url'>{url !== null ? url.host : "*no website"}</p>
+        <p className='username'>
+          {
+            params.website.data.username
+              ? params.website.data.username
+              : "*no username"
+          }
+        </p>
       </div>
       <div className='actions'>
         {
           url === null
             ? null
-            : <button
-              type='button'
-              className='text icon label-large clickable'
+            : <MaterialButton
+              label='Visit'
               onClick={() => window.open(url!)}
-            >
-              <span className="material-icons">open_in_new</span>
-              Visit
-            </button>
+              icon='open_in_new'
+              type='text'
+            />
         }
-        <button type='button' className='icon label-large clickable' onClick={() => { }}>
-          <span className="material-icons">content_copy</span>
-          Copy
-        </button>
+        <MaterialButton
+          label='Copy'
+          onClick={() => { }}
+          icon='content_copy'
+          type='text'
+        />
+        <MaterialButton
+          label='Options'
+          onClick={() => { }}
+          icon='settings'
+          type='tonal'
+        />
       </div>
     </div>
   );

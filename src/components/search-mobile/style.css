@@ -1,0 +1,12 @@
+.search-mobile {
+    padding-right: 0;
+}
+
+.search-mobile input {
+    width: 35vw;
+}
+
+.search-mobile img {
+    margin-left: 8px;
+    margin-right: 4px;
+}

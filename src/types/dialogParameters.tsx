@@ -6,6 +6,7 @@ export type DialogParameters = {
 }
 
 export type DialogAction = {
-    name: string;
+    label: string;
+    icon?: string;
     onClick: () => void;
 }

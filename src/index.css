@@ -13,51 +13,6 @@ body {
     cursor: pointer;
 }
 
-button {
-    display: flex;
-    align-items: center;
-    border: none;
-    height: 40px;
-    border-radius: 20px;
-    padding-inline: 24px;
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    transition: 0.3s;
-}
-
-button:hover {
-    opacity: 0.75;
-}
-
-button.text {
-    color: var(--md-sys-color-primary);
-    background-color: unset;
-}
-
-button.text:hover {
-    background-color: var(--md-sys-color-elevation2);
-}
-
-button span.material-icons {
-    font-size: var(--md-sys-typescale-label-large-font-weight)
-}
-
-button.icon {
-    padding-left: 18px;
-    gap: 8px;
-}
-
-button.icon-button {
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    width: 40px;
-}
-
-button.icon-button span.material-icons {
-    font-size: 24px;
-}
-
 .card {
     border-radius: 12px;
     padding: 16px;
@@ -68,4 +23,44 @@ button.icon-button span.material-icons {
 
 .card:hover {
     background-color: var(--md-sys-color-elevation2);
+}
+
+.pill {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    height: 40px;
+    border-radius: 40px;
+    display: flex;
+    padding-right: 16px;
+    transition: 0.3s;
+    align-items: center;
+}
+
+.pill:focus-within, .pill:hover {
+    background-color: var(--md-sys-color-elevation5);
+}
+
+.pill .material-icons {
+    margin-left: 12px;
+    margin-right: 8px;
+    user-select: none;
+}
+
+.pill img {
+    height: 32px;
+    width: 32px;
+    border-radius: 100%;
+}
+
+.pill input {
+    background-color: transparent;
+    color: var(--md-sys-color-on-surface);
+    border: 0;
+    height: 40px;
+    box-sizing: border-box;
+    display: block;
+}
+    
+.pill input:focus {
+    outline: 0;
 }

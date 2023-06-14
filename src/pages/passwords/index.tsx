@@ -5,7 +5,6 @@ import { createPortal } from 'react-dom';
 import { decrypt, exportKey, generateKey, importKey } from '../../functions/crypto';
 import { testCaseMatch, updateTestCase } from '../../functions/passwordTestCase';
 import PasswordCard from '../../components/password-card';
-import CreatePassword from '../../components/password-card-new';
 import MaterialDialog from '../../components/dialog';
 import Search from '../../components/search';
 import { useGoogleUser } from '../../context/userProvider';
@@ -14,6 +13,10 @@ import { useCryptoKey } from '../../context/cryptoKey';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/searchProvider';
+import UserPill from '../../components/user';
+import Sorting from '../../components/sorting';
+import NewPasswordButton from '../../components/password-card-new';
+import SearchMobile from '../../components/search-mobile';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
@@ -22,6 +25,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   const [websites, updateWebsites] = useState<Website[]>([]);
   const [showModal, setShowModal] = useState(true);
+  const [mobile, updateMobile] = useState(false);
 
   // const [showPasswordDialog, setShowPasswordDialog] = useState(false);
   // const passwordDialogRef = useRef<Website | null>(null);
@@ -87,14 +91,31 @@ export default function PasswordsPage(params: { db: Firestore }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cryptoKey.key]);
 
+  useEffect(() => {
+    let screenSize = 1000;
+    updateMobile(window.innerWidth <= screenSize);
+
+    window.onresize = () => {
+      return updateMobile(window.innerWidth <= screenSize);
+    };
+  }, []);
+
   return <>
     <Navbar>
-      <Search user={user} />
+      {
+        mobile
+          ? <SearchMobile user={user} />
+          : <>
+            <NewPasswordButton reference={websitesColRef} />
+            <Sorting />
+            <Search />
+            <UserPill user={user} />
+          </>
+      }
     </Navbar>
     {
       cryptoKey.key !== null
         ? <div className='passwords'>
-          <CreatePassword reference={websitesColRef} />
           {
             websites.filter(
               website => {
@@ -146,7 +167,9 @@ export default function PasswordsPage(params: { db: Firestore }) {
             closeFunction={() => { }}
             actions={
               [{
-                name: "Confirm", onClick: async () => {
+                label: "Confirm",
+                icon: "check",
+                onClick: async () => {
                   if (passwordRef.current === null) {
                     return;
                   }
