@@ -37,8 +37,8 @@ button.material.text:hover, button.material.text:focus-visible {
 }
 
 button.material.tonal {
-    background-color: var(--md-sys-color-elevation3);
-    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
 }
 
 button.material.tonal:hover {
