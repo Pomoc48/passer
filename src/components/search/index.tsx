@@ -10,8 +10,8 @@ export default function Search() {
       <div>
         <input
           value={search.value}
-          className='body-medium'
-          placeholder='Search passwords'
+          className='label-large'
+          placeholder='Search passwords…'
           onChange={e => search.update(e.target.value)}
         />
       </div>

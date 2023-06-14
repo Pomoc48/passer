@@ -29,13 +29,13 @@ export default function SearchMobile(params: { user: UserCredential }) {
   }
 
   return (
-    <div className="search pill">
+    <div className="search-mobile pill">
       <span className="material-icons">search</span>
       <div>
         <input
           value={search.value}
           className='body-medium'
-          placeholder='Search passwords'
+          placeholder='Search passwords…'
           onChange={e => search.update(e.target.value)}
         />
       </div>

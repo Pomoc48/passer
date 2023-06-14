@@ -1,12 +1,12 @@
-.search {
+.search-mobile {
     padding-right: 0;
 }
 
-.search input {
+.search-mobile input {
     width: 35vw;
 }
 
-.search img {
+.search-mobile img {
     margin-left: 8px;
     margin-right: 4px;
 }

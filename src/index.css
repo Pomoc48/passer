@@ -26,8 +26,8 @@ body {
 }
 
 .pill {
-    background-color: var(--md-sys-color-elevation3);
-    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
     height: 40px;
     border-radius: 40px;
     display: flex;

@@ -16,7 +16,7 @@ import { useSearch } from '../../context/searchProvider';
 import UserPill from '../../components/user';
 import Sorting from '../../components/sorting';
 import NewPasswordButton from '../../components/password-card-new';
-// import SearchMobile from '../../components/search-mobile';
+import SearchMobile from '../../components/search-mobile';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
@@ -25,6 +25,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   const [websites, updateWebsites] = useState<Website[]>([]);
   const [showModal, setShowModal] = useState(true);
+  const [mobile, updateMobile] = useState(false);
 
   // const [showPasswordDialog, setShowPasswordDialog] = useState(false);
   // const passwordDialogRef = useRef<Website | null>(null);
@@ -90,13 +91,27 @@ export default function PasswordsPage(params: { db: Firestore }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cryptoKey.key]);
 
+  useEffect(() => {
+    let screenSize = 1000;
+    updateMobile(window.innerWidth <= screenSize);
+
+    window.onresize = () => {
+      return updateMobile(window.innerWidth <= screenSize);
+    };
+  }, []);
+
   return <>
     <Navbar>
-      <NewPasswordButton reference={websitesColRef} />
-      <Sorting />
-      <Search />
-      <UserPill user={user} />
-      {/* <SearchMobile user={user} /> */}
+      {
+        mobile
+          ? <SearchMobile user={user} />
+          : <>
+            <NewPasswordButton reference={websitesColRef} />
+            <Sorting />
+            <Search />
+            <UserPill user={user} />
+          </>
+      }
     </Navbar>
     {
       cryptoKey.key !== null
