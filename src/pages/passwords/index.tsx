@@ -5,7 +5,6 @@ import { createPortal } from 'react-dom';
 import { decrypt, exportKey, generateKey, importKey } from '../../functions/crypto';
 import { testCaseMatch, updateTestCase } from '../../functions/passwordTestCase';
 import PasswordCard from '../../components/password-card';
-import CreatePassword from '../../components/password-card-new';
 import MaterialDialog from '../../components/dialog';
 import Search from '../../components/search';
 import { useGoogleUser } from '../../context/userProvider';
@@ -16,6 +15,7 @@ import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/searchProvider';
 import UserPill from '../../components/user';
 import Sorting from '../../components/sorting';
+import NewPasswordButton from '../../components/password-card-new';
 // import SearchMobile from '../../components/search-mobile';
 
 export default function PasswordsPage(params: { db: Firestore }) {
@@ -92,10 +92,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   return <>
     <Navbar>
-      <div className="pill clickable">
-        <span className="material-icons">add</span>
-        <p className='label-large'>New password</p>
-      </div>
+      <NewPasswordButton reference={websitesColRef} />
       <Sorting />
       <Search />
       <UserPill user={user} />
@@ -104,7 +101,6 @@ export default function PasswordsPage(params: { db: Firestore }) {
     {
       cryptoKey.key !== null
         ? <div className='passwords'>
-          <CreatePassword reference={websitesColRef} />
           {
             websites.filter(
               website => {
@@ -156,7 +152,9 @@ export default function PasswordsPage(params: { db: Firestore }) {
             closeFunction={() => { }}
             actions={
               [{
-                name: "Confirm", onClick: async () => {
+                label: "Confirm",
+                icon: "check",
+                onClick: async () => {
                   if (passwordRef.current === null) {
                     return;
                   }

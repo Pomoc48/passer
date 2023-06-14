@@ -1,4 +1,5 @@
 import { Website } from '../../types/website';
+import MaterialButton from '../button';
 import './style.css'
 
 export default function PasswordCard(params: { website: Website, onClick: () => void }) {
@@ -36,19 +37,18 @@ export default function PasswordCard(params: { website: Website, onClick: () => 
         {
           url === null
             ? null
-            : <button
-              type='button'
-              className='text icon label-large clickable'
+            : <MaterialButton
+              label='Visit'
               onClick={() => window.open(url!)}
-            >
-              <span className="material-icons">open_in_new</span>
-              Visit
-            </button>
+              icon='open_in_new'
+              type='text'
+            />
         }
-        <button type='button' className='icon label-large clickable' onClick={() => { }}>
-          <span className="material-icons">content_copy</span>
-          Copy
-        </button>
+        <MaterialButton
+          label='Copy'
+          onClick={() => { }}
+          icon='content_copy'
+        />
       </div>
     </div>
   );

@@ -1,8 +1,12 @@
+import MaterialButton from "../button";
+
 export default function Sorting() {
   return (
-    <div className="pill clickable">
-      <span className="material-icons">sort</span>
-      <p className='label-large'>Alphabetical</p>
-    </div>
+    <MaterialButton
+      label='Alphabetical'
+      onClick={() => { }}
+      icon='sort'
+      type='tonal'
+    />
   );
 }

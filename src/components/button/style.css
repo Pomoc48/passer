@@ -1,0 +1,47 @@
+button.material {
+    display: flex;
+    align-items: center;
+    border: none;
+    height: 40px;
+    border-radius: 20px;
+    padding-inline: 20px;
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    transition: 0.3s;
+}
+
+button.material:focus {
+    outline: 0;
+}
+
+button.material:hover, button.material:focus-visible {
+    opacity: 0.75;
+}
+
+button.material span.material-icons {
+    font-size: var(--md-sys-typescale-body-large-font-size);
+    margin-right: 8px;
+}
+
+button.material.icon {
+    padding-left: 16px;
+}
+
+button.material.text {
+    color: var(--md-sys-color-primary);
+    background-color: unset;
+}
+
+button.material.text:hover, button.material.text:focus-visible {
+    background-color: var(--md-sys-color-elevation2);
+}
+
+button.material.tonal {
+    background-color: var(--md-sys-color-elevation3);
+    color: var(--md-sys-color-on-surface);
+}
+
+button.material.tonal:hover {
+    background-color: var(--md-sys-color-elevation5);
+    opacity: 1;
+}

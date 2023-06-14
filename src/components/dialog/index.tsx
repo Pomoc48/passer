@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { DialogParameters } from '../../types/dialogParameters';
 import './style.css';
+import MaterialButton from '../button';
 
 export default function MaterialDialog(params: DialogParameters) {
   useEffect(() => {
@@ -27,7 +28,12 @@ export default function MaterialDialog(params: DialogParameters) {
       <div className='actions'>
         {
           params.actions.map((action, index) => {
-            return <button key={index} type='button' className='label-large clickable' onClick={action.onClick}>{action.name}</button>
+            return <MaterialButton
+              key={index}
+              label={action.label}
+              onClick={action.onClick}
+              icon={action.icon}
+            />
           })
         }
       </div>
