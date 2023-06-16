@@ -38,12 +38,18 @@ export default function PasswordCard(params: { website: Website, onClick: () => 
         </p>
       </div>
       <div className='actions'>
-        <MaterialButton
-          label='Copy'
-          onClick={() => { }}
-          icon='content_copy'
-          type='text'
-        />
+        {
+          params.website.data.password
+            ? <MaterialButton
+              label='Copy'
+              onClick={() => {
+                navigator.clipboard.writeText(params.website.data.password!);
+              }}
+              icon='content_copy'
+              type='text'
+            />
+            : null
+        }
         <MaterialButton
           label='Options'
           onClick={() => { }}
