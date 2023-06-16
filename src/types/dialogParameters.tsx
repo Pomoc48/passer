@@ -2,11 +2,13 @@ export type DialogParameters = {
     title: string;
     content: JSX.Element[];
     actions: DialogAction[];
-    closeFunction: (() => void) | null;
+    closeFunction?: () => void;
+    maxWidth?: number;
 }
 
 export type DialogAction = {
     label: string;
+    onClick?: () => void;
     icon?: string;
-    onClick: () => void;
+    type?: "filled" | "tonal" | "text",
 }

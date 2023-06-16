@@ -5,25 +5,31 @@ import MaterialButton from '../button';
 
 export default function MaterialDialog(params: DialogParameters) {
   useEffect(() => {
+    let root = document.querySelector(':root')! as HTMLElement;
+    root.style.setProperty(
+      '--dialog-width',
+      params.maxWidth === undefined ? "500px" : params.maxWidth + 'px',
+    );
+
     setTimeout(() => {
       document.getElementsByClassName("dialog")[0].classList.add("open");
       document.getElementsByClassName("scrim")[0].classList.add("open");
     }, 1);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function close() {
+    if (params.closeFunction !== null) {
+      document.getElementsByClassName("dialog")[0].classList.remove("open");
+      document.getElementsByClassName("scrim")[0].classList.remove("open");
+
+      setTimeout(() => params.closeFunction!(), 300);
+    }
+  }
+
   return <>
-    <div
-      className="scrim"
-      onClick={() => {
-        if (params.closeFunction !== null) {
-          document.getElementsByClassName("dialog")[0].classList.remove("open");
-          document.getElementsByClassName("scrim")[0].classList.remove("open");
-          setTimeout(() => {
-            params.closeFunction!();
-          }, 300);
-        }
-      }}
-    />
+    <div className="scrim" onClick={close} />
     <div className="dialog">
       <h3 className='title-large'>{params.title}</h3>
       <div className='content body-medium'>
@@ -37,8 +43,9 @@ export default function MaterialDialog(params: DialogParameters) {
             return <MaterialButton
               key={index}
               label={action.label}
-              onClick={action.onClick}
+              onClick={action.onClick === undefined ? close : action.onClick}
               icon={action.icon}
+              type={action.type}
             />
           })
         }

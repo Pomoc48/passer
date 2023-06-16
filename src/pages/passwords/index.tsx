@@ -212,7 +212,6 @@ export default function PasswordsPage(params: { db: Firestore }) {
                 />
               </form>
             ]}
-            closeFunction={null}
             actions={
               [{
                 label: "Confirm",

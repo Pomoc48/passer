@@ -61,6 +61,7 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
           ? createPortal(
             <MaterialDialog
               title="Add new password"
+              maxWidth={900}
               content={[
                 <>
                   <label htmlFor="name">Password name:</label>
@@ -106,8 +107,13 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
               closeFunction={() => {
                 setShowDialog(false);
               }}
-              actions={
-                [{
+              actions={[
+                {
+                  label: "Cancel",
+                  icon: "close",
+                  type: "tonal",
+                },
+                {
                   label: "Confirm",
                   icon: "check",
                   onClick: async () => {
@@ -127,8 +133,8 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
 
                     prepareEncryptedData();
                   }
-                }]
-              }
+                },
+              ]}
             />,
             document.body
           )
