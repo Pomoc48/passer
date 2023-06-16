@@ -2,7 +2,7 @@ input.material-input {
     all: unset;
     width: 100%;
     box-sizing: border-box;
-    background-color: var(--md-sys-color-elevation2);
+    background-color: var(--md-sys-color-elevation1);
     height: 56px;
     border-radius: 8px 8px 0 0;
     border-bottom: 3px solid var(--md-sys-color-outline);

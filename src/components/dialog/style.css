@@ -17,6 +17,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: min(100vw - 32px, var(--dialog-width, 500px));
+    max-height: calc(100vh - 200px);
     z-index: 3;
     padding: 24px;
     border-radius: 28px;
@@ -29,8 +30,19 @@
     opacity: 1;
 }
 
+.dialog .flow-container {
+    display: flex;
+    gap: 24px;
+    padding-top: 12px;
+    max-height: calc(100vh - 400px);
+    overflow-y: scroll;
+}
+
+.dialog .flow-container > * {
+    flex-basis: 100%;
+}
+
 .dialog .content {
-    padding-bottom: 24px;
     display: flex;
     flex-direction: column;
 }
@@ -40,7 +52,14 @@
 }
 
 .dialog .actions {
+    padding-top: 24px;
     display: flex;
     justify-content: flex-end;
     gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .dialog .flow-container {
+        flex-direction: column;
+    }
 }

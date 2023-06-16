@@ -7,10 +7,17 @@ import { useCryptoKey } from "../../context/cryptoKey";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import MaterialDialog from "../dialog";
-// import { GeneratePassword } from "js-generate-password";
+import { GeneratePassword } from "js-generate-password";
 import MaterialButton from "../button";
+import "./style.css";
+import { MaterialInput } from "../input";
 
-export default function NewPasswordButton(params: { reference: CollectionReference }) {
+export default function NewPasswordButton(
+  params: {
+    reference: CollectionReference,
+    notify: (message: string) => void,
+  },
+) {
   const cryptoKey = useCryptoKey().key!;
   const [showDialog, setShowDialog] = useState(false);
 
@@ -18,6 +25,10 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
   const urlRef = useRef<HTMLInputElement | null>(null);
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const [useNumbers, setUseNumbers] = useState(true);
+  const [useCharacters, setUseCharacters] = useState(true);
+  const [passwordSize, setPasswordSize] = useState(24);
 
   async function prepareEncryptedData() {
     const uid = new ShortUniqueId({ length: 16 });
@@ -46,6 +57,8 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
 
     setShowDialog(false);
     await firebaseInsert(params.reference, uploadData);
+
+    params.notify("New password successfully added");
   }
 
   return (
@@ -62,51 +75,84 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
             <MaterialDialog
               title="Add new password"
               maxWidth={900}
+              closeFunction={() => setShowDialog(false)}
               content={[
                 <>
-                  <label htmlFor="name">Password name:</label>
-                  <input
-                    id="name"
+                  <label>Password name:</label>
+                  <MaterialInput
+                    placeholder="ex. Wordpress Admin"
                     type="text"
-                    className='DialogInput'
-                    placeholder='ex. Wordpress Admin'
                     ref={nameRef}
                   />
                 </>,
                 <>
-                  <label htmlFor="url">Website URL:</label>
-                  <input
-                    id="url"
-                    type='url'
-                    className='DialogInput'
-                    placeholder='https://www.example.com/'
+                  <label>Website URL:</label>
+                  <MaterialInput
+                    placeholder="https://www.example.com/"
+                    type="url"
                     ref={urlRef}
                   />
                 </>,
                 <>
-                  <label htmlFor="username">Username / email:</label>
-                  <input
-                    id="username"
-                    type='text'
-                    className='DialogInput'
-                    placeholder='johnSmith94'
+                  <label>Username / email:</label>
+                  <MaterialInput
+                    placeholder="johnSmith94"
+                    type="text"
                     ref={usernameRef}
                   />
                 </>,
                 <>
-                  <label htmlFor="password">Password:</label>
-                  <input
-                    id="password"
-                    type='text'
-                    className='DialogInput'
-                    placeholder='0pX<W=gGTZoVRWqIoCMZ'
+                  <label>Password:</label>
+                  <MaterialInput
+                    placeholder="0pX<W=gGTZoVRWqIoCMZ"
+                    type="text"
                     ref={passwordRef}
                   />
                 </>,
               ]}
-              closeFunction={() => {
-                setShowDialog(false);
-              }}
+              additionalContent={[
+                <>
+                  <label>Generate secure password:</label>
+                  <div className="card">
+                    <div className="row expand">
+                      <p>Password length: {passwordSize}</p>
+                      <input
+                        type="range"
+                        min={8}
+                        max={42}
+                        value={passwordSize}
+                        onChange={(v) => setPasswordSize(parseInt(v.currentTarget.value))}
+                      />
+                    </div>
+                    <div className="row">
+                      <span className="material-icons" onClick={() => setUseNumbers(!useNumbers)}>
+                        {useNumbers ? "check_box" : "check_box_outline_blank"}
+                      </span>
+                      <p>Include numbers</p>
+                    </div>
+                    <div className="row">
+                      <span className="material-icons" onClick={() => setUseCharacters(!useCharacters)}>
+                        {useCharacters ? "check_box" : "check_box_outline_blank"}
+                      </span>
+                      <p>Include special characters</p>
+                    </div>
+                    <div className="action">
+                      <MaterialButton
+                        label="Generate"
+                        onClick={() => {
+                          passwordRef.current!.value = GeneratePassword({
+                            length: passwordSize,
+                            numbers: useNumbers,
+                            symbols: useCharacters,
+                          });
+                        }}
+                        icon="auto_fix_high"
+                        type="tonal"
+                      />
+                    </div>
+                  </div>
+                </>,
+              ]}
               actions={[
                 {
                   label: "Cancel",

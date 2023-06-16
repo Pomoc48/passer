@@ -1,6 +1,7 @@
 export type DialogParameters = {
     title: string;
     content: JSX.Element[];
+    additionalContent?: JSX.Element[];
     actions: DialogAction[];
     closeFunction?: () => void;
     maxWidth?: number;

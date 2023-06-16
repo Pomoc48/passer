@@ -41,7 +41,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const websitesColRef = collection(params.db, "users", user.user.uid, "websites");
 
   useEffect(() => {
-    let screenSize = 1000;
+    let screenSize = 900;
     updateMobile(window.innerWidth <= screenSize);
 
     window.onresize = () => {
@@ -153,7 +153,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
         mobile
           ? <SearchMobile user={user} />
           : <>
-            <NewPasswordButton reference={websitesColRef} />
+            <NewPasswordButton reference={websitesColRef} notify={notify} />
             <Search />
             <UserPill user={user} />
           </>

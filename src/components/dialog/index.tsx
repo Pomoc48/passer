@@ -32,9 +32,16 @@ export default function MaterialDialog(params: DialogParameters) {
     <div className="scrim" onClick={close} />
     <div className="dialog">
       <h3 className='title-large'>{params.title}</h3>
-      <div className='content body-medium'>
+      <div className="flow-container">
+        <div className='content body-medium'>
+          {params.content.map((content, i) => <div key={i}>{content}</div>)}
+        </div>
         {
-          params.content.map((content, i) => <div key={i}>{content}</div>)
+          params.additionalContent !== undefined
+            ? <div className='content body-medium'>
+              {params.additionalContent.map((content, i) => <div key={i}>{content}</div>)}
+            </div>
+            : null
         }
       </div>
       <div className='actions'>
