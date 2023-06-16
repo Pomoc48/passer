@@ -17,6 +17,7 @@ import UserPill from '../../components/user';
 import NewPasswordButton from '../../components/password-new';
 import SearchMobile from '../../components/search-mobile';
 import { MaterialInput } from '../../components/input';
+import Snackbar from '../../components/snackbar';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
@@ -27,6 +28,9 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const [showPasswordDialog, setShowPasswordDialog] = useState(true);
   const [passwordFail, setPasswordFail] = useState(true);
   const [mobile, updateMobile] = useState(false);
+
+  const [showSnack, setShowSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
 
   // const [showPasswordDialog, setShowPasswordDialog] = useState(false);
   // const passwordDialogRef = useRef<Website | null>(null);
@@ -110,9 +114,11 @@ export default function PasswordsPage(params: { db: Firestore }) {
       return;
     }
 
+
     let key: CryptoKey = await generateKey(passwordRef.current.value);
 
     if (passwordFail && !await testCaseMatch(userDocRef!, key)) {
+      notify("Invalid password");
       return;
     }
 
@@ -124,6 +130,21 @@ export default function PasswordsPage(params: { db: Firestore }) {
     localStorage.setItem(user.user.uid, keyData);
     cryptoKey.update(key);
     setShowPasswordDialog(false);
+
+    if (passwordFail) {
+      notify("Passwords successfully decrypted");
+    } else {
+      notify("Master password successfully updated");
+    }
+  }
+
+  function notify(message: string) {
+    if (showSnack) {
+      return;
+    }
+
+    setSnackMessage(message);
+    setShowSnack(true);
   }
 
   return <>
@@ -200,7 +221,15 @@ export default function PasswordsPage(params: { db: Firestore }) {
               }]
             }
           />,
-          document.body
+          document.body,
+        )
+        : null
+    }
+    {
+      showSnack
+        ? createPortal(
+          <Snackbar close={() => setShowSnack(false)} message={snackMessage} />,
+          document.body,
         )
         : null
     }

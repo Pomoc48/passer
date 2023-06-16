@@ -21,13 +21,17 @@ export async function testCaseMatch(reference: DocumentReference, key: CryptoKey
     if (docSnap.data().keyTest !== undefined) {
         let controlString = docSnap.data().keyTest;
 
-        const decrypted = await decrypt(
-            key,
-            new EncryptedData(controlString),
-        );
+        try {
+            const decrypted = await decrypt(
+                key,
+                new EncryptedData(controlString),
+            );
 
-        if (decrypted === "Test Message 123") {
-            return true;
+            if (decrypted === "Test Message 123") {
+                return true;
+            }
+        } catch (e) {
+            return false;
         }
     }
 
