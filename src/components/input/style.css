@@ -1,0 +1,16 @@
+input.material-input {
+    all: unset;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--md-sys-color-elevation2);
+    height: 56px;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 3px solid var(--md-sys-color-outline);
+    padding-inline: 16px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input.material-input:focus {
+    border-bottom: 3px solid var(--md-sys-color-primary);
+}

@@ -16,6 +16,7 @@ import { useSearch } from '../../context/searchProvider';
 import UserPill from '../../components/user';
 import NewPasswordButton from '../../components/password-new';
 import SearchMobile from '../../components/search-mobile';
+import { MaterialInput } from '../../components/input';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useGoogleUser().user!;
@@ -23,7 +24,8 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const search = useSearch();
 
   const [websites, updateWebsites] = useState<Website[]>([]);
-  const [showModal, setShowModal] = useState(true);
+  const [showPasswordDialog, setShowPasswordDialog] = useState(true);
+  const [passwordFail, setPasswordFail] = useState(true);
   const [mobile, updateMobile] = useState(false);
 
   // const [showPasswordDialog, setShowPasswordDialog] = useState(false);
@@ -35,6 +37,13 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const websitesColRef = collection(params.db, "users", user.user.uid, "websites");
 
   useEffect(() => {
+    let screenSize = 1000;
+    updateMobile(window.innerWidth <= screenSize);
+
+    window.onresize = () => {
+      return updateMobile(window.innerWidth <= screenSize);
+    };
+
     const keyData = localStorage.getItem(user.user.uid);
 
     if (keyData !== null) {
@@ -46,10 +55,10 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
       if (await testCaseMatch(userDocRef!, key)) {
         cryptoKey.update(key);
-        setShowModal(false);
+        setShowPasswordDialog(false);
       } else {
         cryptoKey.update(null);
-        setShowModal(true);
+        setPasswordFail(true);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,20 +93,38 @@ export default function PasswordsPage(params: { db: Firestore }) {
     });
 
     return () => {
-      unsubscribe();
+      if (cryptoKey.key !== null) {
+        unsubscribe();
+      }
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cryptoKey.key]);
 
-  useEffect(() => {
-    let screenSize = 1000;
-    updateMobile(window.innerWidth <= screenSize);
+  async function masterSubmit() {
+    if (passwordRef.current === null) {
+      return;
+    }
 
-    window.onresize = () => {
-      return updateMobile(window.innerWidth <= screenSize);
-    };
-  }, []);
+    if (passwordRef.current.value === "") {
+      return;
+    }
+
+    let key: CryptoKey = await generateKey(passwordRef.current.value);
+
+    if (passwordFail && !await testCaseMatch(userDocRef!, key)) {
+      return;
+    }
+
+    if (!passwordFail) {
+      await updateTestCase(userDocRef, key);
+    }
+
+    const keyData = await exportKey(key);
+    localStorage.setItem(user.user.uid, keyData);
+    cryptoKey.update(key);
+    setShowPasswordDialog(false);
+  }
 
   return <>
     <Navbar>
@@ -137,7 +164,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
                   key={index}
                   website={data}
                   onClick={() => {
-
+                    // TODO: add
                   }}
                 />
               );
@@ -147,44 +174,29 @@ export default function PasswordsPage(params: { db: Firestore }) {
         : null
     }
     {
-      showModal
+      showPasswordDialog
         ? createPortal(
           <MaterialDialog
-            title="Master password setup"
-            content={
-              <>
-                <div>Please enter your master password used for encrypting and decrypting your data.</div>
-                <input
-                  type='password'
-                  className='DialogInput'
+            title={passwordFail ? "Verify your password" : "Master password setup"}
+            content={[
+              <div>Please enter your master password used for encrypting and decrypting your data.</div>,
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                masterSubmit();
+              }}>
+                <MaterialInput
                   placeholder='SecretPassword123'
+                  type='password'
                   ref={passwordRef}
                 />
-              </>
-            }
-            closeFunction={() => { }}
+              </form>
+            ]}
+            closeFunction={null}
             actions={
               [{
                 label: "Confirm",
                 icon: "check",
-                onClick: async () => {
-                  if (passwordRef.current === null) {
-                    return;
-                  }
-
-                  if (passwordRef.current.value === "") {
-                    return;
-                  }
-
-                  let key: CryptoKey = await generateKey(passwordRef.current.value);
-                  await updateTestCase(userDocRef, key);
-
-                  const keyData = await exportKey(key);
-                  localStorage.setItem(user.user.uid, keyData)
-
-                  cryptoKey.update(key);
-                  setShowModal(false);
-                }
+                onClick: masterSubmit,
               }]
             }
           />,

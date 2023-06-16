@@ -15,16 +15,22 @@ export default function MaterialDialog(params: DialogParameters) {
     <div
       className="scrim"
       onClick={() => {
-        document.getElementsByClassName("dialog")[0].classList.remove("open");
-        document.getElementsByClassName("scrim")[0].classList.remove("open");
-        setTimeout(() => {
-          params.closeFunction();
-        }, 300);
+        if (params.closeFunction !== null) {
+          document.getElementsByClassName("dialog")[0].classList.remove("open");
+          document.getElementsByClassName("scrim")[0].classList.remove("open");
+          setTimeout(() => {
+            params.closeFunction!();
+          }, 300);
+        }
       }}
     />
     <div className="dialog">
       <h3 className='title-large'>{params.title}</h3>
-      <div className='content body-medium'>{params.content}</div>
+      <div className='content body-medium'>
+        {
+          params.content.map((content, i) => <div key={i}>{content}</div>)
+        }
+      </div>
       <div className='actions'>
         {
           params.actions.map((action, index) => {

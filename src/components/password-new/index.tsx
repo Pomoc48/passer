@@ -61,7 +61,7 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
           ? createPortal(
             <MaterialDialog
               title="Add new password"
-              content={
+              content={[
                 <>
                   <label htmlFor="name">Password name:</label>
                   <input
@@ -71,6 +71,8 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
                     placeholder='ex. Wordpress Admin'
                     ref={nameRef}
                   />
+                </>,
+                <>
                   <label htmlFor="url">Website URL:</label>
                   <input
                     id="url"
@@ -79,6 +81,8 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
                     placeholder='https://www.example.com/'
                     ref={urlRef}
                   />
+                </>,
+                <>
                   <label htmlFor="username">Username / email:</label>
                   <input
                     id="username"
@@ -87,6 +91,8 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
                     placeholder='johnSmith94'
                     ref={usernameRef}
                   />
+                </>,
+                <>
                   <label htmlFor="password">Password:</label>
                   <input
                     id="password"
@@ -95,26 +101,8 @@ export default function NewPasswordButton(params: { reference: CollectionReferen
                     placeholder='0pX<W=gGTZoVRWqIoCMZ'
                     ref={passwordRef}
                   />
-                  {/* <button
-                    className="text icon-button clickable"
-                    onClick={() => {
-                      if (passwordRef.current === null) {
-                        return;
-                      }
-
-                      let password = GeneratePassword({
-                        length: 20,
-                        numbers: true,
-                        symbols: true,
-                      })
-
-                      passwordRef.current.value = password;
-                    }}
-                  >
-                    <span className="material-icons">auto_fix_high</span>
-                  </button> */}
-                </>
-              }
+                </>,
+              ]}
               closeFunction={() => {
                 setShowDialog(false);
               }}

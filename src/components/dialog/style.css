@@ -35,37 +35,12 @@
     flex-direction: column;
 }
 
-.dialog .content input {
-    all: unset;
-    box-sizing: border-box;
-    border-radius: 4px;
-    padding: 0 16px;
-    height: 56px;
-    border: 2px solid #79747E;
-    transition: 0.3s;
-}
-
-.dialog .content input:focus {
-    border: 2px solid var(--md-sys-color-primary);
-}
-
-.dialog .content label {
-    color: var(--md-sys-color-primary);
-    margin-bottom: 8px;
+.dialog .content > div:nth-child(n + 2) {
     margin-top: 16px;
-}
-
-.dialog .content label:first-child {
-    margin-top: 0;
-}
-
-.dialog .content button {
-    position: relative;
-    top: -48px;
-    left: calc(100% - 48px);
 }
 
 .dialog .actions {
     display: flex;
     justify-content: flex-end;
+    gap: 16px;
 }

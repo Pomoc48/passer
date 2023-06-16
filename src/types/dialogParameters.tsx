@@ -1,8 +1,8 @@
 export type DialogParameters = {
     title: string;
-    content: string | JSX.Element;
+    content: JSX.Element[];
     actions: DialogAction[];
-    closeFunction: () => void;
+    closeFunction: (() => void) | null;
 }
 
 export type DialogAction = {
