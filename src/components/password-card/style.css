@@ -19,6 +19,20 @@
     font-size: 16px;
 }
 
+.password-card .content .empty {
+    opacity: 0.5;
+}
+
+.password-card .content > p > a {
+    color: var(--md-sys-color-primary);
+}
+
+.password-card .content a > span {
+    font-size: 12px;
+    margin-left: 4px;
+    vertical-align: sub;
+}
+
 .password-card .actions {
     margin-top: 16px;
     display: flex;

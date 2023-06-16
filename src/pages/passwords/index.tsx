@@ -15,7 +15,7 @@ import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/searchProvider';
 import UserPill from '../../components/user';
 import Sorting from '../../components/sorting';
-import NewPasswordButton from '../../components/password-card-new';
+import NewPasswordButton from '../../components/password-new';
 import SearchMobile from '../../components/search-mobile';
 
 export default function PasswordsPage(params: { db: Firestore }) {
