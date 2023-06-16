@@ -16,6 +16,7 @@ export default function NewPasswordButton(
   params: {
     reference: CollectionReference,
     notify: (message: string) => void,
+    isFAB?: boolean,
   },
 ) {
   const cryptoKey = useCryptoKey().key!;
@@ -55,9 +56,7 @@ export default function NewPasswordButton(
       }
     }
 
-    setShowDialog(false);
     await firebaseInsert(params.reference, uploadData);
-
     params.notify("New password successfully added");
   }
 
@@ -68,6 +67,7 @@ export default function NewPasswordButton(
         onClick={() => { setShowDialog(true) }}
         icon='add'
         type='filled'
+        isFAB={params.isFAB}
       />
       {
         showDialog

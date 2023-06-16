@@ -11,6 +11,10 @@ input.material-input {
     transition: 0.3s;
 }
 
+input.material-input:hover {
+    background-color: var(--md-sys-color-elevation2);
+}
+
 input.material-input:focus {
     border-bottom: 3px solid var(--md-sys-color-primary);
 }

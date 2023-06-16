@@ -23,6 +23,7 @@
 }
 
 .dialog .card .row.expand > input {
+    display: block;
     flex-grow: 1;
     margin-left: 16px;
 }
@@ -33,8 +34,19 @@
     margin-top: 16px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
     .dialog .card .row.expand {
         flex-direction: column;
+        height: auto;
+    }
+    
+    .dialog .card .row.expand > * {
+        width: 100%;
+        margin-bottom: 0;
+    }
+    
+    .dialog .card .row.expand > input {
+        margin-bottom: 8px;
+        margin-left: 0;
     }
 }

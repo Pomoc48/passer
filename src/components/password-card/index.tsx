@@ -2,7 +2,12 @@ import { Website } from '../../types/website';
 import MaterialButton from '../button';
 import './style.css'
 
-export default function PasswordCard(params: { website: Website, onClick: () => void }) {
+export default function PasswordCard(
+  params: {
+    website: Website,
+    notify: (arg0: string) => void,
+  },
+) {
   let url = params.website.data.url;
 
   if (url !== null) {
@@ -17,10 +22,7 @@ export default function PasswordCard(params: { website: Website, onClick: () => 
   let hasUsername = params.website.data.username! !== "";
 
   return (
-    <div
-      className='card password-card'
-      onClick={params.onClick}
-    >
+    <div className='card password-card'>
       <div className='content'>
         <p className='title'>{params.website.data.name}</p>
         <p className={hasURL ? 'url' : "url empty"}>
@@ -44,6 +46,7 @@ export default function PasswordCard(params: { website: Website, onClick: () => 
               label='Copy'
               onClick={() => {
                 navigator.clipboard.writeText(params.website.data.password!);
+                params.notify("Password copied to clipboard");
               }}
               icon='content_copy'
               type='text'

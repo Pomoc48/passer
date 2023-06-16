@@ -160,8 +160,17 @@ export default function PasswordsPage(params: { db: Firestore }) {
       }
     </Navbar>
     {
+      mobile
+        ? <NewPasswordButton
+          reference={websitesColRef}
+          notify={notify}
+          isFAB={true}
+        />
+        : null
+    }
+    {
       cryptoKey.key !== null
-        ? <div className='passwords'>
+        ? <div className={mobile ? 'passwords FAB-space' : 'passwords'}>
           {
             websites.filter(
               website => {
@@ -180,15 +189,11 @@ export default function PasswordsPage(params: { db: Firestore }) {
                 return checkMatch(website.data.name) || checkMatch(website.data.username) || checkMatch(website.data.url?.toString());
               }
             ).map((data, index) => {
-              return (
-                <PasswordCard
-                  key={index}
-                  website={data}
-                  onClick={() => {
-                    // TODO: add
-                  }}
-                />
-              );
+              return <PasswordCard
+                key={index}
+                website={data}
+                notify={notify}
+              />;
             })
           }
         </div>
@@ -227,7 +232,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
     {
       showSnack
         ? createPortal(
-          <Snackbar close={() => setShowSnack(false)} message={snackMessage} />,
+          <Snackbar close={() => setShowSnack(false)} message={snackMessage} mobile={mobile} />,
           document.body,
         )
         : null

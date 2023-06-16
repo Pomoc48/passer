@@ -50,7 +50,11 @@ export default function MaterialDialog(params: DialogParameters) {
             return <MaterialButton
               key={index}
               label={action.label}
-              onClick={action.onClick === undefined ? close : action.onClick}
+              onClick={
+                action.onClick === undefined
+                  ? close
+                  : action.onClick
+              }
               icon={action.icon}
               type={action.type}
             />

@@ -19,3 +19,7 @@ div.snackbar {
 div.snackbar.open {
     opacity: 1;
 }
+
+div.snackbar.mobile {
+    bottom: 88px;
+}

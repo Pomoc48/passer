@@ -17,7 +17,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: min(100vw - 32px, var(--dialog-width, 500px));
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 32px);
     z-index: 3;
     padding: 24px;
     border-radius: 28px;
@@ -34,7 +34,7 @@
     display: flex;
     gap: 24px;
     padding-top: 12px;
-    max-height: calc(100vh - 400px);
+    max-height: calc(100vh - 220px);
     overflow-y: scroll;
 }
 
@@ -59,6 +59,10 @@
 }
 
 @media (max-width: 900px) {
+    .dialog {
+        width: min(100vw - 32px, 600px);
+    }
+
     .dialog .flow-container {
         flex-direction: column;
     }
