@@ -1,0 +1,52 @@
+.dialog label {
+    display: block;
+    color: var(--md-sys-color-primary);
+    padding-left: 4px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.dialog .card .row {
+    user-select: none;
+    display: flex;
+    height: 56px;
+    gap: 8px;
+    font-size: 16px;
+    align-items: center;
+}
+
+.dialog .card .row span {
+    user-select: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--md-sys-color-primary);
+}
+
+.dialog .card .row.expand > input {
+    display: block;
+    flex-grow: 1;
+    margin-left: 16px;
+}
+
+.dialog .card .action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+    .dialog .card .row.expand {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .dialog .card .row.expand > * {
+        width: 100%;
+        margin-bottom: 0;
+    }
+    
+    .dialog .card .row.expand > input {
+        margin-bottom: 8px;
+        margin-left: 0;
+    }
+}

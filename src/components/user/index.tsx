@@ -1,7 +1,7 @@
 import { UserCredential, getAuth, signOut } from 'firebase/auth';
-import './style.css';
 import { useGoogleUser } from '../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
+import './style.css';
 
 export default function UserPill(params: { user: UserCredential }) {
   const auth = getAuth();

@@ -45,3 +45,15 @@ button.material.tonal:hover {
     background-color: var(--md-sys-color-elevation5);
     opacity: 1;
 }
+
+button.material.FAB {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    height: 56px;
+    border-radius: 16px;
+}
+
+button.material.FAB:hover {
+    opacity: 1;
+}
