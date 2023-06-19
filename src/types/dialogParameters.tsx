@@ -3,13 +3,14 @@ export type DialogParameters = {
     content: JSX.Element[];
     additionalContent?: JSX.Element[];
     actions: DialogAction[];
-    closeFunction?: () => void;
+    closeFunction: () => void;
     maxWidth?: number;
+    dismissible: boolean;
 }
 
 export type DialogAction = {
     label: string;
-    onClick?: () => void;
+    onClick?: () => Promise<boolean>;
     icon?: string;
     type?: "filled" | "tonal" | "text",
 }

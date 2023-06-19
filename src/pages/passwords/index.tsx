@@ -107,19 +107,18 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   async function masterSubmit() {
     if (passwordRef.current === null) {
-      return;
+      return false;
     }
 
     if (passwordRef.current.value === "") {
-      return;
+      return false;
     }
-
 
     let key: CryptoKey = await generateKey(passwordRef.current.value);
 
     if (passwordFail && !await testCaseMatch(userDocRef!, key)) {
       notify("Invalid password");
-      return;
+      return false;
     }
 
     if (!passwordFail) {
@@ -129,13 +128,14 @@ export default function PasswordsPage(params: { db: Firestore }) {
     const keyData = await exportKey(key);
     localStorage.setItem(user.user.uid, keyData);
     cryptoKey.update(key);
-    setShowPasswordDialog(false);
 
     if (passwordFail) {
       notify("Passwords successfully decrypted");
     } else {
       notify("Master password successfully updated");
     }
+
+    return true;
   }
 
   function notify(message: string) {
@@ -204,11 +204,15 @@ export default function PasswordsPage(params: { db: Firestore }) {
         ? createPortal(
           <MaterialDialog
             title={passwordFail ? "Verify your password" : "Master password setup"}
+            closeFunction={() => setShowPasswordDialog(false)}
+            dismissible={false}
             content={[
               <div>Please enter your master password used for encrypting and decrypting your data.</div>,
-              <form onSubmit={(e) => {
+              <form onSubmit={async (e) => {
                 e.preventDefault();
-                masterSubmit();
+                if (await masterSubmit()) {
+                  setShowPasswordDialog(false);
+                }
               }}>
                 <MaterialInput
                   placeholder='SecretPassword123'

@@ -75,6 +75,7 @@ export default function NewPasswordButton(
             <MaterialDialog
               title="Add new password"
               maxWidth={900}
+              dismissible={true}
               closeFunction={() => setShowDialog(false)}
               content={[
                 <>
@@ -166,18 +167,19 @@ export default function NewPasswordButton(
                     let urlInput = urlRef.current!.value.trim();
 
                     if (nameRef.current!.value.trim() === "") {
-                      return;
+                      return false;
                     }
 
                     if (urlInput !== "") {
                       try {
                         new URL(urlInput);
                       } catch (_) {
-                        return;
+                        return false;
                       }
                     }
 
-                    prepareEncryptedData();
+                    await prepareEncryptedData();
+                    return true;
                   }
                 },
               ]}

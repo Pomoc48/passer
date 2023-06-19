@@ -29,7 +29,7 @@ export default function MaterialDialog(params: DialogParameters) {
   }
 
   return <>
-    <div className="scrim" onClick={close} />
+    <div className="scrim" onClick={params.dismissible ? close : undefined} />
     <div className="dialog">
       <h3 className='title-large'>{params.title}</h3>
       <div className="flow-container">
@@ -53,7 +53,11 @@ export default function MaterialDialog(params: DialogParameters) {
               onClick={
                 action.onClick === undefined
                   ? close
-                  : action.onClick
+                  : async () => {
+                    if (await action.onClick!()) {
+                      close();
+                    }
+                  }
               }
               icon={action.icon}
               type={action.type}
