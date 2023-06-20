@@ -50,6 +50,13 @@
     align-items: center;
 }
 
+.dialog.details .row p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+}
+
 .dialog.details .row span {
     user-select: none;
     cursor: pointer;

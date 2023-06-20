@@ -35,7 +35,7 @@
     gap: 24px;
     padding-top: 12px;
     max-height: calc(100vh - 220px);
-    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .dialog .flow-container > * {
@@ -45,6 +45,7 @@
 .dialog .content {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .dialog .content > div:nth-child(n + 2) {

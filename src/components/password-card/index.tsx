@@ -32,6 +32,21 @@ export default function PasswordCard(
     params.notify(name + " copied to clipboard");
   }
 
+  function maskPassword(length: number) {
+    let mask = "";
+
+    for (let i = 0; i < length; i++) {
+      mask = mask + "•";
+    }
+
+    return mask;
+  }
+
+  function close() {
+    setShowPasswordDetails(false);
+    setShowPassword(false);
+  }
+
   return (
     <>
       <div className='card password-card'>
@@ -76,14 +91,22 @@ export default function PasswordCard(
             <MaterialDialog
               class='details'
               title={params.website.data.name}
-              closeFunction={() => setShowPasswordDetails(false)}
+              closeFunction={close}
               dismissible={true}
               content={[
                 <>
                   <label>Website URL:</label>
                   <div className="row">
-                    <p>{params.website.data.url?.toString()}</p>
-                    <span className="material-icons">open_in_new</span>
+                    <p className={hasURL ? undefined : "empty"}>
+                      {hasURL ? params.website.data.url!.toString() : "*no website"}
+                    </p>
+                    {
+                      hasURL
+                        ? <span
+                          onClick={() => window.open(url!, '_blank')!.focus()}
+                          className="material-icons">open_in_new</span>
+                        : null
+                    }
                   </div>
                 </>,
                 <>
@@ -104,13 +127,34 @@ export default function PasswordCard(
                 <>
                   <label>Password:</label>
                   <div className="row">
-                    <p>{showPassword ? params.website.data.password : "•••••••••••••••••"}</p>
-                    <span className="material-icons" onClick={() => setShowPassword(!showPassword)}>
-                      {showPassword ? "visibility_off" : "visibility"}
-                    </span>
-                    <span
-                      onClick={() => copyContent(params.website.data.password!, "Password")}
-                      className="material-icons">content_copy</span>
+                    <p className={params.website.data.password ? undefined : "empty"}>
+                      {
+                        params.website.data.password
+                          ? showPassword
+                            ? params.website.data.password
+                            : maskPassword(params.website.data.password!.length)
+                          : "*no password"
+                      }
+                    </p>
+                    {
+                      params.website.data.password
+                        ? <>
+                          <span
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="material-icons"
+                          >
+                            {showPassword ? "visibility_off" : "visibility"}
+                          </span>
+                          <span
+                            onClick={() => copyContent(params.website.data.password!, "Password")}
+                            className="material-icons"
+                          >
+                            content_copy
+                          </span>
+                        </>
+                        : null
+                    }
+
                   </div>
                 </>,
               ]}
