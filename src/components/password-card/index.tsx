@@ -167,6 +167,7 @@ export default function PasswordCard(
                 {
                   label: "Delete",
                   icon: "delete",
+                  isError: true,
                   // onClick: async () => false,
                 },
                 {

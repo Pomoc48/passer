@@ -14,4 +14,5 @@ export type DialogAction = {
     onClick?: () => Promise<boolean>;
     icon?: string;
     type?: "filled" | "tonal" | "text",
+    isError?: boolean;
 }

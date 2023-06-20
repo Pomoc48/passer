@@ -61,6 +61,7 @@ export default function MaterialDialog(params: DialogParameters) {
               }
               icon={action.icon}
               type={action.type}
+              isError={action.isError}
             />
           })
         }
