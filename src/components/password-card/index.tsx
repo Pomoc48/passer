@@ -160,16 +160,21 @@ export default function PasswordCard(
               ]}
               actions={[
                 {
+                  label: "Edit",
+                  icon: "edit",
+                  // onClick: async () => false,
+                },
+                {
+                  label: "Delete",
+                  icon: "delete",
+                  // onClick: async () => false,
+                },
+                {
                   label: "Cancel",
                   icon: "close",
                   type: "tonal",
                 },
-                {
-                  label: "Edit",
-                  icon: "edit",
-                  // onClick: async () => false,
-                }]
-              }
+              ]}
             />,
             document.body,
           )

@@ -55,7 +55,8 @@
 .dialog .actions {
     padding-top: 24px;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
     gap: 16px;
 }
 
