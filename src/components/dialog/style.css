@@ -67,3 +67,10 @@
         flex-direction: column;
     }
 }
+
+.dialog .content label {
+    display: block;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 8px;
+    font-size: 14px;
+}

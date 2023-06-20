@@ -19,8 +19,9 @@
     font-size: 16px;
 }
 
-.password-card .content .empty {
+.password-card .content .empty, .dialog.details .empty {
     opacity: 0.5;
+    user-select: none;
 }
 
 .password-card .content > p > a {
@@ -38,4 +39,20 @@
     display: flex;
     gap: 8px;
     justify-content: flex-end;
+}
+
+.dialog.details .row {
+    user-select: none;
+    display: flex;
+    height: 56px;
+    gap: 8px;
+    font-size: 16px;
+    align-items: center;
+}
+
+.dialog.details .row span {
+    user-select: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--md-sys-color-primary);
 }
