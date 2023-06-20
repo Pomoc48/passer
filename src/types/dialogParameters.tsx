@@ -6,6 +6,7 @@ export type DialogParameters = {
     closeFunction: () => void;
     maxWidth?: number;
     dismissible: boolean;
+    class: string;
 }
 
 export type DialogAction = {

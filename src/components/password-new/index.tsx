@@ -73,6 +73,7 @@ export default function NewPasswordButton(
         showDialog
           ? createPortal(
             <MaterialDialog
+              class="new"
               title="Add new password"
               maxWidth={900}
               dismissible={true}

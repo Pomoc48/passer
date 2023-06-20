@@ -32,9 +32,6 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const [showSnack, setShowSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
 
-  // const [showPasswordDialog, setShowPasswordDialog] = useState(false);
-  // const passwordDialogRef = useRef<Website | null>(null);
-
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const userDocRef = doc(params.db, "users", user.user.uid);
@@ -203,6 +200,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
       showPasswordDialog
         ? createPortal(
           <MaterialDialog
+            class='master'
             title={passwordFail ? "Verify your password" : "Master password setup"}
             closeFunction={() => setShowPasswordDialog(false)}
             dismissible={false}
