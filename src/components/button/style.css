@@ -54,6 +54,11 @@ button.material.FAB {
     border-radius: 16px;
 }
 
+button.material.error {
+    background-color: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
+}
+
 button.material.FAB:hover {
     opacity: 1;
 }

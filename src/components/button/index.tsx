@@ -7,6 +7,7 @@ export default function MaterialButton(
     icon?: string,
     type?: "filled" | "tonal" | "text",
     isFAB?: boolean,
+    isError?: boolean,
   },
 ) {
   let classList = "material label-large clickable";
@@ -25,6 +26,10 @@ export default function MaterialButton(
 
   if (params.isFAB === true) {
     classList += " FAB";
+  }
+
+  if (params.isError === true) {
+    classList += " error";
   }
 
   return (

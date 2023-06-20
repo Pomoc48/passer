@@ -6,6 +6,7 @@ export type DialogParameters = {
     closeFunction: () => void;
     maxWidth?: number;
     dismissible: boolean;
+    class: string;
 }
 
 export type DialogAction = {
@@ -13,4 +14,5 @@ export type DialogAction = {
     onClick?: () => Promise<boolean>;
     icon?: string;
     type?: "filled" | "tonal" | "text",
+    isError?: boolean;
 }

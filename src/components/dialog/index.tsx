@@ -30,7 +30,7 @@ export default function MaterialDialog(params: DialogParameters) {
 
   return <>
     <div className="scrim" onClick={params.dismissible ? close : undefined} />
-    <div className="dialog">
+    <div className={"dialog " + params.class}>
       <h3 className='title-large'>{params.title}</h3>
       <div className="flow-container">
         <div className='content body-medium'>
@@ -61,6 +61,7 @@ export default function MaterialDialog(params: DialogParameters) {
               }
               icon={action.icon}
               type={action.type}
+              isError={action.isError}
             />
           })
         }

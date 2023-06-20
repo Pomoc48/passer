@@ -73,6 +73,7 @@ export default function NewPasswordButton(
         showDialog
           ? createPortal(
             <MaterialDialog
+              class="new"
               title="Add new password"
               maxWidth={900}
               dismissible={true}
@@ -156,11 +157,6 @@ export default function NewPasswordButton(
               ]}
               actions={[
                 {
-                  label: "Cancel",
-                  icon: "close",
-                  type: "tonal",
-                },
-                {
                   label: "Confirm",
                   icon: "check",
                   onClick: async () => {
@@ -181,6 +177,11 @@ export default function NewPasswordButton(
                     await prepareEncryptedData();
                     return true;
                   }
+                },
+                {
+                  label: "Cancel",
+                  icon: "close",
+                  type: "tonal",
                 },
               ]}
             />,

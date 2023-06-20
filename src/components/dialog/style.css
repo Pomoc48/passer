@@ -35,7 +35,7 @@
     gap: 24px;
     padding-top: 12px;
     max-height: calc(100vh - 220px);
-    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .dialog .flow-container > * {
@@ -45,6 +45,7 @@
 .dialog .content {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .dialog .content > div:nth-child(n + 2) {
@@ -54,7 +55,8 @@
 .dialog .actions {
     padding-top: 24px;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
     gap: 16px;
 }
 
@@ -66,4 +68,11 @@
     .dialog .flow-container {
         flex-direction: column;
     }
+}
+
+.dialog .content label {
+    display: block;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 8px;
+    font-size: 14px;
 }
