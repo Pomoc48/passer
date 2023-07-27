@@ -1,0 +1,4 @@
+div.info {
+    color: var(--md-sys-color-on-secondary-container);
+    font-size: 14px;
+}

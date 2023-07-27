@@ -1,11 +1,41 @@
 import './style.css';
 import Navbar from '../../components/navbar';
-import GoogleSignIn from '../../components/google-login';
+import LogInButton from '../../components/login-dialog';
+import SignUpButton from '../../components/signup-dialog';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import Snackbar from '../../components/snackbar';
 
 export default function WelcomePage() {
+  const [showSnack, setShowSnack] = useState(false);
+  const [mobile, updateMobile] = useState(false);
+
+  const [snackMessage, setSnackMessage] = useState("");
+  const [snackLong, setSnackLong] = useState(false);
+
+  useEffect(() => {
+    let screenSize = 900;
+    updateMobile(window.innerWidth <= screenSize);
+
+    window.onresize = () => {
+      return updateMobile(window.innerWidth <= screenSize);
+    };
+  }, []);
+
+  function notify(message: string, long?: boolean) {
+    if (showSnack) {
+      return;
+    }
+
+    setSnackLong(long ?? false);
+    setSnackMessage(message);
+    setShowSnack(true);
+  }
+
   return <>
     <Navbar>
-      <GoogleSignIn/>
+      <LogInButton notify={notify} />
+      <SignUpButton notify={notify} />
     </Navbar>
     <main>
       <div className="section-container">
@@ -36,5 +66,18 @@ export default function WelcomePage() {
         </section>
       </div>
     </main>
+    {
+      showSnack
+        ? createPortal(
+          <Snackbar
+            close={() => setShowSnack(false)}
+            message={snackMessage}
+            mobile={mobile}
+            long={snackLong}
+          />,
+          document.body,
+        )
+        : null
+    }
   </>
 }

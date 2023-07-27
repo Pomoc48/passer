@@ -110,7 +110,7 @@ export default function PasswordCard(
                   </div>
                 </>,
                 <>
-                  <label>Username / email:</label>
+                  <label>Username / e-mail:</label>
                   <div className="row">
                     <p className={hasUsername ? undefined : "empty"}>
                       {hasUsername ? params.website.data.username : "*no username"}
