@@ -6,8 +6,7 @@ import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
 import { emailRegex } from '../../functions/crypto';
 
-export default function SignUpButton(params: { notify: (message: string) => void }) {
-
+export default function SignUpButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -98,6 +97,7 @@ export default function SignUpButton(params: { notify: (message: string) => void
                       return false;
                     }
 
+                    params.notify("Account created, please check your e-mail", true);
                     return true;
                   }
                 },

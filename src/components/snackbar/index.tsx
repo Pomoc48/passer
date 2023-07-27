@@ -1,7 +1,20 @@
 import { useEffect } from 'react';
 import './style.css';
 
-export default function Snackbar(params: { message: String, close: () => void, mobile: boolean }) {
+export default function Snackbar(
+  params: {
+    message: String,
+    close: () => void,
+    mobile: boolean,
+    long?: boolean,
+  },
+) {
+  let duration = 3000;
+
+  if (params.long) {
+    duration = 6000;
+  }
+
   useEffect(() => {
     setTimeout(() => {
       document.getElementsByClassName("snackbar")[0].classList.add("open");
@@ -10,7 +23,7 @@ export default function Snackbar(params: { message: String, close: () => void, m
     setTimeout(() => {
       document.getElementsByClassName("snackbar")[0].classList.remove("open");
       setTimeout(() => params.close(), 300);
-    }, 2700);
+    }, duration - 300);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

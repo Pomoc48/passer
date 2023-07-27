@@ -11,6 +11,7 @@ export default function WelcomePage() {
   const [mobile, updateMobile] = useState(false);
 
   const [snackMessage, setSnackMessage] = useState("");
+  const [snackLong, setSnackLong] = useState(false);
 
   useEffect(() => {
     let screenSize = 900;
@@ -21,11 +22,12 @@ export default function WelcomePage() {
     };
   }, []);
 
-  function notify(message: string) {
+  function notify(message: string, long?: boolean) {
     if (showSnack) {
       return;
     }
 
+    setSnackLong(long ?? false);
     setSnackMessage(message);
     setShowSnack(true);
   }
@@ -67,7 +69,12 @@ export default function WelcomePage() {
     {
       showSnack
         ? createPortal(
-          <Snackbar close={() => setShowSnack(false)} message={snackMessage} mobile={mobile} />,
+          <Snackbar
+            close={() => setShowSnack(false)}
+            message={snackMessage}
+            mobile={mobile}
+            long={snackLong}
+          />,
           document.body,
         )
         : null

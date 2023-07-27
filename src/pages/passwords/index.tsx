@@ -234,7 +234,11 @@ export default function PasswordsPage(params: { db: Firestore }) {
     {
       showSnack
         ? createPortal(
-          <Snackbar close={() => setShowSnack(false)} message={snackMessage} mobile={mobile} />,
+          <Snackbar
+            close={() => setShowSnack(false)}
+            message={snackMessage}
+            mobile={mobile}
+          />,
           document.body,
         )
         : null
