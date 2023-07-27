@@ -4,8 +4,9 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
+import { emailRegex } from '../../functions/crypto';
 
-export default function LogInButton() {
+export default function LogInButton(params: { notify: (message: string) => void }) {
 
   const [showDialog, setShowDialog] = useState(false);
 
@@ -57,7 +58,27 @@ export default function LogInButton() {
                 {
                   label: "Continue",
                   icon: "check",
-                  // onClick: async () => false,
+                  onClick: async () => {
+                    let emailInput = emailRef.current!.value.trim();
+                    let passwordInput = passwordRef.current!.value.trim();
+
+                    if (passwordInput.length < 12) {
+                      params.notify("Password is too short");
+                      return false;
+                    }
+
+                    if (passwordInput.length > 200) {
+                      params.notify("Password is too long");
+                      return false;
+                    }
+
+                    if (!emailInput.match(emailRegex)) {
+                      params.notify("Invalid e-mail address");
+                      return false;
+                    }
+
+                    return true;
+                  }
                 },
                 {
                   label: "Cancel",

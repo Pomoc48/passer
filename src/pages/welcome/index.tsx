@@ -2,12 +2,38 @@ import './style.css';
 import Navbar from '../../components/navbar';
 import LogInButton from '../../components/login-dialog';
 import SignUpButton from '../../components/signup-dialog';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import Snackbar from '../../components/snackbar';
 
 export default function WelcomePage() {
+  const [showSnack, setShowSnack] = useState(false);
+  const [mobile, updateMobile] = useState(false);
+
+  const [snackMessage, setSnackMessage] = useState("");
+
+  useEffect(() => {
+    let screenSize = 900;
+    updateMobile(window.innerWidth <= screenSize);
+
+    window.onresize = () => {
+      return updateMobile(window.innerWidth <= screenSize);
+    };
+  }, []);
+
+  function notify(message: string) {
+    if (showSnack) {
+      return;
+    }
+
+    setSnackMessage(message);
+    setShowSnack(true);
+  }
+
   return <>
     <Navbar>
-      <LogInButton />
-      <SignUpButton />
+      <LogInButton notify={notify} />
+      <SignUpButton notify={notify} />
     </Navbar>
     <main>
       <div className="section-container">
@@ -38,5 +64,13 @@ export default function WelcomePage() {
         </section>
       </div>
     </main>
+    {
+      showSnack
+        ? createPortal(
+          <Snackbar close={() => setShowSnack(false)} message={snackMessage} mobile={mobile} />,
+          document.body,
+        )
+        : null
+    }
   </>
 }
