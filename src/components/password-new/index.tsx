@@ -96,7 +96,7 @@ export default function NewPasswordButton(
                   />
                 </>,
                 <>
-                  <label>Username / email:</label>
+                  <label>Username / e-mail:</label>
                   <MaterialInput
                     placeholder="johnSmith94"
                     type="text"

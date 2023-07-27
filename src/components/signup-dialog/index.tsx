@@ -1,11 +1,18 @@
-import { GoogleAuthProvider, UserCredential, getAuth, signInWithPopup } from 'firebase/auth';
-import GoogleLogo from '../../assets/google.png';
 import './style.css';
-import { useGoogleUser } from '../../context/userProvider';
-import { useNavigate } from 'react-router-dom';
 import MaterialButton from '../button';
+import { useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import MaterialDialog from '../dialog';
+import { MaterialInput } from '../input';
 
 export default function SignUpButton() {
+
+  const [showDialog, setShowDialog] = useState(false);
+
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const password2Ref = useRef<HTMLInputElement | null>(null);
+
   // const provider = new GoogleAuthProvider();
   // const auth = getAuth();
 
@@ -13,11 +20,71 @@ export default function SignUpButton() {
   // const navigate = useNavigate();
 
   return (
-    <MaterialButton
-      label='Create new account'
-      onClick={() => { }}
-      icon='person_add'
-      type='filled'
-    />
+    <>
+      <MaterialButton
+        label='Create account'
+        onClick={() => setShowDialog(true)}
+        icon='person_add'
+        type='filled'
+      />
+      {
+        showDialog
+          ? createPortal(
+            <MaterialDialog
+              class='details'
+              title="Create a new account"
+              closeFunction={() => setShowDialog(false)}
+              dismissible={true}
+              content={[
+                <div className='info'>
+                  <div>Please create a secure and memorable password, that's at least 12 characters long.</div>
+                  <br />
+                  <div>You can try using something like the Diceware or any other popular memorable password generation technique.</div>
+                  <br />
+                </div>,
+                <>
+                  <label>E-mail:</label>
+                  <MaterialInput
+                    placeholder="user@example.com"
+                    type="email"
+                    ref={emailRef}
+                  />
+                </>,
+                <>
+                  <label>Password:</label>
+                  <MaterialInput
+                    placeholder="password123"
+                    type="password"
+                    ref={passwordRef}
+                  />
+                </>,
+                <>
+                  <label>Repeat password:</label>
+                  <MaterialInput
+                    placeholder="password123"
+                    type="password"
+                    ref={password2Ref}
+                  />
+                </>,
+                <div />,
+              ]}
+              actions={[
+                {
+                  label: "Continue",
+                  icon: "check",
+                  // onClick: async () => false,
+                },
+                {
+                  label: "Cancel",
+                  icon: "close",
+                  type: "tonal",
+                },
+              ]}
+            />,
+            document.body
+          )
+          : null
+      }
+    </>
   );
 }

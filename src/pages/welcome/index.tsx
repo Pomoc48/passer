@@ -1,12 +1,12 @@
 import './style.css';
 import Navbar from '../../components/navbar';
-import LoginInButton from '../../components/login-dialog';
+import LogInButton from '../../components/login-dialog';
 import SignUpButton from '../../components/signup-dialog';
 
 export default function WelcomePage() {
   return <>
     <Navbar>
-      <LoginInButton />
+      <LogInButton />
       <SignUpButton />
     </Navbar>
     <main>
