@@ -1,11 +1,13 @@
 import './style.css';
 import Navbar from '../../components/navbar';
-import GoogleSignIn from '../../components/google-login';
+import LoginInButton from '../../components/login-dialog';
+import SignUpButton from '../../components/signup-dialog';
 
 export default function WelcomePage() {
   return <>
     <Navbar>
-      <GoogleSignIn/>
+      <LoginInButton />
+      <SignUpButton />
     </Navbar>
     <main>
       <div className="section-container">
