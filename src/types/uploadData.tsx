@@ -5,6 +5,5 @@ export type UploadData = {
     time: {
         created: Date;
         modified: Date;
-        used: Date;
     };
 }

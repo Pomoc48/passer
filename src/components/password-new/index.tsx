@@ -36,7 +36,6 @@ export default function NewPasswordButton(
 
     const data = {
       name: nameRef.current!.value.trim(),
-      note: null,
       password: passwordRef.current!.value.trim(),
       url: urlRef.current!.value.trim(),
       username: usernameRef.current!.value.trim(),
@@ -52,7 +51,6 @@ export default function NewPasswordButton(
       time: {
         created: new Date(),
         modified: new Date(),
-        used: new Date(),
       }
     }
 
@@ -64,7 +62,7 @@ export default function NewPasswordButton(
     <>
       <MaterialButton
         label='New password'
-        onClick={() => { setShowDialog(true) }}
+        onClick={() => setShowDialog(true)}
         icon='add'
         type='filled'
         isFAB={params.isFAB}

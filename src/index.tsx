@@ -61,11 +61,9 @@ const router = createBrowserRouter([
   {
     path: "/manager",
     element: <RequireAuth redirectTo="/">
-      <KeyProvider>
-        <SearchProvider>
-          <PasswordsPage db={db} />
-        </SearchProvider>
-      </KeyProvider>
+      <SearchProvider>
+        <PasswordsPage db={db} />
+      </SearchProvider>
     </RequireAuth>,
   },
 ]);
@@ -73,7 +71,9 @@ const router = createBrowserRouter([
 root.render(
   <React.StrictMode>
     <UserProvider>
-      <RouterProvider router={router} />
+      <KeyProvider>
+        <RouterProvider router={router} />
+      </KeyProvider>
     </UserProvider>
   </React.StrictMode>
 );

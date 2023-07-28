@@ -7,6 +7,9 @@ import { MaterialInput } from '../input';
 import { emailRegex, passTransform } from '../../functions/login';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useEmailUser } from '../../context/userProvider';
+import { useCryptoKey } from '../../context/cryptoKey';
+import { generateKey } from '../../functions/crypto';
+import { useNavigate } from 'react-router-dom';
 
 export default function LogInButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
@@ -15,6 +18,9 @@ export default function LogInButton(params: { notify: (message: string, long?: b
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const setUser = useEmailUser().update;
+  const setCryptoKey = useCryptoKey().update;
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -78,13 +84,19 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                     const auth = getAuth();
 
                     signInWithEmailAndPassword(auth, emailInput, pass)
-                      .then((userCredential) => {
+                      .then(async (userCredential) => {
                         console.log(userCredential.user);
 
                         if (!userCredential.user.emailVerified) {
                           params.notify("Please verify your e-mail address");
                         } else {
                           setUser(userCredential);
+
+                          let key = await generateKey(pass);
+                          console.log(key);
+                          setCryptoKey(key);
+
+                          navigate("/manager");
                         }
                       })
                       .catch((error) => params.notify(error.message));

@@ -3,7 +3,6 @@ export type Website = {
     favorite: boolean;
     data: {
         name: string;
-        note: string | null;
         password: string | null;
         url: URL | null;
         username: string | null;
@@ -11,6 +10,5 @@ export type Website = {
     time: {
         created: Date;
         modified: Date;
-        used: Date;
     };
 }

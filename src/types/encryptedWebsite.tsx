@@ -7,6 +7,5 @@ export type EncryptedWebsite = {
     time: {
         created: Timestamp;
         modified: Timestamp;
-        used: Timestamp;
     };
 }

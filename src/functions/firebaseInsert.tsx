@@ -9,7 +9,6 @@ export async function firebaseInsert(reference: CollectionReference, uploadData:
     time: {
       created: new Date(),
       modified: new Date(),
-      used: new Date(),
     }
   }, { merge: true });
 }
