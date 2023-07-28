@@ -4,7 +4,8 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
-import { emailRegex } from '../../functions/crypto';
+import { emailRegex, passTransform } from '../../functions/login';
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth';
 
 export default function SignUpButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
@@ -12,12 +13,6 @@ export default function SignUpButton(params: { notify: (message: string, long?: 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const password2Ref = useRef<HTMLInputElement | null>(null);
-
-  // const provider = new GoogleAuthProvider();
-  // const auth = getAuth();
-
-  // const { update } = useGoogleUser();
-  // const navigate = useNavigate();
 
   return (
     <>
@@ -97,7 +92,21 @@ export default function SignUpButton(params: { notify: (message: string, long?: 
                       return false;
                     }
 
-                    params.notify("Account created, please check your e-mail", true);
+                    console.log(await passTransform(emailInput, passwordInput));
+
+                    const auth = getAuth();
+
+                    createUserWithEmailAndPassword(auth, emailInput, passwordInput)
+                      .then((userCredential) => {
+                        console.log(userCredential.user);
+
+                        sendEmailVerification(userCredential.user)
+                          .then(() => {
+                            params.notify("Account created, please check your e-mail", true);
+                          });
+                      })
+                      .catch((error) => params.notify(error.message, true));
+
                     return true;
                   }
                 },
