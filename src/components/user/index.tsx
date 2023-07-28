@@ -1,11 +1,11 @@
 import { UserCredential, getAuth, signOut } from 'firebase/auth';
-import { useGoogleUser } from '../../context/userProvider';
+import { useEmailUser } from '../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 
 export default function UserPill(params: { user: UserCredential }) {
   const auth = getAuth();
-  const { update } = useGoogleUser();
+  const { update } = useEmailUser();
 
   const navigate = useNavigate();
 

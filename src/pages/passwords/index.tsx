@@ -7,7 +7,7 @@ import { testCaseMatch, updateTestCase } from '../../functions/passwordTestCase'
 import PasswordCard from '../../components/password-card';
 import MaterialDialog from '../../components/dialog';
 import Search from '../../components/search';
-import { useGoogleUser } from '../../context/userProvider';
+import { useEmailUser } from '../../context/userProvider';
 import Navbar from '../../components/navbar';
 import { useCryptoKey } from '../../context/cryptoKey';
 import { Website } from '../../types/website';
@@ -20,7 +20,7 @@ import { MaterialInput } from '../../components/input';
 import Snackbar from '../../components/snackbar';
 
 export default function PasswordsPage(params: { db: Firestore }) {
-  const user = useGoogleUser().user!;
+  const user = useEmailUser().user!;
   const cryptoKey = useCryptoKey();
   const search = useSearch();
 

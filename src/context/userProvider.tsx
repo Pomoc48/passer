@@ -3,14 +3,14 @@ import { createContext, useContext, useState } from "react";
 
 const UserContext = createContext({
   user: null as UserCredential | null,
-  update: (user: UserCredential | null) => {},
+  update: (user: UserCredential | null) => { },
 });
 
-export function useGoogleUser() {
+export function useEmailUser() {
   return useContext(UserContext);
 }
 
-export function UserProvider({children} : any) {
+export function UserProvider({ children }: any) {
   const [user, setUser] = useState<UserCredential | null>(null);
 
   function updateUser(user: UserCredential | null) {
@@ -18,7 +18,7 @@ export function UserProvider({children} : any) {
   }
 
   return (
-    <UserContext.Provider value={{user: user, update: updateUser}}>
+    <UserContext.Provider value={{ user: user, update: updateUser }}>
       {children}
     </UserContext.Provider>
   )

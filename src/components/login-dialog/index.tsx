@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
-import { emailRegex } from '../../functions/crypto';
+import { emailRegex } from '../../functions/login';
 
 export default function LogInButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
