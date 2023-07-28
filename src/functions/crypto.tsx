@@ -1,9 +1,6 @@
 import { EncryptedData } from "../types/encryptedData";
 
-export const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-async function hashMessage(message: string): Promise<string> {
+export async function hashMessage(message: string): Promise<string> {
     const msgUint8 = new TextEncoder().encode(message + "h@v&b!/.9^fo%=");
     const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
 
