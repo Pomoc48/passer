@@ -1,7 +1,7 @@
 import { CollectionReference, doc, setDoc, addDoc } from "firebase/firestore";
 import { UploadData } from "../types/uploadData";
 
-export async function firebaseInsert(reference: CollectionReference, uploadData: UploadData) {
+export async function firestoreInsert(reference: CollectionReference, uploadData: UploadData) {
 
   if (uploadData.uuid === null) {
     await addDoc(reference, {
