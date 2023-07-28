@@ -86,15 +86,13 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                     signInWithEmailAndPassword(auth, emailInput, pass)
                       .then(async (userCredential) => {
                         console.log(userCredential.user);
+                        setShowDialog(false);
 
                         if (!userCredential.user.emailVerified) {
                           params.notify("Please verify your e-mail address");
                         } else {
                           setUser(userCredential);
-
-                          let key = await generateKey(pass);
-                          console.log(key);
-                          setCryptoKey(key);
+                          setCryptoKey(await generateKey(pass));
 
                           navigate("/manager");
                         }

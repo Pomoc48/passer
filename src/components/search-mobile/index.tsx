@@ -20,14 +20,6 @@ export default function SearchMobile(params: { user: UserCredential }) {
     });
   }
 
-  let image: string | undefined;
-
-  if (params.user.user.photoURL === null) {
-    image = undefined;
-  } else {
-    image = params.user.user.photoURL;
-  }
-
   return (
     <div className="search-mobile pill">
       <span className="material-icons">search</span>
@@ -39,7 +31,13 @@ export default function SearchMobile(params: { user: UserCredential }) {
           onChange={e => search.update(e.target.value)}
         />
       </div>
-      <img className='clickable' onClick={signUserOut} src={image} draggable="false" alt="Profile" />
+      <div className='clickable' onClick={signUserOut}>
+        {
+          params.user.user.photoURL
+            ? <img src={params.user.user.photoURL} draggable="false" alt="Profile" />
+            : <div className="fake-photo">{params.user.user.email![0].toUpperCase()}</div>
+        }
+      </div>
     </div>
   );
 }

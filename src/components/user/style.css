@@ -1,4 +1,13 @@
-.navbar-user img {
+.navbar-user img, .navbar-user div.fake-photo {
     margin-left: 4px;
     margin-right: 8px;
+}
+
+.navbar-user div.fake-photo {
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
+    text-align: center;
+    line-height: 32px;
+    font-size: 14px;
+    font-weight: 500;
 }

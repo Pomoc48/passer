@@ -18,18 +18,14 @@ export default function UserPill(params: { user: UserCredential }) {
     });
   }
 
-  let image: string | undefined;
-
-  if (params.user.user.photoURL === null) {
-    image = undefined;
-  } else {
-    image = params.user.user.photoURL;
-  }
-
   return (
     <div className="navbar-user pill clickable" onClick={signUserOut}>
-      <img className='clickable' src={image} draggable="false" alt="Profile" />
-      <p className='label-large'>{params.user.user.displayName}</p>
+      {
+        params.user.user.photoURL
+          ? <img className='clickable' src={params.user.user.photoURL} draggable="false" alt="Profile" />
+          : <div className="fake-photo">{params.user.user.email![0].toUpperCase()}</div>
+      }
+      <p className='label-large'>{params.user.user.email!}</p>
     </div>
   );
 }
