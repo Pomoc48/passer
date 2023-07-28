@@ -1,8 +1,7 @@
 import { CollectionReference } from "firebase/firestore"
 import { encrypt } from "../../functions/crypto";
-import { firebaseInsert } from "../../functions/firebaseInsert";
+import { firestoreInsert } from "../../functions/firestore";
 import { UploadData } from "../../types/uploadData";
-import ShortUniqueId from "short-unique-id";
 import { useCryptoKey } from "../../context/cryptoKey";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -32,11 +31,8 @@ export default function NewPasswordButton(
   const [passwordSize, setPasswordSize] = useState(24);
 
   async function prepareEncryptedData() {
-    const uid = new ShortUniqueId({ length: 16 });
-
     const data = {
       name: nameRef.current!.value.trim(),
-      note: null,
       password: passwordRef.current!.value.trim(),
       url: urlRef.current!.value.trim(),
       username: usernameRef.current!.value.trim(),
@@ -46,17 +42,16 @@ export default function NewPasswordButton(
     const encrypted = await encrypt(cryptoKey, serialized);
 
     const uploadData: UploadData = {
-      uuid: uid(),
+      uuid: null,
       websiteData: encrypted,
       favorite: false,
       time: {
         created: new Date(),
         modified: new Date(),
-        used: new Date(),
       }
     }
 
-    await firebaseInsert(params.reference, uploadData);
+    await firestoreInsert(params.reference, uploadData);
     params.notify("New password successfully added");
   }
 
@@ -64,7 +59,7 @@ export default function NewPasswordButton(
     <>
       <MaterialButton
         label='New password'
-        onClick={() => { setShowDialog(true) }}
+        onClick={() => setShowDialog(true)}
         icon='add'
         type='filled'
         isFAB={params.isFAB}

@@ -46,7 +46,7 @@ body {
     user-select: none;
 }
 
-.pill img {
+.pill img, .pill div.fake-photo {
     height: 32px;
     width: 32px;
     border-radius: 100%;

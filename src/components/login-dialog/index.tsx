@@ -4,7 +4,12 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
-import { emailRegex } from '../../functions/crypto';
+import { emailRegex, passTransform } from '../../functions/login';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useEmailUser } from '../../context/userProvider';
+import { useCryptoKey } from '../../context/cryptoKey';
+import { generateKey } from '../../functions/crypto';
+import { useNavigate } from 'react-router-dom';
 
 export default function LogInButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
@@ -12,11 +17,10 @@ export default function LogInButton(params: { notify: (message: string, long?: b
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  // const provider = new GoogleAuthProvider();
-  // const auth = getAuth();
+  const setUser = useEmailUser().update;
+  const setCryptoKey = useCryptoKey().update;
 
-  // const { update } = useGoogleUser();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -76,7 +80,28 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                       return false;
                     }
 
-                    return true;
+                    let pass = await passTransform(emailInput, passwordInput);
+                    const auth = getAuth();
+
+                    signInWithEmailAndPassword(auth, emailInput, pass)
+                      .then(async (userCredential) => {
+                        setShowDialog(false);
+
+                        if (!userCredential.user.emailVerified) {
+                          params.notify("Please verify your e-mail address");
+                        } else {
+                          localStorage.setItem('userEmail', emailInput);
+                          localStorage.setItem('userToken', pass);
+
+                          setUser(userCredential);
+                          setCryptoKey(await generateKey(pass));
+
+                          navigate("/manager");
+                        }
+                      })
+                      .catch((error) => params.notify(error.message));
+
+                    return false;
                   }
                 },
                 {

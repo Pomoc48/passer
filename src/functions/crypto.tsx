@@ -1,28 +1,18 @@
 import { EncryptedData } from "../types/encryptedData";
 
-export const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-async function hashMessage(message: string): Promise<string> {
+export async function hashMessage(message: string): Promise<string> {
     const msgUint8 = new TextEncoder().encode(message + "h@v&b!/.9^fo%=");
     const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
 
     return encodeHexString(hashBuffer);
 }
 
-export async function generateKey(password: string, initial: boolean = true): Promise<CryptoKey> {
+export async function generateKey(password: string): Promise<CryptoKey> {
     const encoder = new TextEncoder();
-    let passwordHash: string;
-
-    if (initial) {
-        passwordHash = await hashMessage(password);
-    } else {
-        passwordHash = password;
-    }
 
     return await crypto.subtle.importKey(
         "raw",
-        encoder.encode(passwordHash).slice(0, 16),
+        encoder.encode(password).slice(0, 16),
         "AES-GCM",
         true,
         ["encrypt", "decrypt"],
@@ -51,22 +41,6 @@ export async function decrypt(key: CryptoKey, data: EncryptedData): Promise<stri
 
     return new TextDecoder("utf-8").decode(decryptedBuffer);
 }
-
-export async function exportKey(key: CryptoKey): Promise<string> {
-    const exported = await crypto.subtle.exportKey("jwk", key);
-    return JSON.stringify(exported);
-}
-
-export async function importKey(keyData: string): Promise<CryptoKey> {
-    return crypto.subtle.importKey(
-        "jwk",
-        JSON.parse(keyData),
-        "AES-GCM",
-        true,
-        ["encrypt", "decrypt"],
-    );
-}
-
 
 function sliceIntoChunks(arr: string, chunkSize: number): string[] {
     const res = [];

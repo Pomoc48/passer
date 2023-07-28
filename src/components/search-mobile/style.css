@@ -6,7 +6,16 @@
     width: 35vw;
 }
 
-.search-mobile img {
+.search-mobile img, .search-mobile div.fake-photo {
     margin-left: 8px;
     margin-right: 4px;
+}
+
+.search-mobile div.fake-photo {
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
+    text-align: center;
+    line-height: 32px;
+    font-size: 14px;
+    font-weight: 500;
 }
