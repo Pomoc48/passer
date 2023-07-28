@@ -4,7 +4,9 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
-import { emailRegex } from '../../functions/login';
+import { emailRegex, passTransform } from '../../functions/login';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useEmailUser } from '../../context/userProvider';
 
 export default function LogInButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
@@ -12,11 +14,7 @@ export default function LogInButton(params: { notify: (message: string, long?: b
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  // const provider = new GoogleAuthProvider();
-  // const auth = getAuth();
-
-  // const { update } = useGoogleUser();
-  // const navigate = useNavigate();
+  const setUser = useEmailUser().update;
 
   return (
     <>
@@ -76,7 +74,22 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                       return false;
                     }
 
-                    return true;
+                    let pass = await passTransform(emailInput, passwordInput);
+                    const auth = getAuth();
+
+                    signInWithEmailAndPassword(auth, emailInput, pass)
+                      .then((userCredential) => {
+                        console.log(userCredential.user);
+
+                        if (!userCredential.user.emailVerified) {
+                          params.notify("Please verify your e-mail address");
+                        } else {
+                          setUser(userCredential);
+                        }
+                      })
+                      .catch((error) => params.notify(error.message));
+
+                    return false;
                   }
                 },
                 {

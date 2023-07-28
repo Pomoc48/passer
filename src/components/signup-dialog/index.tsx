@@ -92,22 +92,22 @@ export default function SignUpButton(params: { notify: (message: string, long?: 
                       return false;
                     }
 
-                    console.log(await passTransform(emailInput, passwordInput));
+                    let close: boolean = false;
 
+                    let pass = await passTransform(emailInput, passwordInput);
                     const auth = getAuth();
 
-                    createUserWithEmailAndPassword(auth, emailInput, passwordInput)
+                    createUserWithEmailAndPassword(auth, emailInput, pass)
                       .then((userCredential) => {
-                        console.log(userCredential.user);
-
                         sendEmailVerification(userCredential.user)
                           .then(() => {
                             params.notify("Account created, please check your e-mail", true);
+                            close = true;
                           });
                       })
                       .catch((error) => params.notify(error.message, true));
 
-                    return true;
+                    return close;
                   }
                 },
                 {
