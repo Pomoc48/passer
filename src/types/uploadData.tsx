@@ -1,5 +1,5 @@
 export type UploadData = {
-    uuid: string;
+    uuid: string | null;
     websiteData: string;
     favorite: boolean;
     time: {
