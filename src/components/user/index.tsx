@@ -2,7 +2,7 @@ import { User, getAuth } from 'firebase/auth';
 import { useEmailUser } from '../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
-import { signUserOut } from '../../functions/login';
+import { signUserOut } from '../../functions/auth';
 
 export default function UserPill(params: { user: User }) {
   const auth = getAuth();

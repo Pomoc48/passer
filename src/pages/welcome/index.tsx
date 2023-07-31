@@ -8,7 +8,7 @@ import Snackbar from '../../components/snackbar';
 import { useEmailUser } from '../../context/userProvider';
 import { useCryptoKey } from '../../context/cryptoKey';
 import { useNavigate } from 'react-router-dom';
-import { autoLogin } from '../../functions/login';
+import { autoLogin } from '../../functions/auth';
 
 export default function WelcomePage() {
   const [showSnack, setShowSnack] = useState(false);
