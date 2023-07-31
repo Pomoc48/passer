@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { initializeApp } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { getFirestore } from 'firebase/firestore';
 import WelcomePage from './pages/welcome';
@@ -45,6 +46,19 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+declare global {
+  var FIREBASE_APPCHECK_DEBUG_TOKEN: boolean | string | undefined;
+}
+
+if (process.env.REACT_APP_RECAPTCHA_SITE_KEY !== undefined) {
+  window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+
+  initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(process.env.REACT_APP_RECAPTCHA_SITE_KEY),
+    isTokenAutoRefreshEnabled: true
+  });
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
