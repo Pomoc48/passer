@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { initializeApp } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { getFirestore } from 'firebase/firestore';
 import WelcomePage from './pages/welcome';
@@ -35,16 +36,29 @@ function onUpdate() {
 onUpdate();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k",
-  authDomain: "pass-9f64b.firebaseapp.com",
-  projectId: "pass-9f64b",
-  storageBucket: "pass-9f64b.appspot.com",
-  messagingSenderId: "31474752244",
-  appId: "1:31474752244:web:68a51225edf4bc9786dca1",
-  measurementId: "G-S9TYFLCXWG"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
+
+declare global {
+  var FIREBASE_APPCHECK_DEBUG_TOKEN: boolean | string | undefined;
+}
+
+if (process.env.REACT_APP_RECAPTCHA_SITE_KEY !== undefined) {
+  window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+
+  initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(process.env.REACT_APP_RECAPTCHA_SITE_KEY),
+    isTokenAutoRefreshEnabled: true
+  });
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
