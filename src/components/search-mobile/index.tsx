@@ -1,11 +1,11 @@
-import { UserCredential, getAuth } from 'firebase/auth';
+import { User, getAuth } from 'firebase/auth';
 import './style.css';
 import { useEmailUser } from '../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
 import { useSearch } from '../../context/searchProvider';
 import { signUserOut } from '../../functions/login';
 
-export default function SearchMobile(params: { user: UserCredential }) {
+export default function SearchMobile(params: { user: User }) {
   const auth = getAuth();
   const search = useSearch();
 
@@ -28,14 +28,14 @@ export default function SearchMobile(params: { user: UserCredential }) {
         onClick={() => signUserOut(auth, setUser, navigate)}
       >
         {
-          params.user.user.photoURL
+          params.user.photoURL
             ? <img
-              src={params.user.user.photoURL}
+              src={params.user.photoURL}
               draggable="false"
               alt="Profile"
             />
             : <div className="fake-photo">
-              {params.user.user.email![0].toUpperCase()}
+              {params.user.email![0].toUpperCase()}
             </div>
         }
       </div>
