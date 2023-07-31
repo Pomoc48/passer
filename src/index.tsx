@@ -52,7 +52,10 @@ declare global {
 }
 
 if (process.env.REACT_APP_RECAPTCHA_SITE_KEY !== undefined) {
-  window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+
+  if (process.env.NODE_ENV !== 'production') {
+    window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+  }
 
   initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider(process.env.REACT_APP_RECAPTCHA_SITE_KEY),
