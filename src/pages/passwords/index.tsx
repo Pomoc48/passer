@@ -27,7 +27,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const [showSnack, setShowSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
 
-  const websitesColRef = collection(params.db, "users", user.user.uid, "websites");
+  const websitesColRef = collection(params.db, "users", user.uid, "websites");
 
   useEffect(() => {
     let screenSize = 900;

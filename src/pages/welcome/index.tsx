@@ -7,9 +7,8 @@ import { createPortal } from 'react-dom';
 import Snackbar from '../../components/snackbar';
 import { useEmailUser } from '../../context/userProvider';
 import { useCryptoKey } from '../../context/cryptoKey';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { generateKey } from '../../functions/crypto';
 import { useNavigate } from 'react-router-dom';
+import { autoLogin } from '../../functions/auth';
 
 export default function WelcomePage() {
   const [showSnack, setShowSnack] = useState(false);
@@ -30,33 +29,12 @@ export default function WelcomePage() {
     window.onresize = () => {
       return updateMobile(window.innerWidth <= screenSize);
     };
-
-    autoLogin();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function autoLogin() {
-    let email = localStorage.getItem("userEmail");
-    let token = localStorage.getItem('userToken');
-
-    if (email === null || token === null) {
-      return;
-    }
-
-    const auth = getAuth();
-
-    signInWithEmailAndPassword(auth, email, token)
-      .then(async (userCredential) => {
-        if (!userCredential.user.emailVerified) {
-          return;
-        }
-
-        setUser(userCredential);
-        setCryptoKey(await generateKey(token!));
-
-        navigate("/manager");
-      })
-  }
+  useEffect(() => {
+    autoLogin(setUser, setCryptoKey, navigate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function notify(message: string, long?: boolean) {
     if (showSnack) {

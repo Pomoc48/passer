@@ -1,9 +1,9 @@
-import { UserCredential } from "firebase/auth";
+import { User } from "firebase/auth";
 import { createContext, useContext, useState } from "react";
 
 const UserContext = createContext({
-  user: null as UserCredential | null,
-  update: (user: UserCredential | null) => { },
+  user: null as User | null,
+  update: (user: User | null) => { },
 });
 
 export function useEmailUser() {
@@ -11,9 +11,9 @@ export function useEmailUser() {
 }
 
 export function UserProvider({ children }: any) {
-  const [user, setUser] = useState<UserCredential | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
-  function updateUser(user: UserCredential | null) {
+  function updateUser(user: User | null) {
     setUser(user);
   }
 

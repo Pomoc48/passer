@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
-import { emailRegex, passTransform } from '../../functions/login';
+import { emailRegex, passTransform } from '../../functions/auth';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useEmailUser } from '../../context/userProvider';
 import { useCryptoKey } from '../../context/cryptoKey';
@@ -80,21 +80,20 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                       return false;
                     }
 
-                    let pass = await passTransform(emailInput, passwordInput);
+                    let token = await passTransform(emailInput, passwordInput);
                     const auth = getAuth();
 
-                    signInWithEmailAndPassword(auth, emailInput, pass)
+                    signInWithEmailAndPassword(auth, emailInput, token)
                       .then(async (userCredential) => {
                         setShowDialog(false);
 
                         if (!userCredential.user.emailVerified) {
                           params.notify("Please verify your e-mail address");
                         } else {
-                          localStorage.setItem('userEmail', emailInput);
-                          localStorage.setItem('userToken', pass);
+                          localStorage.setItem('keyToken', token);
 
-                          setUser(userCredential);
-                          setCryptoKey(await generateKey(pass));
+                          setUser(userCredential.user);
+                          setCryptoKey(await generateKey(token));
 
                           navigate("/manager");
                         }
