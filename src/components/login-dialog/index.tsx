@@ -80,21 +80,23 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                       return false;
                     }
 
-                    let pass = await passTransform(emailInput, passwordInput);
+                    //TODO: export to login.tsx
+
+                    let token = await passTransform(emailInput, passwordInput);
+
                     const auth = getAuth();
 
-                    signInWithEmailAndPassword(auth, emailInput, pass)
+                    signInWithEmailAndPassword(auth, emailInput, token)
                       .then(async (userCredential) => {
                         setShowDialog(false);
 
                         if (!userCredential.user.emailVerified) {
                           params.notify("Please verify your e-mail address");
                         } else {
-                          localStorage.setItem('userEmail', emailInput);
-                          localStorage.setItem('userToken', pass);
+                          localStorage.setItem('keyToken', token);
 
-                          setUser(userCredential);
-                          setCryptoKey(await generateKey(pass));
+                          setUser(userCredential.user);
+                          setCryptoKey(await generateKey(token));
 
                           navigate("/manager");
                         }

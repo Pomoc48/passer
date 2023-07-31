@@ -1,5 +1,5 @@
-import { Auth, UserCredential, signOut } from "firebase/auth";
-import { hashMessage } from "./crypto";
+import { Auth, User, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { generateKey, hashMessage } from "./crypto";
 import { NavigateFunction } from "react-router-dom";
 
 export const emailRegex =
@@ -9,14 +9,37 @@ export function passTransform(pass: string, email: string): Promise<string> {
     return hashMessage(pass + email);
 }
 
+export async function autoLogin(
+    setUser: (user: User | null) => void,
+    setCryptoKey: (user: CryptoKey | null) => void,
+    navigate: NavigateFunction,
+) {
+    let token = localStorage.getItem('keyToken');
+
+    if (token === null) {
+        return;
+    }
+
+    const auth = getAuth();
+
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            setUser(auth.currentUser);
+            setCryptoKey(await generateKey(token!));
+
+            navigate("/manager");
+            unsubscribe();
+        }
+    });
+}
+
 export function signUserOut(
     auth: Auth,
-    setUser: (user: UserCredential | null) => void,
+    setUser: (user: User | null) => void,
     navigate: NavigateFunction,
 ) {
     signOut(auth).then(() => {
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem('userToken');
+        localStorage.removeItem('keyToken');
 
         setUser(null);
         navigate("/");

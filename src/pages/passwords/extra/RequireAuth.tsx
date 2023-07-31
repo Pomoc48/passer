@@ -1,7 +1,18 @@
 import { Navigate } from 'react-router-dom';
-import { useEmailUser } from '../../../context/userProvider';
+import { getAuth } from 'firebase/auth';
 
 export function RequireAuth({ children, redirectTo }: any) {
-    const user = useEmailUser();
-    return user.user === null ? <Navigate to={redirectTo} /> : children;
+    let token = localStorage.getItem('keyToken');
+
+    if (token === null) {
+        return <Navigate to={redirectTo} />;
+    }
+
+    const auth = getAuth();
+
+    if (auth.currentUser === null) {
+        return <Navigate to={redirectTo} />;
+    }
+
+    return children;
 }
