@@ -119,6 +119,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
             key={index}
             website={data}
             notify={notify}
+            reference={websitesColRef}
           />;
         })
       }

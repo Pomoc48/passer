@@ -8,6 +8,7 @@
     z-index: 2;
     background-color: rgba(0,0,0, 0.4);
     transition: all 0.3s;
+    backdrop-filter: blur(2px);
 }
 
 .dialog {

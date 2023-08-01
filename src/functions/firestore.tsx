@@ -1,4 +1,4 @@
-import { CollectionReference, doc, setDoc, addDoc } from "firebase/firestore";
+import { CollectionReference, doc, setDoc, addDoc, deleteDoc, DocumentReference } from "firebase/firestore";
 import { UploadData } from "../types/uploadData";
 
 export async function firestoreInsert(reference: CollectionReference, uploadData: UploadData) {
@@ -24,4 +24,8 @@ export async function firestoreInsert(reference: CollectionReference, uploadData
       modified: new Date(),
     }
   }, { merge: true });
+}
+
+export async function firestoreDelete(reference: DocumentReference) {
+  await deleteDoc(reference);
 }
