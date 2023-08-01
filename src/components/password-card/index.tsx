@@ -4,11 +4,14 @@ import MaterialButton from '../button';
 import './style.css'
 import MaterialDialog from '../dialog';
 import { createPortal } from 'react-dom';
+import { firestoreDelete } from '../../functions/firestore';
+import { CollectionReference, doc } from 'firebase/firestore';
 
 export default function PasswordCard(
   params: {
     website: Website,
     notify: (arg0: string) => void,
+    reference: CollectionReference,
   },
 ) {
   const [showPasswordDetails, setShowPasswordDetails] = useState(false);
@@ -208,7 +211,13 @@ export default function PasswordCard(
                 {
                   label: "Delete",
                   icon: "delete",
-                  // onClick: async () => false,
+                  onClick: async () => {
+                    await firestoreDelete(
+                      doc(params.reference, params.website.uuid),
+                    );
+
+                    return true;
+                  },
                 },
                 {
                   label: "Cancel",
