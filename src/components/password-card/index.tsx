@@ -13,6 +13,7 @@ export default function PasswordCard(
 ) {
   const [showPasswordDetails, setShowPasswordDetails] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showRemoveConfirmation, setShowRemoveConfirmation] = useState(false);
 
   let url = params.website.data.url;
 
@@ -168,6 +169,45 @@ export default function PasswordCard(
                   label: "Delete",
                   icon: "delete",
                   isError: true,
+                  onClick: async () => {
+                    setTimeout(() => {
+                      setShowRemoveConfirmation(true);
+                    }, 310);
+                    return true;
+                  },
+                },
+                {
+                  label: "Cancel",
+                  icon: "close",
+                  type: "tonal",
+                },
+              ]}
+            />,
+            document.body,
+          )
+          : null
+      }
+
+      {
+        showRemoveConfirmation
+          ? createPortal(
+            <MaterialDialog
+              class='confirmation'
+              title={"Delete " + params.website.data.name + "?"}
+              closeFunction={() => setShowRemoveConfirmation(false)}
+              dismissible={true}
+              content={[
+                <>
+                  <div>Are you sure you want to delete this site's data?</div>
+                  <br />
+                  <div>This action is irreversible.</div>
+                  <br />
+                </>,
+              ]}
+              actions={[
+                {
+                  label: "Delete",
+                  icon: "delete",
                   // onClick: async () => false,
                 },
                 {

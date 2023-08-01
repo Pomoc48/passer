@@ -29,7 +29,7 @@ export default function MaterialDialog(params: DialogParameters) {
   }
 
   return <>
-    <div className="scrim" onClick={params.dismissible ? close : undefined} />
+    <div className={"scrim " + params.class} onClick={params.dismissible ? close : undefined} />
     <div className={"dialog " + params.class}>
       <h3 className='title-large'>{params.title}</h3>
       <div className="flow-container">
