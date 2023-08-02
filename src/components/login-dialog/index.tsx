@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
-import { emailRegex, passTransform } from '../../functions/auth';
+import { emailRegex, createKeyToken } from '../../functions/auth';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useEmailUser } from '../../context/userProvider';
 import { useCryptoKey } from '../../context/cryptoKey';
@@ -80,10 +80,10 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                       return false;
                     }
 
-                    let token = await passTransform(emailInput, passwordInput);
+                    let token = await createKeyToken(emailInput, passwordInput);
                     const auth = getAuth();
 
-                    signInWithEmailAndPassword(auth, emailInput, token)
+                    signInWithEmailAndPassword(auth, emailInput, passwordInput)
                       .then(async (userCredential) => {
                         setShowDialog(false);
 

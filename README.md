@@ -11,30 +11,7 @@ Every password with its site data is serialized and client-side encrypted before
 The [CryptoKey](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey) used for encryption and decryption is generated using a salted hash from the user's password and e-mail, that never leaves your device.
 
 Authentication with its state persistance is entirely done through Firebase, but in order to decrypt the downloaded data, the generated hash is later stored locally to create the key.
-Based on my knowledge, it's impossible to get into someone else's account if the locally stored hash was compromised, as it would require cracking the SHA-256.
-
-<!-- ## Firebase setup
-
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-
-    function isUserValid(uid) {
-      let authenticated = request.auth != null && request.auth.uid == uid;
-      let verified = request.auth.token.email_verified;
-        
-      return authenticated && verified;
-    }
-
-    match /users/{uid} {
-      match /websites/{pass} {
-        allow read, write: if isUserValid(uid);
-      }
-    }
-  }
-}
-``` -->
+As the hash is not used for the Firebase account creation, it is not possible to get into someone else's account, if the locally stored hash was compromised.
 
 ## License
 
