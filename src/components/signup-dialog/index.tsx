@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MaterialDialog from '../dialog';
 import { MaterialInput } from '../input';
-import { emailRegex, passTransform } from '../../functions/auth';
+import { emailRegex } from '../../functions/auth';
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth';
 
 export default function SignUpButton(params: { notify: (message: string, long?: boolean) => void }) {
@@ -93,11 +93,9 @@ export default function SignUpButton(params: { notify: (message: string, long?: 
                     }
 
                     let close: boolean = false;
-
-                    let pass = await passTransform(emailInput, passwordInput);
                     const auth = getAuth();
 
-                    createUserWithEmailAndPassword(auth, emailInput, pass)
+                    createUserWithEmailAndPassword(auth, emailInput, passwordInput)
                       .then((userCredential) => {
                         sendEmailVerification(userCredential.user)
                           .then(() => {
