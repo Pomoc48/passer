@@ -171,7 +171,7 @@ export default function PasswordCard(
                 {
                   label: "Delete",
                   icon: "delete",
-                  isError: true,
+                  type: "error",
                   onClick: async () => {
                     setTimeout(() => {
                       setShowRemoveConfirmation(true);

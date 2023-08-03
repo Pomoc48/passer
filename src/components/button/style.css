@@ -5,10 +5,11 @@ button.material {
     height: 40px;
     width: fit-content;
     border-radius: 20px;
-    padding-inline: 20px;
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
+    padding-inline: 16px 22px;
+    gap: 12px;
     transition: 0.3s;
+    user-select: none;
+    cursor: pointer;
 }
 
 button.material:focus {
@@ -19,45 +20,44 @@ button.material:hover, button.material:focus-visible {
     opacity: 0.75;
 }
 
-button.material span.material-icons {
-    font-size: var(--md-sys-typescale-body-large-font-size);
-    margin-right: 8px;
+button.material > p {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    padding-bottom: 2px;
 }
 
-button.material.icon {
-    padding-left: 16px;
+button.material > span.material-icons {
+    font-size: 18px;
 }
 
-button.material.text {
-    color: var(--md-sys-color-primary);
-    background-color: unset;
-}
-
-button.material.text:hover, button.material.text:focus-visible {
-    background-color: var(--md-sys-color-elevation2);
+button.material.filled {
+    background-color: var(--primary-color);
+    color: var(--background-color);
 }
 
 button.material.tonal {
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
 }
 
-button.material.tonal:hover {
-    background-color: var(--md-sys-color-elevation5);
-    opacity: 1;
+button.material.text {
+    background-color: unset;
+    color: var(--primary-color);
+}
+
+button.material.text:hover {
+    background-color: var(--secondary-color);
 }
 
 button.material.FAB {
+    background-color: var(--primary-color);
+    color: var(--background-color);
     position: fixed;
     bottom: 18px;
     right: 18px;
     height: 56px;
     border-radius: 16px;
-}
-
-button.material.error {
-    background-color: var(--md-sys-color-error);
-    color: var(--md-sys-color-on-error);
 }
 
 button.material.FAB:hover {

@@ -61,8 +61,7 @@ export default function NewPasswordButton(
         label='New password'
         onClick={() => setShowDialog(true)}
         icon='add'
-        type='filled'
-        isFAB={params.isFAB}
+        type='FAB'
       />
       {
         showDialog

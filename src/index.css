@@ -1,11 +1,12 @@
 @import "css/material/theme.css";
+@import "css/theme.css";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 
 body {
     margin: 0;
     font-family: Roboto, sans-serif;
-    background-color: var(--md-sys-color-surface);
-    color: var(--md-sys-color-on-surface);
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .clickable {
