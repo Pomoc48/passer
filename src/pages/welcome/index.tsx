@@ -1,7 +1,7 @@
 import './style.scss';
 import Navbar from '../../components/common/navbar';
-import LogInButton from '../../components/login-dialog';
-import SignUpButton from '../../components/signup-dialog';
+import LogInButton from '../../components/welcome/login-dialog';
+import SignUpButton from '../../components/welcome/signup-dialog';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Snackbar from '../../components/common/snackbar';

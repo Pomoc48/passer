@@ -1,44 +1,38 @@
-import './style.css';
-import MaterialButton from '../common/button';
+import MaterialButton from '../../common/button';
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import MaterialDialog from '../common/dialog';
-import { MaterialInput } from '../common/input';
-import { emailRegex, createKeyToken } from '../../functions/auth';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { useEmailUser } from '../../context/userProvider';
-import { useCryptoKey } from '../../context/cryptoKey';
-import { generateKey } from '../../functions/crypto';
-import { useNavigate } from 'react-router-dom';
+import MaterialDialog from '../../common/dialog';
+import { MaterialInput } from '../../common/input';
+import { emailRegex } from '../../../functions/auth';
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth';
 
-export default function LogInButton(params: { notify: (message: string, long?: boolean) => void }) {
+export default function SignUpButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const setUser = useEmailUser().update;
-  const setCryptoKey = useCryptoKey().update;
-
-  const navigate = useNavigate();
+  const password2Ref = useRef<HTMLInputElement | null>(null);
 
   return (
     <>
       <MaterialButton
-        label='Log In'
+        label='Create account'
         onClick={() => setShowDialog(true)}
-        icon='login'
-        type='tonal'
+        icon='person_add'
+        type='filled'
       />
       {
         showDialog
           ? createPortal(
             <MaterialDialog
               class='details'
-              title="Log in to your account"
+              title="Create a new account"
               closeFunction={() => setShowDialog(false)}
               dismissible={true}
               content={[
+                <div>
+                  <p>Please create a secure and memorable password, that's at least 12 characters long.</p>
+                </div>,
                 <>
                   <label>E-mail:</label>
                   <MaterialInput
@@ -55,6 +49,14 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                     ref={passwordRef}
                   />
                 </>,
+                <>
+                  <label>Repeat password:</label>
+                  <MaterialInput
+                    placeholder="password123"
+                    type="password"
+                    ref={password2Ref}
+                  />
+                </>,
                 <div />,
               ]}
               actions={[
@@ -64,6 +66,7 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                   onClick: async () => {
                     let emailInput = emailRef.current!.value.trim();
                     let passwordInput = passwordRef.current!.value.trim();
+                    let password2Input = password2Ref.current!.value.trim();
 
                     if (passwordInput.length < 12) {
                       params.notify("Password is too short");
@@ -75,32 +78,30 @@ export default function LogInButton(params: { notify: (message: string, long?: b
                       return false;
                     }
 
+                    if (passwordInput !== password2Input) {
+                      params.notify("Passwords do not match");
+                      return false;
+                    }
+
                     if (!emailInput.match(emailRegex)) {
                       params.notify("Invalid e-mail address");
                       return false;
                     }
 
-                    let token = await createKeyToken(emailInput, passwordInput);
+                    let close: boolean = false;
                     const auth = getAuth();
 
-                    signInWithEmailAndPassword(auth, emailInput, passwordInput)
-                      .then(async (userCredential) => {
-                        setShowDialog(false);
-
-                        if (!userCredential.user.emailVerified) {
-                          params.notify("Please verify your e-mail address");
-                        } else {
-                          localStorage.setItem('keyToken', token);
-
-                          setUser(userCredential.user);
-                          setCryptoKey(await generateKey(token));
-
-                          navigate("/manager");
-                        }
+                    createUserWithEmailAndPassword(auth, emailInput, passwordInput)
+                      .then((userCredential) => {
+                        sendEmailVerification(userCredential.user)
+                          .then(() => {
+                            params.notify("Account created, please check your e-mail", true);
+                            close = true;
+                          });
                       })
-                      .catch((error) => params.notify(error.message));
+                      .catch((error) => params.notify(error.message, true));
 
-                    return false;
+                    return close;
                   }
                 },
                 {

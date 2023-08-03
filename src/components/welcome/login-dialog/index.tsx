@@ -1,42 +1,43 @@
-import './style.css';
-import MaterialButton from '../common/button';
+import MaterialButton from '../../common/button';
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import MaterialDialog from '../common/dialog';
-import { MaterialInput } from '../common/input';
-import { emailRegex } from '../../functions/auth';
-import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth';
+import MaterialDialog from '../../common/dialog';
+import { MaterialInput } from '../../common/input';
+import { emailRegex, createKeyToken } from '../../../functions/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useEmailUser } from '../../../context/userProvider';
+import { useCryptoKey } from '../../../context/cryptoKey';
+import { generateKey } from '../../../functions/crypto';
+import { useNavigate } from 'react-router-dom';
 
-export default function SignUpButton(params: { notify: (message: string, long?: boolean) => void }) {
+export default function LogInButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const password2Ref = useRef<HTMLInputElement | null>(null);
+
+  const setUser = useEmailUser().update;
+  const setCryptoKey = useCryptoKey().update;
+
+  const navigate = useNavigate();
 
   return (
     <>
       <MaterialButton
-        label='Create account'
+        label='Log In'
         onClick={() => setShowDialog(true)}
-        icon='person_add'
-        type='filled'
+        icon='login'
+        type='tonal'
       />
       {
         showDialog
           ? createPortal(
             <MaterialDialog
               class='details'
-              title="Create a new account"
+              title="Log in to your account"
               closeFunction={() => setShowDialog(false)}
               dismissible={true}
               content={[
-                <div className='info'>
-                  <div>Please create a secure and memorable password, that's at least 12 characters long.</div>
-                  <br />
-                  <div>You can try using something like the Diceware or any other popular memorable password generation technique.</div>
-                  <br />
-                </div>,
                 <>
                   <label>E-mail:</label>
                   <MaterialInput
@@ -53,14 +54,6 @@ export default function SignUpButton(params: { notify: (message: string, long?: 
                     ref={passwordRef}
                   />
                 </>,
-                <>
-                  <label>Repeat password:</label>
-                  <MaterialInput
-                    placeholder="password123"
-                    type="password"
-                    ref={password2Ref}
-                  />
-                </>,
                 <div />,
               ]}
               actions={[
@@ -70,7 +63,6 @@ export default function SignUpButton(params: { notify: (message: string, long?: 
                   onClick: async () => {
                     let emailInput = emailRef.current!.value.trim();
                     let passwordInput = passwordRef.current!.value.trim();
-                    let password2Input = password2Ref.current!.value.trim();
 
                     if (passwordInput.length < 12) {
                       params.notify("Password is too short");
@@ -82,30 +74,32 @@ export default function SignUpButton(params: { notify: (message: string, long?: 
                       return false;
                     }
 
-                    if (passwordInput !== password2Input) {
-                      params.notify("Passwords do not match");
-                      return false;
-                    }
-
                     if (!emailInput.match(emailRegex)) {
                       params.notify("Invalid e-mail address");
                       return false;
                     }
 
-                    let close: boolean = false;
+                    let token = await createKeyToken(emailInput, passwordInput);
                     const auth = getAuth();
 
-                    createUserWithEmailAndPassword(auth, emailInput, passwordInput)
-                      .then((userCredential) => {
-                        sendEmailVerification(userCredential.user)
-                          .then(() => {
-                            params.notify("Account created, please check your e-mail", true);
-                            close = true;
-                          });
-                      })
-                      .catch((error) => params.notify(error.message, true));
+                    signInWithEmailAndPassword(auth, emailInput, passwordInput)
+                      .then(async (userCredential) => {
+                        setShowDialog(false);
 
-                    return close;
+                        if (!userCredential.user.emailVerified) {
+                          params.notify("Please verify your e-mail address");
+                        } else {
+                          localStorage.setItem('keyToken', token);
+
+                          setUser(userCredential.user);
+                          setCryptoKey(await generateKey(token));
+
+                          navigate("/manager");
+                        }
+                      })
+                      .catch((error) => params.notify(error.message));
+
+                    return false;
                   }
                 },
                 {
