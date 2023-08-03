@@ -4,14 +4,12 @@
     grid-gap: 16px;
     padding: 16px;
     padding-top: 72px;
-}
-
-.passwords.FAB-space {
-    padding-bottom: 88px;
-}
-
-@media only screen and (max-width: 500px) {
-    .passwords {
+    
+    @media only screen and (max-width: 500px) {
         grid-template-columns: 1fr;
+    }
+    
+    .FAB-space {
+        padding-bottom: 88px;
     }
 }

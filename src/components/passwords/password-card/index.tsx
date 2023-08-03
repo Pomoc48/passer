@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Website } from '../../types/website';
-import MaterialButton from '../common/button';
-import './style.css'
-import MaterialDialog from '../common/dialog';
+import { Website } from '../../../types/website';
+import MaterialButton from '../../common/button';
+import './style.scss'
+import MaterialDialog from '../../common/dialog';
 import { createPortal } from 'react-dom';
-import { firestoreDelete } from '../../functions/firestore';
+import { firestoreDelete } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
+import Card from '../../common/card';
 
 export default function PasswordCard(
   params: {
@@ -53,8 +54,8 @@ export default function PasswordCard(
 
   return (
     <>
-      <div className='card password-card'>
-        <div className='content'>
+      <Card variant={true}>
+        <div className='password-card-content'>
           <p className='title'>{params.website.data.name}</p>
           <p className={hasURL ? 'url' : "url empty"}>
             {
@@ -70,7 +71,7 @@ export default function PasswordCard(
             {hasUsername ? params.website.data.username : "*no username"}
           </p>
         </div>
-        <div className='actions'>
+        <div className='password-card-actions'>
           {
             params.website.data.password
               ? <MaterialButton
@@ -88,7 +89,8 @@ export default function PasswordCard(
             type='tonal'
           />
         </div>
-      </div>
+
+      </Card>
       {
         showPasswordDetails
           ? createPortal(

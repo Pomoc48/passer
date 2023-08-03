@@ -1,9 +1,9 @@
 import { User, getAuth } from 'firebase/auth';
 import './style.css';
-import { useEmailUser } from '../../context/userProvider';
+import { useEmailUser } from '../../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
-import { useSearch } from '../../context/searchProvider';
-import { signUserOut } from '../../functions/auth';
+import { useSearch } from '../../../context/searchProvider';
+import { signUserOut } from '../../../functions/auth';
 
 export default function SearchMobile(params: { user: User }) {
   const auth = getAuth();

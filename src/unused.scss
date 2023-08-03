@@ -37,21 +37,3 @@
 .pill input:focus {
     outline: 0;
 }
-
-input[type="range"] {
-    appearance: none;
-    border-radius: 99px;
-    height: 6px;
-    background-color: var(--md-sys-color-secondary-container);
-}
-
-input[type="range"]::-webkit-slider-thumb, input[type="range"]::-moz-range-thumb {
-    appearance: none;
-    outline: 0;
-    border: 0;
-    height: 16px;
-    width: 16px;
-    cursor: pointer;
-    border-radius: 99px;
-    background: var(--md-sys-color-primary);
-}

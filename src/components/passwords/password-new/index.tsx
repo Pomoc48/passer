@@ -1,15 +1,15 @@
 import { CollectionReference } from "firebase/firestore"
-import { encrypt } from "../../functions/crypto";
-import { firestoreInsert } from "../../functions/firestore";
-import { UploadData } from "../../types/uploadData";
-import { useCryptoKey } from "../../context/cryptoKey";
+import { encrypt } from "../../../functions/crypto";
+import { firestoreInsert } from "../../../functions/firestore";
+import { UploadData } from "../../../types/uploadData";
+import { useCryptoKey } from "../../../context/cryptoKey";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import MaterialDialog from "../common/dialog";
+import MaterialDialog from "../../common/dialog";
 import { GeneratePassword } from "js-generate-password";
-import MaterialButton from "../common/button";
-import "./style.css";
-import { MaterialInput } from "../common/input";
+import MaterialButton from "../../common/button";
+import "./style.scss";
+import { MaterialInput } from "../../common/input";
 
 export default function NewPasswordButton(
   params: {
@@ -61,7 +61,7 @@ export default function NewPasswordButton(
         label='New password'
         onClick={() => setShowDialog(true)}
         icon='add'
-        type='FAB'
+        type={params.isFAB ? 'FAB' : "filled"}
       />
       {
         showDialog
@@ -143,7 +143,7 @@ export default function NewPasswordButton(
                           });
                         }}
                         icon="auto_fix_high"
-                        type="tonal"
+                        type="text"
                       />
                     </div>
                   </div>
