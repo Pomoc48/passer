@@ -11,6 +11,7 @@ import { UserProvider } from './context/userProvider';
 import { KeyProvider } from './context/cryptoKey';
 import { SearchProvider } from './context/searchProvider';
 import React from 'react';
+import ErrorPage from './pages/error';
 
 let matcher = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -73,7 +74,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <WelcomePage />,
-    errorElement: <div>404</div>,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/manager",
