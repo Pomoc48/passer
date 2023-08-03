@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 import Navbar from '../../components/common/navbar';
 import LogInButton from '../../components/login-dialog';
 import SignUpButton from '../../components/signup-dialog';
@@ -54,8 +54,8 @@ export default function WelcomePage() {
     </Navbar>
     <main>
       <section>
-        <h1 className='title'>Passer</h1>
-        <p className='description'>
+        <h1>Passer</h1>
+        <p>
           Free, open-source and self-hosted password manager.
           Every password with its site data is client-side encrypted before being stored in the cloud.
           The solution for all your password storing related problems.

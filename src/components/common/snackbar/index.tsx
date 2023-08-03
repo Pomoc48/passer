@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import './style.css';
+import './style.scss';
 
 export default function Snackbar(
   params: {
@@ -30,7 +30,7 @@ export default function Snackbar(
 
   return (
     <div className={params.mobile ? "snackbar mobile" : "snackbar"}>
-      <p className='body-medium'>{params.message}</p>
+      <p>{params.message}</p>
     </div>
   );
 }

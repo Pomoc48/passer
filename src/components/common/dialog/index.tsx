@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { DialogParameters } from '../../../types/dialogParameters';
-import './style.css';
+import './style.scss';
 import MaterialButton from '../button';
 
 export default function MaterialDialog(params: DialogParameters) {
@@ -31,14 +31,14 @@ export default function MaterialDialog(params: DialogParameters) {
   return <>
     <div className={"scrim " + params.class} onClick={params.dismissible ? close : undefined} />
     <div className={"dialog " + params.class}>
-      <h3 className='title-large'>{params.title}</h3>
+      <h3>{params.title}</h3>
       <div className="flow-container">
-        <div className='content body-medium'>
+        <div className='content'>
           {params.content.map((content, i) => <div key={i}>{content}</div>)}
         </div>
         {
           params.additionalContent !== undefined
-            ? <div className='content body-medium'>
+            ? <div className='content'>
               {params.additionalContent.map((content, i) => <div key={i}>{content}</div>)}
             </div>
             : null

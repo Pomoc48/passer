@@ -1,0 +1,66 @@
+@use "../../../css/mixins.scss";
+
+button.material {
+    display: flex;
+    align-items: center;
+    border: none;
+    height: 40px;
+    width: fit-content;
+    border-radius: 20px;
+    padding-inline: 16px 22px;
+    gap: 12px;
+    transition: 0.3s;
+    @include mixins.clickable;
+    
+    span.material-icons {
+        font-size: 18px;
+    }
+    
+    p {
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+        padding-bottom: 2px;
+    }
+    
+    &:focus {
+        outline: 0;
+    }
+    
+    &:hover, &:focus-visible {
+        opacity: 0.75;
+    }
+    
+    &.filled {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+    }
+    
+    &.tonal {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+    
+    &.text {
+        background-color: unset;
+        color: var(--primary-color);
+        
+        &:hover {
+            background-color: var(--secondary-color);
+        }
+    }
+    
+    &.FAB {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+        position: fixed;
+        bottom: 18px;
+        right: 18px;
+        height: 56px;
+        border-radius: 16px;
+        
+        &:hover {
+            opacity: 1;
+        }
+    }
+}

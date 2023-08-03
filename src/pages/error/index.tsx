@@ -1,4 +1,4 @@
-import '../welcome/style.css';
+import '../welcome/style.scss';
 import Navbar from '../../components/common/navbar';
 import { useNavigate } from 'react-router-dom';
 import MaterialButton from '../../components/common/button';
@@ -10,8 +10,8 @@ export default function ErrorPage() {
     <Navbar />
     <main>
       <section>
-        <h1 className='title'>Error</h1>
-        <p className='description'>
+        <h1>Error</h1>
+        <p>
           The page you were trying to reach is not available or doesn't exist. Check the address bar or go back to the home page.
         </p>
         <div className="buttons">

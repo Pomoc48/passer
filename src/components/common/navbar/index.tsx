@@ -1,9 +1,9 @@
-import './style.css';
+import './style.scss';
 
 export default function Navbar({ children }: any) {
   return (
     <header>
-      <h1 className='headline-small on-surface-text'>Passer</h1>
+      <h1>Passer</h1>
       <div className="container">
         {children}
       </div>

@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import './style.css';
+import './style.scss';
 
 export const MaterialInput = forwardRef(
   function MaterialInput(

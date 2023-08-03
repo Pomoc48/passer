@@ -14,12 +14,12 @@ div.snackbar {
     align-items: center;
     opacity: 0;
     transition: 0.3s;
-}
-
-div.snackbar.open {
-    opacity: 1;
-}
-
-div.snackbar.mobile {
-    bottom: 88px;
+    
+    &.open {
+        opacity: 1;
+    }
+    
+    &.mobile {
+        bottom: 88px;
+    }
 }
