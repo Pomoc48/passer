@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Website } from '../../types/website';
-import MaterialButton from '../button';
+import MaterialButton from '../common/button';
 import './style.css'
-import MaterialDialog from '../dialog';
+import MaterialDialog from '../common/dialog';
 import { createPortal } from 'react-dom';
 import { firestoreDelete } from '../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';

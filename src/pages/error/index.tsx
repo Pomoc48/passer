@@ -1,7 +1,7 @@
 import '../welcome/style.css';
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/common/navbar';
 import { useNavigate } from 'react-router-dom';
-import MaterialButton from '../../components/button';
+import MaterialButton from '../../components/common/button';
 
 export default function ErrorPage() {
   const navigate = useNavigate();

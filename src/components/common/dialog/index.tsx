@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { DialogParameters } from '../../types/dialogParameters';
+import { DialogParameters } from '../../../types/dialogParameters';
 import './style.css';
 import MaterialButton from '../button';
 

@@ -6,7 +6,7 @@ import { decrypt } from '../../functions/crypto';
 import PasswordCard from '../../components/password-card';
 import Search from '../../components/search';
 import { useEmailUser } from '../../context/userProvider';
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/common/navbar';
 import { useCryptoKey } from '../../context/cryptoKey';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
@@ -14,7 +14,7 @@ import { useSearch } from '../../context/searchProvider';
 import UserPill from '../../components/user';
 import NewPasswordButton from '../../components/password-new';
 import SearchMobile from '../../components/search-mobile';
-import Snackbar from '../../components/snackbar';
+import Snackbar from '../../components/common/snackbar';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const user = useEmailUser().user!;

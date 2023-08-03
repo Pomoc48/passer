@@ -5,11 +5,11 @@ import { UploadData } from "../../types/uploadData";
 import { useCryptoKey } from "../../context/cryptoKey";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import MaterialDialog from "../dialog";
+import MaterialDialog from "../common/dialog";
 import { GeneratePassword } from "js-generate-password";
-import MaterialButton from "../button";
+import MaterialButton from "../common/button";
 import "./style.css";
-import { MaterialInput } from "../input";
+import { MaterialInput } from "../common/input";
 
 export default function NewPasswordButton(
   params: {

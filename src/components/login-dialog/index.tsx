@@ -1,9 +1,9 @@
 import './style.css';
-import MaterialButton from '../button';
+import MaterialButton from '../common/button';
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import MaterialDialog from '../dialog';
-import { MaterialInput } from '../input';
+import MaterialDialog from '../common/dialog';
+import { MaterialInput } from '../common/input';
 import { emailRegex, createKeyToken } from '../../functions/auth';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useEmailUser } from '../../context/userProvider';

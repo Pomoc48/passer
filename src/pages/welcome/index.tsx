@@ -1,15 +1,15 @@
 import './style.css';
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/common/navbar';
 import LogInButton from '../../components/login-dialog';
 import SignUpButton from '../../components/signup-dialog';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import Snackbar from '../../components/snackbar';
+import Snackbar from '../../components/common/snackbar';
 import { useEmailUser } from '../../context/userProvider';
 import { useCryptoKey } from '../../context/cryptoKey';
 import { useNavigate } from 'react-router-dom';
 import { autoLogin } from '../../functions/auth';
-import MaterialButton from '../../components/button';
+import MaterialButton from '../../components/common/button';
 
 export default function WelcomePage() {
   const [showSnack, setShowSnack] = useState(false);
