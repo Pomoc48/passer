@@ -3,6 +3,7 @@ button.material {
     align-items: center;
     border: none;
     height: 40px;
+    width: fit-content;
     border-radius: 20px;
     padding-inline: 20px;
     background-color: var(--md-sys-color-primary);
