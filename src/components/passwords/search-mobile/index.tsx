@@ -4,6 +4,8 @@ import { useEmailUser } from '../../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
 import { useSearch } from '../../../context/searchProvider';
 import { signUserOut } from '../../../functions/auth';
+import Avatar from '../../common/avatar';
+import Pill from '../../common/pill';
 
 export default function SearchMobile(params: { user: User }) {
   const auth = getAuth();
@@ -13,12 +15,14 @@ export default function SearchMobile(params: { user: User }) {
   const navigate = useNavigate();
 
   return (
-    <div className="search-mobile pill">
-      <span className="material-icons">search</span>
+    <Pill>
+      <div className="pill-icon">
+        <span className="material-icons">search</span>
+      </div>
       <div>
         <input
           value={search.value}
-          className='body-medium'
+          className='search-input-mobile'
           placeholder='Search passwords…'
           onChange={e => search.update(e.target.value)}
         />
@@ -27,18 +31,8 @@ export default function SearchMobile(params: { user: User }) {
         className='clickable'
         onClick={() => signUserOut(auth, setUser, navigate)}
       >
-        {
-          params.user.photoURL
-            ? <img
-              src={params.user.photoURL}
-              draggable="false"
-              alt="Profile"
-            />
-            : <div className="fake-photo">
-              {params.user.email![0].toUpperCase()}
-            </div>
-        }
+        <Avatar user={params.user} />
       </div>
-    </div>
+    </Pill>
   );
 }
