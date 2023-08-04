@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { getFirestore } from 'firebase/firestore';
 import WelcomePage from './pages/welcome';
 import PasswordsPage from './pages/passwords';
-import { RequireAuth } from './pages/passwords/extra/RequireAuth';
+import { RequireAuth } from './components/passwords/require-auth';
 import { UserProvider } from './context/userProvider';
 import { KeyProvider } from './context/cryptoKey';
 import { SearchProvider } from './context/searchProvider';

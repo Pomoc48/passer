@@ -6,6 +6,8 @@
     }
     
     .card {
+        margin-top: 0 !important;
+        
         .row {
             user-select: none;
             display: flex;
@@ -58,16 +60,15 @@ input[type="range"] {
     border-radius: 99px;
     height: 6px;
     background-color: var(--secondary-variant-color);
+    
+    &::-webkit-slider-thumb, &::-moz-range-thumb {
+        appearance: none;
+        outline: 0;
+        border: 0;
+        height: 16px;
+        width: 16px;
+        cursor: pointer;
+        border-radius: 99px;
+        background: var(--primary-color);
+    }
 }
-
-input[type="range"]::-webkit-slider-thumb, input[type="range"]::-moz-range-thumb {
-    appearance: none;
-    outline: 0;
-    border: 0;
-    height: 16px;
-    width: 16px;
-    cursor: pointer;
-    border-radius: 99px;
-    background: var(--primary-color);
-}
-
