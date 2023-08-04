@@ -1,3 +1,5 @@
+@use "../../../scss/mixins.scss";
+
 header {
     display: flex;
     padding: 16px;
@@ -31,8 +33,7 @@ header {
     }
     
     p.display-name {
-        font-size: 14px;
-        font-weight: 500;
         padding-right: 16px;
+        @include mixins.button-text;
     }
 }

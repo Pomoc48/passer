@@ -1,11 +1,12 @@
+@use "../../../scss/mixins.scss";
+
 .search-input {
     all: unset;
     box-sizing: border-box;
     width: 250px;
     height: 40px;
-    font-size: 14px;
-    font-weight: 500;
     padding-right: 16px;
+    @include mixins.button-text;
 }
 
 .pill-icon {

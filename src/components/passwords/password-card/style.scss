@@ -1,3 +1,5 @@
+@use "../../../scss/mixins.scss";
+
 .password-card-content {
     p {
         margin: 0;
@@ -60,10 +62,9 @@
         }
         
         span {
-            user-select: none;
-            cursor: pointer;
             font-size: 18px;
             color: var(--primary-color);
+            @include mixins.clickable;
         }
     }
 }

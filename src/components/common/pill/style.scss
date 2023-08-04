@@ -1,3 +1,5 @@
+@use "../../../scss/mixins.scss";
+
 .pill {
     background-color: var(--secondary-color);
     color: var(--text-color);
@@ -10,8 +12,7 @@
     align-items: center;
     
     &.clickable {
-        user-select: none;
-        cursor: pointer;
+        @include mixins.clickable;
     }
     
     &:hover {

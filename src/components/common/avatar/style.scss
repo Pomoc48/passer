@@ -1,3 +1,5 @@
+@use "../../../scss/mixins.scss";
+
 .real-photo, .fake-photo {
     width: 32px;
     height: 32px;
@@ -9,6 +11,5 @@
     color: var(--background-color);
     text-align: center;
     line-height: 32px;
-    font-size: 14px;
-    font-weight: 500;
+    @include mixins.button-text;
 }

@@ -1,5 +1,5 @@
 import { User, getAuth } from 'firebase/auth';
-import './style.css';
+import './style.scss';
 import { useEmailUser } from '../../../context/userProvider';
 import { useNavigate } from 'react-router-dom';
 import { useSearch } from '../../../context/searchProvider';

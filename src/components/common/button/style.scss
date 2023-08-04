@@ -1,4 +1,4 @@
-@use "../../../css/mixins.scss";
+@use "../../../scss/mixins.scss";
 
 button.material {
     display: flex;
@@ -17,10 +17,9 @@ button.material {
     }
     
     p {
-        font-size: 14px;
-        font-weight: 500;
         margin: 0;
         padding-bottom: 2px;
+        @include mixins.button-text;
     }
     
     &:focus {
