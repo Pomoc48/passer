@@ -1,0 +1,9 @@
+@mixin clickable {
+    user-select: none;
+    cursor: pointer;
+}
+
+@mixin button-text {
+    font-size: 14px;
+    font-weight: 500;
+}

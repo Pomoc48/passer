@@ -1,0 +1,21 @@
+@use "../../../scss/mixins.scss";
+
+.pill {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    height: 40px;
+    border-radius: 40px;
+    display: flex;
+    padding-inline: 4px;
+    transition: 0.3s;
+    gap: 12px;
+    align-items: center;
+    
+    &.clickable {
+        @include mixins.clickable;
+    }
+    
+    &:hover {
+        background-color: var(--secondary-variant-color);
+    }
+}

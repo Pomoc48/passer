@@ -1,16 +1,17 @@
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './scss/theme.scss';
 import { initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { getFirestore } from 'firebase/firestore';
 import WelcomePage from './pages/welcome';
 import PasswordsPage from './pages/passwords';
-import { RequireAuth } from './pages/passwords/extra/RequireAuth';
+import { RequireAuth } from './components/passwords/require-auth';
 import { UserProvider } from './context/userProvider';
 import { KeyProvider } from './context/cryptoKey';
 import { SearchProvider } from './context/searchProvider';
 import React from 'react';
+import ErrorPage from './pages/error';
 
 let matcher = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -73,7 +74,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <WelcomePage />,
-    errorElement: <div>404</div>,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/manager",

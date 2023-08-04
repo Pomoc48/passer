@@ -1,14 +1,15 @@
-import './style.css';
-import Navbar from '../../components/navbar';
-import LogInButton from '../../components/login-dialog';
-import SignUpButton from '../../components/signup-dialog';
+import './style.scss';
+import Navbar from '../../components/common/navbar';
+import LogInButton from '../../components/welcome/login-dialog';
+import SignUpButton from '../../components/welcome/signup-dialog';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import Snackbar from '../../components/snackbar';
+import Snackbar from '../../components/common/snackbar';
 import { useEmailUser } from '../../context/userProvider';
 import { useCryptoKey } from '../../context/cryptoKey';
 import { useNavigate } from 'react-router-dom';
 import { autoLogin } from '../../functions/auth';
+import MaterialButton from '../../components/common/button';
 
 export default function WelcomePage() {
   const [showSnack, setShowSnack] = useState(false);
@@ -23,7 +24,7 @@ export default function WelcomePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let screenSize = 900;
+    let screenSize = 640;
     updateMobile(window.innerWidth <= screenSize);
 
     window.onresize = () => {
@@ -49,36 +50,30 @@ export default function WelcomePage() {
   return <>
     <Navbar>
       <LogInButton notify={notify} />
-      <SignUpButton notify={notify} />
+      {mobile ? null : <SignUpButton notify={notify} />}
     </Navbar>
     <main>
-      <div className="section-container">
-        <section>
-          <span className="material-icons">password</span>
-          <div className="text">
-            <h2 className='primary-text display-large'>Passer</h2>
-            <p className='body-large'>Open-source password manager, presented by Mikołaj Łukawski. The solution for all your password storing related problems.</p>
-          </div>
-        </section>
-      </div>
-      <div className="section-container">
-        <section>
-          <div className="text">
-            <h3 className='primary-text headline-large'>Secure</h3>
-            <p className='body-large'>Your passwords and all site data are client-side encrypted, before being safely stored on the database. The encryption/decryption key is generated locally using your master password and never leaves your device.</p>
-          </div>
-          <span className="material-icons">key</span>
-        </section>
-      </div>
-      <div className="section-container">
-        <section>
-          <span className="material-icons">code</span>
-          <div className="text">
-            <h3 className='primary-text headline-large'>Transparent</h3>
-            <p className='body-large'>The source code is fully available with it's documentation and step by step instructions in the GitHub repo, and the entire solution is easily self-hostable using the free tier of Firebase.</p>
-          </div>
-        </section>
-      </div>
+      <section>
+        <h1>Passer</h1>
+        <p>
+          Free, open-source and self-hosted password manager.
+          Every password with its site data is client-side encrypted before being stored in the cloud.
+          The solution for all your password storing related problems.
+          <br /><br />
+          Create a new testing account to check out the features, or learn more by visiting the project's GitHub repository.
+        </p>
+        <div className="buttons">
+          {mobile ? <SignUpButton notify={notify} /> : null}
+          <MaterialButton
+            label='Learn more'
+            icon='open_in_new'
+            type='tonal'
+            onClick={() => {
+              window.open("https://github.com/Pomoc48/passer", '_blank')!.focus();
+            }}
+          />
+        </div>
+      </section>
     </main>
     {
       showSnack

@@ -1,0 +1,70 @@
+@use "../../../scss/mixins.scss";
+
+.password-card-content {
+    p {
+        margin: 0;
+    }
+    
+    .title {
+        font-size: 18px;
+        margin-top: 4px;
+    }
+    
+    .url {
+        margin-top: 4px;
+        color: var(--primary-color);
+        font-size: 12px;
+        user-select: none;
+    }
+    
+    .username {
+        margin-top: 16px;
+        font-size: 16px;
+    }
+    
+    .empty, .dialog.details .empty {
+        opacity: 0.5;
+        user-select: none;
+    }
+    
+    p > a {
+        color: var(--primary-color);
+        
+        span {
+            font-size: 12px;
+            margin-left: 4px;
+            vertical-align: sub;
+        }
+    }
+}
+
+.password-card-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.dialog.details {
+    .row {
+        user-select: none;
+        display: flex;
+        height: 56px;
+        gap: 8px;
+        font-size: 16px;
+        align-items: center;
+        
+        p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80%;
+        }
+        
+        span {
+            font-size: 18px;
+            color: var(--primary-color);
+            @include mixins.clickable;
+        }
+    }
+}

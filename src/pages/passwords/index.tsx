@@ -1,23 +1,27 @@
 import { Firestore, collection, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import './style.css'
+import './style.scss'
 import { createPortal } from 'react-dom';
 import { decrypt } from '../../functions/crypto';
-import PasswordCard from '../../components/password-card';
-import Search from '../../components/search';
+import PasswordCard from '../../components/passwords/password-card';
+import Search from '../../components/passwords/search';
 import { useEmailUser } from '../../context/userProvider';
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/common/navbar';
 import { useCryptoKey } from '../../context/cryptoKey';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/searchProvider';
-import UserPill from '../../components/user';
-import NewPasswordButton from '../../components/password-new';
-import SearchMobile from '../../components/search-mobile';
-import Snackbar from '../../components/snackbar';
+import NewPasswordButton from '../../components/passwords/password-new';
+import SearchMobile from '../../components/passwords/search-mobile';
+import Snackbar from '../../components/common/snackbar';
+import Pill from '../../components/common/pill';
+import Avatar from '../../components/common/avatar';
+import { signUserOut } from '../../functions/auth';
+import { getAuth } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 export default function PasswordsPage(params: { db: Firestore }) {
-  const user = useEmailUser().user!;
+  const userContext = useEmailUser();
   const cryptoKey = useCryptoKey().key!;
   const search = useSearch();
 
@@ -27,7 +31,10 @@ export default function PasswordsPage(params: { db: Firestore }) {
   const [showSnack, setShowSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
 
-  const websitesColRef = collection(params.db, "users", user.uid, "websites");
+  const websitesColRef = collection(params.db, "users", userContext.user!.uid, "websites");
+
+  const auth = getAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let screenSize = 900;
@@ -76,14 +83,17 @@ export default function PasswordsPage(params: { db: Firestore }) {
     <Navbar>
       {
         mobile
-          ? <SearchMobile user={user} />
+          ? <SearchMobile user={userContext.user!} />
           : <>
             <NewPasswordButton
               reference={websitesColRef}
               notify={notify}
             />
             <Search />
-            <UserPill user={user} />
+            <Pill onClick={() => signUserOut(auth, userContext.update, navigate)}>
+              <Avatar user={userContext.user!} />
+              <p className='display-name'>{userContext.user!.email!}</p>
+            </Pill>
           </>
       }
     </Navbar>

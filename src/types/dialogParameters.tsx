@@ -12,7 +12,6 @@ export type DialogParameters = {
 export type DialogAction = {
     label: string;
     onClick?: () => Promise<boolean>;
-    icon?: string;
-    type?: "filled" | "tonal" | "text",
-    isError?: boolean;
+    icon: string;
+    type?: "filled" | "tonal" | "text" | "error" | "FAB",
 }

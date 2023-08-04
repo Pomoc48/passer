@@ -1,0 +1,15 @@
+.passwords {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+    grid-gap: 16px;
+    padding: 16px;
+    padding-top: 72px;
+    
+    @media only screen and (max-width: 500px) {
+        grid-template-columns: 1fr;
+    }
+    
+    .FAB-space {
+        padding-bottom: 88px;
+    }
+}

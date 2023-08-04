@@ -1,0 +1,23 @@
+@use "../../../scss/mixins.scss";
+
+.search-input {
+    all: unset;
+    box-sizing: border-box;
+    width: 250px;
+    height: 40px;
+    padding-right: 16px;
+    @include mixins.button-text;
+}
+
+.pill-icon {
+    user-select: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
+    span.material-icons {
+        font-size: 22px;
+    }
+}
