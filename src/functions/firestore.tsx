@@ -1,7 +1,7 @@
 import { CollectionReference, doc, setDoc, addDoc, deleteDoc, DocumentReference } from "firebase/firestore";
 import { UploadData } from "../types/uploadData";
 
-export async function firestoreInsert(reference: CollectionReference, uploadData: UploadData) {
+export async function dbInsert(reference: CollectionReference, uploadData: UploadData) {
 
     if (uploadData.uuid === null) {
         await addDoc(reference, {
@@ -26,6 +26,6 @@ export async function firestoreInsert(reference: CollectionReference, uploadData
     }, { merge: true });
 }
 
-export async function firestoreDelete(reference: DocumentReference) {
+export async function dbDelete(reference: DocumentReference) {
     await deleteDoc(reference);
 }

@@ -4,7 +4,7 @@ import MaterialButton from '../../common/button';
 import './style.scss'
 import MaterialDialog from '../../common/dialog';
 import { createPortal } from 'react-dom';
-import { firestoreDelete } from '../../../functions/firestore';
+import { dbDelete } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
 import Card from '../../common/card';
 
@@ -214,7 +214,7 @@ export default function PasswordCard(
                   label: "Delete",
                   icon: "delete",
                   onClick: async () => {
-                    await firestoreDelete(
+                    await dbDelete(
                       doc(params.reference, params.website.uuid),
                     );
 

@@ -1,6 +1,6 @@
 import { CollectionReference } from "firebase/firestore"
 import { encrypt } from "../../../functions/crypto";
-import { firestoreInsert } from "../../../functions/firestore";
+import { dbInsert } from "../../../functions/firestore";
 import { UploadData } from "../../../types/uploadData";
 import { useCryptoKey } from "../../../context/cryptoKey";
 import { useRef, useState } from "react";
@@ -51,7 +51,7 @@ export default function NewPasswordButton(
       }
     }
 
-    await firestoreInsert(params.reference, uploadData);
+    await dbInsert(params.reference, uploadData);
     params.notify("New password successfully added");
   }
 
