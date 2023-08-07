@@ -4,8 +4,8 @@ div.snackbar {
     bottom: 24px;
     height: 48px;
     padding-inline: 16px;
-    background-color: var(--md-sys-color-inverse-surface);
-    color: var(--md-sys-color-inverse-on-surface);
+    background-color: var(--text-color);
+    color: var(--background-color);
     border-radius: 4px;
     box-sizing: border-box;
     width: min(100vw - 48px, 450px);

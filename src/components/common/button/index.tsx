@@ -1,13 +1,7 @@
+import { ButtonProps } from '../../../types/buttonProps';
 import './style.scss';
 
-export default function MaterialButton(
-  params: {
-    label: string,
-    onClick: () => void,
-    icon: string,
-    type?: "filled" | "tonal" | "text" | "error" | "FAB",
-  },
-) {
+export default function MaterialButton(params: ButtonProps) {
   let classList = "material ";
 
   if (params.type === undefined) {

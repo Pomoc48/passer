@@ -4,12 +4,12 @@ import { initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { getFirestore } from 'firebase/firestore';
-import WelcomePage from './pages/welcome';
-import PasswordsPage from './pages/passwords';
-import { RequireAuth } from './components/passwords/require-auth';
-import { UserProvider } from './context/userProvider';
-import { KeyProvider } from './context/cryptoKey';
-import { SearchProvider } from './context/searchProvider';
+import HomePage from './pages/home';
+import ManagerPage from './pages/manager';
+import { RequireAuth } from './components/manager/require-auth';
+import { UserProvider } from './context/user';
+import { KeyProvider } from './context/key';
+import { SearchProvider } from './context/search';
 import React from 'react';
 import ErrorPage from './pages/error';
 
@@ -73,14 +73,14 @@ const db = getFirestore(app);
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <WelcomePage />,
+    element: <HomePage />,
     errorElement: <ErrorPage />,
   },
   {
     path: "/manager",
     element: <RequireAuth redirectTo="/">
       <SearchProvider>
-        <PasswordsPage db={db} />
+        <ManagerPage db={db} />
       </SearchProvider>
     </RequireAuth>,
   },

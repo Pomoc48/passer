@@ -1,4 +1,4 @@
-import { useSearch } from '../../../context/searchProvider';
+import { useSearch } from '../../../context/search';
 import Pill from '../../common/pill';
 import './style.scss';
 

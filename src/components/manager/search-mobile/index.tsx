@@ -1,8 +1,8 @@
 import { User, getAuth } from 'firebase/auth';
 import './style.scss';
-import { useEmailUser } from '../../../context/userProvider';
+import { useEmailUser } from '../../../context/user';
 import { useNavigate } from 'react-router-dom';
-import { useSearch } from '../../../context/searchProvider';
+import { useSearch } from '../../../context/search';
 import { signUserOut } from '../../../functions/auth';
 import Avatar from '../../common/avatar';
 import Pill from '../../common/pill';

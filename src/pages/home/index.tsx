@@ -1,22 +1,25 @@
 import './style.scss';
 import Navbar from '../../components/common/navbar';
-import LogInButton from '../../components/welcome/login-dialog';
-import SignUpButton from '../../components/welcome/signup-dialog';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Snackbar from '../../components/common/snackbar';
-import { useEmailUser } from '../../context/userProvider';
-import { useCryptoKey } from '../../context/cryptoKey';
+import { useEmailUser } from '../../context/user';
+import { useCryptoKey } from '../../context/key';
 import { useNavigate } from 'react-router-dom';
 import { autoLogin } from '../../functions/auth';
 import MaterialButton from '../../components/common/button';
+import LoginDialog from '../../components/dialogs/login';
+import SignupDialog from '../../components/dialogs/signup';
 
-export default function WelcomePage() {
+export default function HomePage() {
   const [showSnack, setShowSnack] = useState(false);
   const [mobile, updateMobile] = useState(false);
 
   const [snackMessage, setSnackMessage] = useState("");
   const [snackLong, setSnackLong] = useState(false);
+
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const [showSignupDialog, setShowSignupDialog] = useState(false);
 
   const setUser = useEmailUser().update;
   const setCryptoKey = useCryptoKey().update;
@@ -33,7 +36,7 @@ export default function WelcomePage() {
   }, []);
 
   useEffect(() => {
-    autoLogin(setUser, setCryptoKey, navigate);
+    autoLogin({ setUser, setCryptoKey, navigate });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -49,8 +52,12 @@ export default function WelcomePage() {
 
   return <>
     <Navbar>
-      <LogInButton notify={notify} />
-      {mobile ? null : <SignUpButton notify={notify} />}
+      <MaterialButton
+        label='Log In'
+        onClick={() => setShowLoginDialog(true)}
+        icon='login'
+        type='tonal'
+      />
     </Navbar>
     <main>
       <section>
@@ -63,7 +70,12 @@ export default function WelcomePage() {
           Create a new testing account to check out the features, or learn more by visiting the project's GitHub repository.
         </p>
         <div className="buttons">
-          {mobile ? <SignUpButton notify={notify} /> : null}
+          <MaterialButton
+            label='Sign Up'
+            onClick={() => setShowSignupDialog(true)}
+            icon='person_add'
+            type='filled'
+          />
           <MaterialButton
             label='Learn more'
             icon='open_in_new'
@@ -75,6 +87,28 @@ export default function WelcomePage() {
         </div>
       </section>
     </main>
+    {
+      showLoginDialog
+        ? createPortal(
+          <LoginDialog
+            notify={notify}
+            closeDialog={() => setShowLoginDialog(false)}
+          />,
+          document.body,
+        )
+        : null
+    }
+    {
+      showSignupDialog
+        ? createPortal(
+          <SignupDialog
+            notify={notify}
+            closeDialog={() => setShowSignupDialog(false)}
+          />,
+          document.body,
+        )
+        : null
+    }
     {
       showSnack
         ? createPortal(

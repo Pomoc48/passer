@@ -5,7 +5,7 @@ button.material {
     align-items: center;
     border: none;
     height: 40px;
-    width: fit-content;
+    width: max-content;
     border-radius: 20px;
     padding-inline: 16px 22px;
     gap: 12px;
@@ -53,7 +53,7 @@ button.material {
         background-color: var(--primary-color);
         color: var(--background-color);
         position: fixed;
-        bottom: 18px;
+        bottom: calc(-100vh + 72px + 18px);
         right: 18px;
         height: 56px;
         border-radius: 16px;

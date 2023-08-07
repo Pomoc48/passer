@@ -1,4 +1,4 @@
-import '../welcome/style.scss';
+import '../home/style.scss';
 import Navbar from '../../components/common/navbar';
 import { useNavigate } from 'react-router-dom';
 import MaterialButton from '../../components/common/button';
