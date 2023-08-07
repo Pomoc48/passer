@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { DialogParameters } from '../../../types/dialogParameters';
+import { DialogProps } from '../../../types/dialogProps';
 import './style.scss';
 import MaterialButton from '../button';
 
-export default function MaterialDialog(params: DialogParameters) {
+export default function MaterialDialog(params: DialogProps) {
   useEffect(() => {
     let root = document.querySelector(':root')! as HTMLElement;
     root.style.setProperty(

@@ -1,6 +1,6 @@
-import { ButtonProps } from "./buttonProperties";
+import { ButtonProps } from "./buttonProps";
 
-export type DialogParameters = {
+export type DialogProps = {
     title: string;
     content: JSX.Element[];
     additionalContent?: JSX.Element[];

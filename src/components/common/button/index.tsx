@@ -1,4 +1,4 @@
-import { ButtonProps } from '../../../types/buttonProperties';
+import { ButtonProps } from '../../../types/buttonProps';
 import './style.scss';
 
 export default function MaterialButton(params: ButtonProps) {

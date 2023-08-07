@@ -9,8 +9,9 @@ import { useEmailUser } from '../../../context/userProvider';
 import { useCryptoKey } from '../../../context/cryptoKey';
 import { generateKey } from '../../../functions/crypto';
 import { useNavigate } from 'react-router-dom';
+import { SnackNotify } from '../../../types/snackNotify';
 
-export default function LogInButton(params: { notify: (message: string, long?: boolean) => void }) {
+export default function LogInButton(params: SnackNotify) {
   const [showDialog, setShowDialog] = useState(false);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
