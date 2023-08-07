@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import './style.scss'
 import { createPortal } from 'react-dom';
 import { decrypt } from '../../functions/crypto';
-import PasswordCard from '../../components/passwords/password-card';
+import WebsiteCard from '../../components/passwords/website-card';
 import Search from '../../components/passwords/search';
 import { useEmailUser } from '../../context/userProvider';
 import Navbar from '../../components/common/navbar';
@@ -121,7 +121,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
             return checkMatch(website.data.name) || checkMatch(website.data.username) || checkMatch(website.data.url?.toString());
           }
         ).map((data, index) => {
-          return <PasswordCard
+          return <WebsiteCard
             key={index}
             website={data}
             notify={notify}
