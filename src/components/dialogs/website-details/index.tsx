@@ -5,7 +5,7 @@ import { dbDelete } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
 import './style.scss'
 
-export default function PasswordDialog(
+export default function WebsiteDialog(
   params: {
     website: Website,
     notify: (message: string, long?: boolean) => void,

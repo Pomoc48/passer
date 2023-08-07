@@ -3,15 +3,15 @@ import { useEffect, useState } from 'react';
 import './style.scss'
 import { createPortal } from 'react-dom';
 import { decrypt } from '../../functions/crypto';
-import WebsiteCard from '../../components/passwords/website-card';
-import Search from '../../components/passwords/search';
-import { useEmailUser } from '../../context/userProvider';
+import WebsiteCard from '../../components/manager/website-card';
+import Search from '../../components/manager/search';
+import { useEmailUser } from '../../context/user';
 import Navbar from '../../components/common/navbar';
-import { useCryptoKey } from '../../context/cryptoKey';
+import { useCryptoKey } from '../../context/key';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
-import { useSearch } from '../../context/searchProvider';
-import SearchMobile from '../../components/passwords/search-mobile';
+import { useSearch } from '../../context/search';
+import SearchMobile from '../../components/manager/search-mobile';
 import Snackbar from '../../components/common/snackbar';
 import Pill from '../../components/common/pill';
 import Avatar from '../../components/common/avatar';
@@ -19,9 +19,9 @@ import { signUserOut } from '../../functions/auth';
 import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import MaterialButton from '../../components/common/button';
-import CreatePasswordDialog from '../../components/dialogs/create';
+import CreateWebsiteDialog from '../../components/dialogs/website-create';
 
-export default function PasswordsPage(params: { db: Firestore }) {
+export default function ManagerPage(params: { db: Firestore }) {
   const userContext = useEmailUser();
   const cryptoKey = useCryptoKey().key!;
   const search = useSearch();
@@ -133,7 +133,7 @@ export default function PasswordsPage(params: { db: Firestore }) {
     {
       showCreateDialog
         ? createPortal(
-          <CreatePasswordDialog
+          <CreateWebsiteDialog
             notify={notify}
             reference={websitesColRef}
             closeDialog={() => setShowCreateDialog(false)}

@@ -5,7 +5,7 @@ import './style.scss'
 import { createPortal } from 'react-dom';
 import { CollectionReference } from 'firebase/firestore';
 import Card from '../../common/card';
-import PasswordDialog from '../../dialogs/password';
+import WebsiteDialog from '../../dialogs/website-details';
 
 export default function WebsiteCard(
   params: {
@@ -76,7 +76,7 @@ export default function WebsiteCard(
       {
         showPasswordDialog
           ? createPortal(
-            <PasswordDialog
+            <WebsiteDialog
               website={params.website}
               notify={params.notify}
               reference={params.reference}

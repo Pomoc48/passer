@@ -2,8 +2,8 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MaterialInput } from '../../../components/common/input';
 import MaterialDialog from '../../../components/common/dialog';
-import { useEmailUser } from '../../../context/userProvider';
-import { useCryptoKey } from '../../../context/cryptoKey';
+import { useEmailUser } from '../../../context/user';
+import { useCryptoKey } from '../../../context/key';
 import { emailRegex, logUserIn } from '../../../functions/auth';
 
 export default function LoginDialog(

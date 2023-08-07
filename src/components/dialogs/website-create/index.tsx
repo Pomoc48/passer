@@ -2,7 +2,7 @@ import { CollectionReference } from "firebase/firestore"
 import { encrypt } from "../../../functions/crypto";
 import { dbInsert } from "../../../functions/firestore";
 import { UploadData } from "../../../types/uploadData";
-import { useCryptoKey } from "../../../context/cryptoKey";
+import { useCryptoKey } from "../../../context/key";
 import { useRef, useState } from "react";
 import MaterialDialog from "../../common/dialog";
 import { GeneratePassword } from "js-generate-password";
@@ -10,7 +10,7 @@ import MaterialButton from "../../common/button";
 import "./style.scss";
 import { MaterialInput } from "../../common/input";
 
-export default function CreatePasswordDialog(
+export default function CreateWebsiteDialog(
   params: {
     reference: CollectionReference,
     notify: (message: string) => void,
