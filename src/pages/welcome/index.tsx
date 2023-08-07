@@ -1,6 +1,5 @@
 import './style.scss';
 import Navbar from '../../components/common/navbar';
-import SignUpButton from '../../components/welcome/signup-dialog';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Snackbar from '../../components/common/snackbar';
@@ -9,7 +8,8 @@ import { useCryptoKey } from '../../context/cryptoKey';
 import { useNavigate } from 'react-router-dom';
 import { autoLogin } from '../../functions/auth';
 import MaterialButton from '../../components/common/button';
-import LoginDialog from '../../dialogs/login';
+import LoginDialog from '../../components/dialogs/login';
+import SignupDialog from '../../components/dialogs/signup';
 
 export default function WelcomePage() {
   const [showSnack, setShowSnack] = useState(false);
@@ -19,6 +19,7 @@ export default function WelcomePage() {
   const [snackLong, setSnackLong] = useState(false);
 
   const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const [showSignupDialog, setShowSignupDialog] = useState(false);
 
   const setUser = useEmailUser().update;
   const setCryptoKey = useCryptoKey().update;
@@ -57,7 +58,6 @@ export default function WelcomePage() {
         icon='login'
         type='tonal'
       />
-      {mobile ? null : <SignUpButton notify={notify} />}
     </Navbar>
     <main>
       <section>
@@ -70,7 +70,12 @@ export default function WelcomePage() {
           Create a new testing account to check out the features, or learn more by visiting the project's GitHub repository.
         </p>
         <div className="buttons">
-          {mobile ? <SignUpButton notify={notify} /> : null}
+          <MaterialButton
+            label='Sign Up'
+            onClick={() => setShowSignupDialog(true)}
+            icon='person_add'
+            type='filled'
+          />
           <MaterialButton
             label='Learn more'
             icon='open_in_new'
@@ -88,6 +93,17 @@ export default function WelcomePage() {
           <LoginDialog
             notify={notify}
             closeDialog={() => setShowLoginDialog(false)}
+          />,
+          document.body,
+        )
+        : null
+    }
+    {
+      showSignupDialog
+        ? createPortal(
+          <SignupDialog
+            notify={notify}
+            closeDialog={() => setShowSignupDialog(false)}
           />,
           document.body,
         )

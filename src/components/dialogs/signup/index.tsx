@@ -1,12 +1,9 @@
 import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { MaterialInput } from '../../components/common/input';
-import MaterialDialog from '../../components/common/dialog';
-import { useEmailUser } from '../../context/userProvider';
-import { useCryptoKey } from '../../context/cryptoKey';
-import { emailRegex, logUserIn } from '../../functions/auth';
+import MaterialDialog from '../../common/dialog';
+import { MaterialInput } from '../../common/input';
+import { createUserAccount, emailRegex } from '../../../functions/auth';
 
-export default function LoginDialog(
+export default function SignupDialog(
   params: {
     notify: (message: string, long?: boolean) => void,
     closeDialog: () => void,
@@ -14,18 +11,18 @@ export default function LoginDialog(
 ) {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const setUser = useEmailUser().update;
-  const setCryptoKey = useCryptoKey().update;
-  const navigate = useNavigate();
+  const password2Ref = useRef<HTMLInputElement | null>(null);
 
   return (
     <MaterialDialog
-      class='login'
-      title="Log in to your account"
+      class='details'
+      title="Create a new account"
       closeFunction={params.closeDialog}
       dismissible={true}
       content={[
+        <div>
+          <p>Please create a secure and memorable password, that's at least 12 characters long.</p>
+        </div>,
         <>
           <label>E-mail:</label>
           <MaterialInput
@@ -42,6 +39,14 @@ export default function LoginDialog(
             ref={passwordRef}
           />
         </>,
+        <>
+          <label>Repeat password:</label>
+          <MaterialInput
+            placeholder="password123"
+            type="password"
+            ref={password2Ref}
+          />
+        </>,
         <div />,
       ]}
       actions={[
@@ -51,6 +56,12 @@ export default function LoginDialog(
           onClick: async () => {
             let emailInput = emailRef.current!.value.trim();
             let passwordInput = passwordRef.current!.value.trim();
+            let password2Input = password2Ref.current!.value.trim();
+
+            if (!emailInput.match(emailRegex)) {
+              params.notify("Invalid e-mail address");
+              return false;
+            }
 
             if (passwordInput.length < 12) {
               params.notify("Password is too short");
@@ -62,22 +73,18 @@ export default function LoginDialog(
               return false;
             }
 
-            if (!emailInput.match(emailRegex)) {
-              params.notify("Invalid e-mail address");
+            if (passwordInput !== password2Input) {
+              params.notify("Passwords do not match");
               return false;
             }
 
-            let outcome = await logUserIn(
-              emailInput,
-              passwordInput,
-              { navigate, setCryptoKey, setUser },
-            );
+            let outcome = await createUserAccount(emailInput, passwordInput);
 
             if (outcome !== true) {
-              params.notify(outcome);
+              params.notify(outcome, true);
             }
 
-            return false;
+            return true;
           }
         },
         {

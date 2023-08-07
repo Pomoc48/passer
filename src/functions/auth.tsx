@@ -1,4 +1,4 @@
-import { Auth, User, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { Auth, User, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { generateKey, hashMessage } from "./crypto";
 import { NavigateFunction } from "react-router-dom";
 import { AuthFunctions } from "../types/authFunctions";
@@ -56,6 +56,26 @@ export async function logUserIn(
         })
         .catch((error) => message = error.message);
 
+    return message;
+}
+
+export async function createUserAccount(
+    email: string,
+    password: string,
+): Promise<string | true> {
+    const auth = getAuth();
+    let message: string | true = true;
+
+    await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            sendEmailVerification(userCredential.user)
+                .then(() => {
+                    message = "Account created, please check your e-mail";
+                });
+        })
+        .catch((error) => message = error.message);
+
+    console.log(message);
     return message;
 }
 
