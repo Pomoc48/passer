@@ -11,7 +11,6 @@ import { useCryptoKey } from '../../context/cryptoKey';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/searchProvider';
-import NewPasswordButton from '../../components/passwords/password-new';
 import SearchMobile from '../../components/passwords/search-mobile';
 import Snackbar from '../../components/common/snackbar';
 import Pill from '../../components/common/pill';
@@ -19,6 +18,8 @@ import Avatar from '../../components/common/avatar';
 import { signUserOut } from '../../functions/auth';
 import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import MaterialButton from '../../components/common/button';
+import CreatePasswordDialog from '../../components/dialogs/create';
 
 export default function PasswordsPage(params: { db: Firestore }) {
   const userContext = useEmailUser();
@@ -30,6 +31,8 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   const [showSnack, setShowSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
+
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
 
   const websitesColRef = collection(params.db, "users", userContext.user!.uid, "websites");
 
@@ -81,14 +84,16 @@ export default function PasswordsPage(params: { db: Firestore }) {
 
   return <>
     <Navbar>
+      <MaterialButton
+        label='Create'
+        onClick={() => setShowCreateDialog(true)}
+        icon='add'
+        type={mobile ? 'FAB' : "filled"}
+      />
       {
         mobile
           ? <SearchMobile user={userContext.user!} />
           : <>
-            <NewPasswordButton
-              reference={websitesColRef}
-              notify={notify}
-            />
             <Search />
             <Pill onClick={() => signUserOut(auth, userContext.update, navigate)}>
               <Avatar user={userContext.user!} />
@@ -97,15 +102,6 @@ export default function PasswordsPage(params: { db: Firestore }) {
           </>
       }
     </Navbar>
-    {
-      mobile
-        ? <NewPasswordButton
-          reference={websitesColRef}
-          notify={notify}
-          isFAB={true}
-        />
-        : null
-    }
     <div className={mobile ? 'passwords FAB-space' : 'passwords'}>
       {
         websites.filter(
@@ -134,6 +130,18 @@ export default function PasswordsPage(params: { db: Firestore }) {
         })
       }
     </div>
+    {
+      showCreateDialog
+        ? createPortal(
+          <CreatePasswordDialog
+            notify={notify}
+            reference={websitesColRef}
+            closeDialog={() => setShowCreateDialog(false)}
+          />,
+          document.body,
+        )
+        : null
+    }
     {
       showSnack
         ? createPortal(

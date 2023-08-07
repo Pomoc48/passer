@@ -53,7 +53,7 @@ button.material {
         background-color: var(--primary-color);
         color: var(--background-color);
         position: fixed;
-        bottom: 18px;
+        bottom: calc(-100vh + 72px + 18px);
         right: 18px;
         height: 56px;
         border-radius: 16px;
