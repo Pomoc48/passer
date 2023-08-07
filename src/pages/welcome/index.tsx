@@ -1,6 +1,5 @@
 import './style.scss';
 import Navbar from '../../components/common/navbar';
-import LogInButton from '../../components/welcome/login-dialog';
 import SignUpButton from '../../components/welcome/signup-dialog';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -10,6 +9,7 @@ import { useCryptoKey } from '../../context/cryptoKey';
 import { useNavigate } from 'react-router-dom';
 import { autoLogin } from '../../functions/auth';
 import MaterialButton from '../../components/common/button';
+import LoginDialog from '../../dialogs/login';
 
 export default function WelcomePage() {
   const [showSnack, setShowSnack] = useState(false);
@@ -17,6 +17,8 @@ export default function WelcomePage() {
 
   const [snackMessage, setSnackMessage] = useState("");
   const [snackLong, setSnackLong] = useState(false);
+
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
 
   const setUser = useEmailUser().update;
   const setCryptoKey = useCryptoKey().update;
@@ -33,7 +35,7 @@ export default function WelcomePage() {
   }, []);
 
   useEffect(() => {
-    autoLogin(setUser, setCryptoKey, navigate);
+    autoLogin({ setUser, setCryptoKey, navigate });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -49,7 +51,12 @@ export default function WelcomePage() {
 
   return <>
     <Navbar>
-      <LogInButton notify={notify} />
+      <MaterialButton
+        label='Log In'
+        onClick={() => setShowLoginDialog(true)}
+        icon='login'
+        type='tonal'
+      />
       {mobile ? null : <SignUpButton notify={notify} />}
     </Navbar>
     <main>
@@ -75,6 +82,17 @@ export default function WelcomePage() {
         </div>
       </section>
     </main>
+    {
+      showLoginDialog
+        ? createPortal(
+          <LoginDialog
+            notify={notify}
+            closeDialog={() => setShowLoginDialog(false)}
+          />,
+          document.body,
+        )
+        : null
+    }
     {
       showSnack
         ? createPortal(

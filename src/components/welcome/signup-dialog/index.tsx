@@ -5,9 +5,8 @@ import MaterialDialog from '../../common/dialog';
 import { MaterialInput } from '../../common/input';
 import { emailRegex } from '../../../functions/auth';
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth';
-import { SnackNotify } from '../../../types/snackNotify';
 
-export default function SignUpButton(params: SnackNotify) {
+export default function SignUpButton(params: { notify: (message: string, long?: boolean) => void }) {
   const [showDialog, setShowDialog] = useState(false);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
