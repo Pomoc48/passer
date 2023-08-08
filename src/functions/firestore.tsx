@@ -2,26 +2,23 @@ import { CollectionReference, doc, setDoc, addDoc, deleteDoc, DocumentReference 
 import { UploadData } from "../types/uploadData";
 
 export async function dbInsert(reference: CollectionReference, uploadData: UploadData) {
-
-    if (uploadData.uuid === null) {
-        await addDoc(reference, {
-            data: uploadData.websiteData,
-            favorite: uploadData.favorite,
-            time: {
-                created: new Date(),
-                modified: new Date(),
-            }
-        });
-
-        return;
-    }
-
-    await setDoc(doc(reference, uploadData.uuid), {
+    await addDoc(reference, {
         data: uploadData.websiteData,
         favorite: uploadData.favorite,
         time: {
-            created: new Date(),
-            modified: new Date(),
+            created: uploadData.time.created,
+            modified: uploadData.time.modified,
+        }
+    });
+}
+
+export async function dbUpdate(reference: CollectionReference, uploadData: UploadData) {
+    await setDoc(doc(reference, uploadData.uuid!), {
+        data: uploadData.websiteData,
+        favorite: uploadData.favorite,
+        time: {
+            created: uploadData.time.created,
+            modified: uploadData.time.modified,
         }
     }, { merge: true });
 }

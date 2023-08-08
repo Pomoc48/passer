@@ -4,7 +4,7 @@ import MaterialDialog from '../../common/dialog';
 import { dbDelete } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
 import './style.scss'
-import { urlValid } from '../../../functions/utils';
+import { isUrlValid } from '../../../functions/utils';
 
 export default function WebsiteDialog(
   params: {
@@ -12,11 +12,12 @@ export default function WebsiteDialog(
     notify: (message: string, long?: boolean) => void,
     closeDialog: () => void,
     reference: CollectionReference,
+    openEdit: () => void,
   },
 ) {
   const [showPassword, setShowPassword] = useState(false);
 
-  let hasURL = urlValid(params.website.data.url);
+  let hasURL = isUrlValid(params.website.data.url);
   let hasUsername = params.website.data.username! !== "";
 
   function copyContent(content: string, name: string) {
@@ -114,7 +115,10 @@ export default function WebsiteDialog(
         {
           label: "Edit",
           icon: "edit",
-          // onClick: async () => false,
+          onClick: async () => {
+            params.openEdit();
+            return true;
+          },
         },
         {
           label: "Delete",

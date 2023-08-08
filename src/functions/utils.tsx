@@ -1,13 +1,15 @@
-export function urlValid(url: string | null): boolean {
-    if (url === null) {
+export function isUrlValid(urlString: string | null): boolean {
+    if (urlString === null) {
         return false;
     }
 
+    let url;
+
     try {
-        new URL(url);
+        url = new URL(urlString);
     } catch (e) {
         return false;
     }
 
-    return true;
+    return url.protocol === "http:" || url.protocol === "https:";
 }

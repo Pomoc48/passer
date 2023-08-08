@@ -1,20 +1,23 @@
 import { CollectionReference } from "firebase/firestore"
 import { encrypt } from "../../../functions/crypto";
-import { dbInsert } from "../../../functions/firestore";
+import { dbInsert, dbUpdate } from "../../../functions/firestore";
 import { UploadData } from "../../../types/uploadData";
 import { useCryptoKey } from "../../../context/key";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MaterialDialog from "../../common/dialog";
 import { GeneratePassword } from "js-generate-password";
 import MaterialButton from "../../common/button";
 import "./style.scss";
 import { MaterialInput } from "../../common/input";
+import { Website } from "../../../types/website";
+import { isUrlValid } from "../../../functions/utils";
 
-export default function CreateWebsiteDialog(
+export default function CreateEditWebsiteDialog(
   params: {
     reference: CollectionReference,
     notify: (message: string) => void,
     closeDialog: () => void,
+    website?: Website,
   },
 ) {
   const cryptoKey = useCryptoKey().key!;
@@ -28,7 +31,17 @@ export default function CreateWebsiteDialog(
   const [useCharacters, setUseCharacters] = useState(true);
   const [passwordSize, setPasswordSize] = useState(24);
 
-  async function prepareEncryptedData() {
+  useEffect(() => {
+    if (params.website) {
+      nameRef.current!.value = params.website.data.name;
+      urlRef.current!.value = params.website.data.url ?? "";
+      usernameRef.current!.value = params.website.data.username ?? "";
+      passwordRef.current!.value = params.website.data.password ?? "";
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function createWebsite() {
     const data = {
       name: nameRef.current!.value.trim(),
       password: passwordRef.current!.value.trim(),
@@ -53,18 +66,43 @@ export default function CreateWebsiteDialog(
     params.notify("New password successfully added");
   }
 
+  async function updateWebsite() {
+    const data = {
+      name: nameRef.current!.value.trim(),
+      password: passwordRef.current!.value.trim(),
+      url: urlRef.current!.value.trim(),
+      username: usernameRef.current!.value.trim(),
+    };
+
+    const serialized = JSON.stringify(data);
+    const encrypted = await encrypt(cryptoKey, serialized);
+
+    const uploadData: UploadData = {
+      uuid: params.website!.uuid,
+      websiteData: encrypted,
+      favorite: false,
+      time: {
+        created: params.website!.time.created,
+        modified: new Date(),
+      }
+    }
+
+    await dbUpdate(params.reference, uploadData);
+    params.notify("Password successfully updated");
+  }
+
   return (
     <MaterialDialog
       class="new"
-      title="Add new password"
+      title={params.website ? "Edit password" : "Create password"}
       maxWidth={900}
       dismissible={true}
       closeFunction={params.closeDialog}
       content={[
         <>
-          <label>Password name:</label>
+          <label>Name:</label>
           <MaterialInput
-            placeholder="ex. Wordpress Admin"
+            placeholder="Example Website"
             type="text"
             ref={nameRef}
           />
@@ -142,21 +180,24 @@ export default function CreateWebsiteDialog(
           label: "Confirm",
           icon: "check",
           onClick: async () => {
-            let urlInput = urlRef.current!.value.trim();
-
             if (nameRef.current!.value.trim() === "") {
+              params.notify("Please enter a valid name");
               return false;
             }
 
-            if (urlInput !== "") {
-              try {
-                new URL(urlInput);
-              } catch (_) {
-                return false;
-              }
+            let urlInput = urlRef.current!.value.trim();
+
+            if ((urlInput !== "") && (!isUrlValid(urlInput))) {
+              params.notify("Provided URL is not valid");
+              return false;
             }
 
-            await prepareEncryptedData();
+            if (params.website) {
+              await updateWebsite();
+            } else {
+              await createWebsite();
+            }
+
             return true;
           }
         },
