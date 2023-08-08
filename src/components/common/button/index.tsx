@@ -11,12 +11,13 @@ export default function MaterialButton(params: ButtonProps) {
   }
 
   return (
-    <button type='button' className={classList} onClick={params.onClick}>
-      {
-        params.icon !== undefined
-          ? <span className="material-icons">{params.icon}</span>
-          : null
-      }
+    <button
+      id={params.id}
+      type='button'
+      className={classList}
+      onClick={params.onClick}
+    >
+      <span className="material-icons">{params.icon}</span>
       <p>{params.label}</p>
     </button>
   );

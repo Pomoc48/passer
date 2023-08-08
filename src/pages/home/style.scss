@@ -36,3 +36,17 @@ section {
         gap: 12px;
     }
 }
+
+#home-mobile-button {
+    display: none;
+}
+
+@media only screen and (max-width: 900px) {
+    #home-desktop-button {
+        display: none;
+    }
+    
+    #home-mobile-button {
+        display: flex;
+    }
+}

@@ -13,7 +13,6 @@ import SignupDialog from '../../components/dialogs/signup';
 
 export default function HomePage() {
   const [showSnack, setShowSnack] = useState(false);
-  const [mobile, updateMobile] = useState(false);
 
   const [snackMessage, setSnackMessage] = useState("");
   const [snackLong, setSnackLong] = useState(false);
@@ -25,15 +24,6 @@ export default function HomePage() {
   const setCryptoKey = useCryptoKey().update;
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    let screenSize = 640;
-    updateMobile(window.innerWidth <= screenSize);
-
-    window.onresize = () => {
-      return updateMobile(window.innerWidth <= screenSize);
-    };
-  }, []);
 
   useEffect(() => {
     autoLogin({ setUser, setCryptoKey, navigate });
@@ -58,6 +48,13 @@ export default function HomePage() {
         icon='login'
         type='tonal'
       />
+      <MaterialButton
+        id='home-desktop-button'
+        label='Create account'
+        onClick={() => setShowSignupDialog(true)}
+        icon='person_add'
+        type='filled'
+      />
     </Navbar>
     <main>
       <section>
@@ -71,6 +68,7 @@ export default function HomePage() {
         </p>
         <div className="buttons">
           <MaterialButton
+            id='home-mobile-button'
             label='Sign Up'
             onClick={() => setShowSignupDialog(true)}
             icon='person_add'
@@ -115,7 +113,6 @@ export default function HomePage() {
           <Snackbar
             close={() => setShowSnack(false)}
             message={snackMessage}
-            mobile={mobile}
             long={snackLong}
           />,
           document.body,

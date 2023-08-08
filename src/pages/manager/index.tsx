@@ -11,13 +11,7 @@ import { useCryptoKey } from '../../context/key';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/search';
-import SearchMobile from '../../components/manager/search-mobile';
 import Snackbar from '../../components/common/snackbar';
-import Pill from '../../components/common/pill';
-import Avatar from '../../components/common/avatar';
-import { signUserOut } from '../../functions/auth';
-import { getAuth } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 import MaterialButton from '../../components/common/button';
 import CreateWebsiteDialog from '../../components/dialogs/website-create';
 
@@ -27,7 +21,6 @@ export default function ManagerPage(params: { db: Firestore }) {
   const search = useSearch();
 
   const [websites, updateWebsites] = useState<Website[]>([]);
-  const [mobile, updateMobile] = useState(false);
 
   const [showSnack, setShowSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
@@ -36,17 +29,7 @@ export default function ManagerPage(params: { db: Firestore }) {
 
   const websitesColRef = collection(params.db, "users", userContext.user!.uid, "websites");
 
-  const auth = getAuth();
-  const navigate = useNavigate();
-
   useEffect(() => {
-    let screenSize = 900;
-    updateMobile(window.innerWidth <= screenSize);
-
-    window.onresize = () => {
-      return updateMobile(window.innerWidth <= screenSize);
-    };
-
     const unsubscribe = onSnapshot(websitesColRef, (snapshot) => {
       let websiteList: Website[] = [];
 
@@ -88,21 +71,11 @@ export default function ManagerPage(params: { db: Firestore }) {
         label='Create'
         onClick={() => setShowCreateDialog(true)}
         icon='add'
-        type={mobile ? 'FAB' : "filled"}
+        type='FAB'
       />
-      {
-        mobile
-          ? <SearchMobile user={userContext.user!} />
-          : <>
-            <Search />
-            <Pill onClick={() => signUserOut(auth, userContext.update, navigate)}>
-              <Avatar user={userContext.user!} />
-              <p className='display-name'>{userContext.user!.email!}</p>
-            </Pill>
-          </>
-      }
+      <Search user={userContext.user!} />
     </Navbar>
-    <div className={mobile ? 'passwords FAB-space' : 'passwords'}>
+    <div className='passwords'>
       {
         websites.filter(
           website => {
@@ -148,7 +121,7 @@ export default function ManagerPage(params: { db: Firestore }) {
           <Snackbar
             close={() => setShowSnack(false)}
             message={snackMessage}
-            mobile={mobile}
+            extraSpace={true}
           />,
           document.body,
         )
