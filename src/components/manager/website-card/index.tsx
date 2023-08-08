@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom';
 import { CollectionReference } from 'firebase/firestore';
 import Card from '../../common/card';
 import WebsiteDialog from '../../dialogs/website-details';
+import { urlValid } from '../../../functions/utils';
 
 export default function WebsiteCard(
   params: {
@@ -16,17 +17,7 @@ export default function WebsiteCard(
 ) {
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
 
-  let url = params.website.data.url;
-
-  if (url !== null) {
-    try {
-      url = new URL(url.toString());
-    } catch (_) {
-      url = null;
-    }
-  }
-
-  let hasURL = url !== null;
+  let hasURL = urlValid(params.website.data.url);
   let hasUsername = params.website.data.username! !== "";
 
   function copyContent(content: string, name: string) {
@@ -42,8 +33,8 @@ export default function WebsiteCard(
           <p className={hasURL ? 'url' : "url empty"}>
             {
               hasURL
-                ? <a href={url!.toString()} target='_blank' rel="noreferrer">
-                  {url!.host}
+                ? <a href={params.website.data.url!.toString()} target='_blank' rel="noreferrer">
+                  {new URL(params.website.data.url!).host}
                   <span className="material-icons">open_in_new</span>
                 </a>
                 : "*no website"
