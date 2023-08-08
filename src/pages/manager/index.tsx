@@ -148,7 +148,7 @@ export default function ManagerPage(params: { db: Firestore }) {
           <Snackbar
             close={() => setShowSnack(false)}
             message={snackMessage}
-            mobile={mobile}
+            extraSpace={true}
           />,
           document.body,
         )

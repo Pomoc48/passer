@@ -13,7 +13,6 @@ import SignupDialog from '../../components/dialogs/signup';
 
 export default function HomePage() {
   const [showSnack, setShowSnack] = useState(false);
-  const [mobile, updateMobile] = useState(false);
 
   const [snackMessage, setSnackMessage] = useState("");
   const [snackLong, setSnackLong] = useState(false);
@@ -25,15 +24,6 @@ export default function HomePage() {
   const setCryptoKey = useCryptoKey().update;
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    let screenSize = 640;
-    updateMobile(window.innerWidth <= screenSize);
-
-    window.onresize = () => {
-      return updateMobile(window.innerWidth <= screenSize);
-    };
-  }, []);
 
   useEffect(() => {
     autoLogin({ setUser, setCryptoKey, navigate });
@@ -115,7 +105,6 @@ export default function HomePage() {
           <Snackbar
             close={() => setShowSnack(false)}
             message={snackMessage}
-            mobile={mobile}
             long={snackLong}
           />,
           document.body,

@@ -5,7 +5,7 @@ export default function Snackbar(
   params: {
     message: String,
     close: () => void,
-    mobile: boolean,
+    extraSpace?: boolean,
     long?: boolean,
   },
 ) {
@@ -29,7 +29,7 @@ export default function Snackbar(
   }, []);
 
   return (
-    <div className={params.mobile ? "snackbar mobile" : "snackbar"}>
+    <div className={params.extraSpace ? "snackbar extra-space" : "snackbar"}>
       <p>{params.message}</p>
     </div>
   );
