@@ -3,7 +3,16 @@
     cursor: pointer;
 }
 
-@mixin button-text {
+@mixin button-font {
     font-size: 14px;
     font-weight: 500;
+}
+
+@mixin text-button {
+    background-color: unset;
+    padding-inline: 10px 14px;
+    
+    &:hover {
+        background-color: var(--secondary-color);
+    }
 }

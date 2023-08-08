@@ -13,7 +13,7 @@ import { EncryptedData } from '../../types/encryptedData';
 import { useSearch } from '../../context/search';
 import Snackbar from '../../components/common/snackbar';
 import MaterialButton from '../../components/common/button';
-import CreateWebsiteDialog from '../../components/dialogs/website-create';
+import CreateEditWebsiteDialog from '../../components/dialogs/website-create-edit';
 
 export default function ManagerPage(params: { db: Firestore }) {
   const userContext = useEmailUser();
@@ -106,7 +106,7 @@ export default function ManagerPage(params: { db: Firestore }) {
     {
       showCreateDialog
         ? createPortal(
-          <CreateWebsiteDialog
+          <CreateEditWebsiteDialog
             notify={notify}
             reference={websitesColRef}
             closeDialog={() => setShowCreateDialog(false)}

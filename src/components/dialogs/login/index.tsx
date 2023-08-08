@@ -83,7 +83,7 @@ export default function LoginDialog(
         {
           label: "Cancel",
           icon: "close",
-          type: "tonal",
+          type: "text",
         },
       ]}
     />

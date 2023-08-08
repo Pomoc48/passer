@@ -5,12 +5,6 @@ import MaterialButton from '../button';
 
 export default function MaterialDialog(params: DialogProps) {
   useEffect(() => {
-    let root = document.querySelector(':root')! as HTMLElement;
-    root.style.setProperty(
-      '--dialog-width',
-      params.maxWidth === undefined ? "500px" : params.maxWidth + 'px',
-    );
-
     setTimeout(() => {
       document.getElementsByClassName("dialog")[0].classList.add("open");
       document.getElementsByClassName("scrim")[0].classList.add("open");
@@ -28,9 +22,15 @@ export default function MaterialDialog(params: DialogProps) {
     }
   }
 
+  let dialogClasses = "dialog " + params.class;
+
+  if (params.extraWide) {
+    dialogClasses += " extra-wide";
+  }
+
   return <>
     <div className="scrim" onClick={params.dismissible ? close : undefined} />
-    <div className={"dialog " + params.class}>
+    <div className={dialogClasses}>
       <h3>{params.title}</h3>
       <div className="flow-container">
         <div className='content'>

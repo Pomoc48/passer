@@ -4,7 +4,7 @@ export type Website = {
     data: {
         name: string;
         password: string | null;
-        url: URL | null;
+        url: string | null;
         username: string | null;
     },
     time: {

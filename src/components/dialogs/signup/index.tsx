@@ -90,7 +90,7 @@ export default function SignupDialog(
         {
           label: "Cancel",
           icon: "close",
-          type: "tonal",
+          type: "text",
         },
       ]}
     />

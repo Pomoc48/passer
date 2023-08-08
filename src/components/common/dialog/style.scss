@@ -21,7 +21,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: min(100vw - 32px, var(--dialog-width, 500px));
+    width: min(100vw - 32px, 500px);
     max-height: calc(100vh - 32px);
     z-index: 3;
     padding: 24px;
@@ -29,6 +29,10 @@
     box-sizing: border-box;
     background-color: var(--secondary-variant-color);
     transition: all 0.3s;
+    
+    &.extra-wide {
+        width: min(100vw - 32px, 900px);
+    }
     
     @media (max-width: 900px) {
         width: min(100vw - 32px, 600px);

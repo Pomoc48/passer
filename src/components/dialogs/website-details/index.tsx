@@ -4,6 +4,7 @@ import MaterialDialog from '../../common/dialog';
 import { dbDelete } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
 import './style.scss'
+import { isUrlValid } from '../../../functions/utils';
 
 export default function WebsiteDialog(
   params: {
@@ -11,21 +12,12 @@ export default function WebsiteDialog(
     notify: (message: string, long?: boolean) => void,
     closeDialog: () => void,
     reference: CollectionReference,
+    openEdit: () => void,
   },
 ) {
   const [showPassword, setShowPassword] = useState(false);
 
-  let url = params.website.data.url;
-
-  if (url !== null) {
-    try {
-      url = new URL(url.toString());
-    } catch (_) {
-      url = null;
-    }
-  }
-
-  let hasURL = url !== null;
+  let hasURL = isUrlValid(params.website.data.url);
   let hasUsername = params.website.data.username! !== "";
 
   function copyContent(content: string, name: string) {
@@ -64,7 +56,7 @@ export default function WebsiteDialog(
             {
               hasURL
                 ? <span
-                  onClick={() => window.open(url!, '_blank')!.focus()}
+                  onClick={() => window.open(params.website.data.url!, '_blank')!.focus()}
                   className="material-icons">open_in_new</span>
                 : null
             }
@@ -123,7 +115,10 @@ export default function WebsiteDialog(
         {
           label: "Edit",
           icon: "edit",
-          // onClick: async () => false,
+          onClick: async () => {
+            params.openEdit();
+            return true;
+          },
         },
         {
           label: "Delete",
@@ -134,13 +129,14 @@ export default function WebsiteDialog(
               doc(params.reference, params.website.uuid),
             );
 
+            params.notify("Password successfully removed");
             return true;
           },
         },
         {
           label: "Cancel",
           icon: "close",
-          type: "tonal",
+          type: "text",
         },
       ]}
     />
