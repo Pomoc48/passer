@@ -1,12 +1,17 @@
 @use "../../../scss/mixins.scss";
 
-.search-input {
+.search-input{
     all: unset;
     box-sizing: border-box;
     width: 250px;
     height: 40px;
     padding-right: 16px;
     @include mixins.button-text;
+    
+    &.mobile {
+        width: 35vw;
+        padding-right: 0;
+    }
 }
 
 .pill-icon {
@@ -19,5 +24,21 @@
     
     span.material-icons {
         font-size: 22px;
+    }
+}
+
+header div.container {
+    .pill.mobile-components {
+        display: none;
+    }
+    
+    @media only screen and (max-width: 900px) {
+        .pill.mobile-components {
+            display: flex;
+        }
+        
+        .pill.desktop-components {
+            display: none;
+        }
     }
 }

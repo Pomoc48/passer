@@ -1,9 +1,0 @@
-@use "../../../scss/mixins.scss";
-
-.search-input-mobile {
-    all: unset;
-    box-sizing: border-box;
-    height: 40px;
-    width: 35vw;
-    @include mixins.button-text;
-}
