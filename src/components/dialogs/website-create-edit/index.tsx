@@ -95,7 +95,7 @@ export default function CreateEditWebsiteDialog(
     <MaterialDialog
       class="new"
       title={params.website ? "Edit password" : "Create password"}
-      maxWidth={900}
+      extraWide={true}
       dismissible={true}
       closeFunction={params.closeDialog}
       content={[

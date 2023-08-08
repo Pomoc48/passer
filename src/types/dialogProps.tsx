@@ -6,7 +6,7 @@ export type DialogProps = {
     additionalContent?: JSX.Element[];
     actions: ButtonProps[];
     closeFunction: () => void;
-    maxWidth?: number;
+    extraWide?: boolean;
     dismissible: boolean;
     class: string;
 }
