@@ -48,6 +48,13 @@ export default function HomePage() {
         icon='login'
         type='tonal'
       />
+      <MaterialButton
+        id='home-desktop-button'
+        label='Create account'
+        onClick={() => setShowSignupDialog(true)}
+        icon='person_add'
+        type='filled'
+      />
     </Navbar>
     <main>
       <section>
@@ -61,6 +68,7 @@ export default function HomePage() {
         </p>
         <div className="buttons">
           <MaterialButton
+            id='home-mobile-button'
             label='Sign Up'
             onClick={() => setShowSignupDialog(true)}
             icon='person_add'
