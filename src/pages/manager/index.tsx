@@ -88,7 +88,7 @@ export default function ManagerPage(params: { db: Firestore }) {
         label='Create'
         onClick={() => setShowCreateDialog(true)}
         icon='add'
-        type={mobile ? 'FAB' : "filled"}
+        type='FAB'
       />
       {
         mobile
@@ -102,7 +102,7 @@ export default function ManagerPage(params: { db: Firestore }) {
           </>
       }
     </Navbar>
-    <div className={mobile ? 'passwords FAB-space' : 'passwords'}>
+    <div className='passwords'>
       {
         websites.filter(
           website => {
