@@ -163,7 +163,7 @@ export default function CreateWebsiteDialog(
         {
           label: "Cancel",
           icon: "close",
-          type: "tonal",
+          type: "text",
         },
       ]}
     />

@@ -8,7 +8,7 @@ button.material {
     width: max-content;
     border-radius: 20px;
     padding-inline: 16px 22px;
-    gap: 12px;
+    gap: 8px;
     transition: 0.3s;
     @include mixins.clickable;
     
@@ -19,7 +19,7 @@ button.material {
     p {
         margin: 0;
         padding-bottom: 2px;
-        @include mixins.button-text;
+        @include mixins.button-font;
     }
     
     &:focus {
@@ -41,12 +41,13 @@ button.material {
     }
     
     &.text {
-        background-color: unset;
         color: var(--primary-color);
-        
-        &:hover {
-            background-color: var(--secondary-color);
-        }
+        @include mixins.text-button;
+    }
+    
+    &.error {
+        color: var(--error-color);
+        @include mixins.text-button;
     }
     
     &.FAB {

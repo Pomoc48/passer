@@ -35,6 +35,6 @@ header {
     
     p.display-name {
         padding-right: 16px;
-        @include mixins.button-text;
+        @include mixins.button-font;
     }
 }

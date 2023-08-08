@@ -11,5 +11,5 @@
     color: var(--background-color);
     text-align: center;
     line-height: 32px;
-    @include mixins.button-text;
+    @include mixins.button-font;
 }

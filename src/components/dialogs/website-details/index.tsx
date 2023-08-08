@@ -140,7 +140,7 @@ export default function WebsiteDialog(
         {
           label: "Cancel",
           icon: "close",
-          type: "tonal",
+          type: "text",
         },
       ]}
     />
