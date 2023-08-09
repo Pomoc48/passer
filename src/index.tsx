@@ -15,26 +15,43 @@ import ErrorPage from './pages/error';
 
 let matcher = window.matchMedia("(prefers-color-scheme: dark)");
 
-matcher.addEventListener("change", () => onUpdate());
+matcher.addEventListener("change", () => updateTheme());
 
-let lightSchemeIcon = document.querySelector("link#light-scheme-icon");
-let darkSchemeIcon = document.querySelector("link#dark-scheme-icon");
+let lightSchemeIcon = document.querySelector("link#light-scheme-icon")!;
+let darkSchemeIcon = document.querySelector("link#dark-scheme-icon")!;
 
-function onUpdate() {
-  if (lightSchemeIcon === null || darkSchemeIcon === null) {
-    return;
+export function updateTheme() {
+  let systemDefaultTheme = true;
+  let themeOverride = localStorage.getItem("theme");
+
+  if (themeOverride === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+    systemDefaultTheme = false;
+  }
+
+  if (themeOverride === "light") {
+    document.documentElement.setAttribute("data-theme", "light");
+    systemDefaultTheme = false;
   }
 
   if (matcher.matches) {
     document.head.append(darkSchemeIcon);
     lightSchemeIcon.remove();
+
+    if (systemDefaultTheme) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
   } else {
     document.head.append(lightSchemeIcon);
     darkSchemeIcon.remove();
+
+    if (systemDefaultTheme) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   }
 }
 
-onUpdate();
+updateTheme();
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,

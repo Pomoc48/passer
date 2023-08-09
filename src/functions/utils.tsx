@@ -13,3 +13,7 @@ export function isUrlValid(urlString: string | null): boolean {
 
     return url.protocol === "http:" || url.protocol === "https:";
 }
+
+export function capitalize(value: string): string {
+    return value.charAt(0).toUpperCase() + value.slice(1);
+}

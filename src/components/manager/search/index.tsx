@@ -1,19 +1,16 @@
-import { User, getAuth } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { useSearch } from '../../../context/search';
 import Avatar from '../../common/avatar';
 import Pill from '../../common/pill';
 import './style.scss';
-import { useEmailUser } from '../../../context/user';
-import { useNavigate } from 'react-router-dom';
-import { signUserOut } from '../../../functions/auth';
 
-export default function Search(params: { user: User }) {
-  const auth = getAuth();
+export default function Search(
+  params: {
+    user: User,
+    openDialog: () => void,
+  }
+) {
   const search = useSearch();
-  const userContext = useEmailUser();
-
-  const setUser = useEmailUser().update;
-  const navigate = useNavigate();
 
   return (
     <>
@@ -31,7 +28,7 @@ export default function Search(params: { user: User }) {
         </div>
         <div
           className='clickable'
-          onClick={() => signUserOut(auth, setUser, navigate)}
+          onClick={params.openDialog}
         >
           <Avatar user={params.user} />
         </div>
@@ -51,13 +48,11 @@ export default function Search(params: { user: User }) {
       </Pill>
       <Pill
         class='desktop-components'
-        onClick={() => signUserOut(auth, userContext.update, navigate)}
+        onClick={params.openDialog}
       >
         <Avatar user={params.user} />
         <p className='display-name'>{params.user.email!}</p>
       </Pill>
     </>
-
-
   );
 }

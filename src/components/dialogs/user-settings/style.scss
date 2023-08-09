@@ -1,0 +1,86 @@
+@use "../../../scss/mixins.scss";
+
+.dialog.user-settings {
+    width: min(320px, (100% - 32px));
+    padding: 0;
+    transform: unset;
+    top: 72px;
+    left: unset;
+    right: calc(0% + 16px);
+    
+    .flow-container {
+        padding: 0;
+        
+        .content {
+            overflow: hidden;
+            
+            div {
+                margin: 0;    
+            }
+            
+            .user-info {
+                display: flex;
+                gap: 16px;
+                padding: 24px;
+                
+                div.text {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: calc(100% - 42px - 16px);
+                    gap: 6px;
+                    
+                    p {
+                        margin: 0;
+                        font-weight: 400;
+                        user-select: none;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 100%;
+                        
+                        &.name {
+                            font-size: 16px;
+                        }
+                        
+                        &.email {
+                            font-size: 12px;
+                            opacity: 0.75;
+                        }
+                    }
+                }
+            }
+            
+            .separator {
+                height: 2px;
+                background-color: var(--secondary-color);
+            }
+            
+            .option-items {
+                padding: 12px 8px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+    }
+}
+
+.item-option {
+    border-radius: 20px;
+    padding-inline: 20px;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    gap: 16px;
+    transition: 0.3s;
+    @include mixins.clickable;
+    
+    p {
+        font-size: 14px;
+    }
+    
+    &:hover {
+        background-color: var(--secondary-color);
+    }
+}

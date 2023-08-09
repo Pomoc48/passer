@@ -10,16 +10,14 @@
     --error-color: #a60000;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --text-color: #F0F0F0;
-        --background-color: #141414;
-        --accent-color: #A3C2A4;
-        --primary-color: #A0C9FF;
-        --secondary-color: #2A323D;
-        --secondary-variant-color: #212429;
-        --error-color: #ffa0a0;
-    }
+[data-theme="dark"] {
+    --text-color: #F0F0F0;
+    --background-color: #141414;
+    --accent-color: #A3C2A4;
+    --primary-color: #A0C9FF;
+    --secondary-color: #2A323D;
+    --secondary-variant-color: #212429;
+    --error-color: #ffa0a0;
 }
 
 body {
