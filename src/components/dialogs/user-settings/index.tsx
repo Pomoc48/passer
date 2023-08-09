@@ -84,7 +84,7 @@ export default function UserSettingsDialog(
           <Avatar user={params.user} big={true} />
           <div className='text'>
             <p className='name'>
-              {params.user.displayName ?? "User"}
+              {params.user.displayName ?? "Passer user"}
             </p>
             <p className='email'>{params.user.email}</p>
           </div>
