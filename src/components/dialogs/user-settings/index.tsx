@@ -4,6 +4,10 @@ import Avatar from '../../common/avatar';
 import { useEmailUser } from '../../../context/user';
 import { useNavigate } from 'react-router-dom';
 import "./style.scss";
+import { signUserOut } from '../../../functions/auth';
+import { updateTheme } from '../../..';
+import { useEffect, useState } from 'react';
+import { capitalize } from '../../../functions/utils';
 
 export default function UserSettingsDialog(
   params: {
@@ -13,10 +17,44 @@ export default function UserSettingsDialog(
   }
 ) {
   const auth = getAuth();
-  const userContext = useEmailUser();
 
   const setUser = useEmailUser().update;
   const navigate = useNavigate();
+
+  const [themeName, setThemeName] = useState("");
+
+  useEffect(() => {
+    let theme = localStorage.getItem("theme");
+
+    if (theme === "dark" || theme === "light") {
+      setThemeName(capitalize(theme));
+      return;
+    }
+
+    setThemeName("System");
+  }, []);
+
+  function toggleTheme() {
+    let theme = localStorage.getItem("theme");
+
+    if (theme === "dark") {
+      localStorage.setItem("theme", "system");
+      setThemeName("System");
+      updateTheme();
+      return;
+    }
+
+    if (theme === "light") {
+      localStorage.setItem("theme", "dark");
+      setThemeName("Dark");
+      updateTheme();
+      return;
+    }
+
+    localStorage.setItem("theme", "light");
+    setThemeName("Light");
+    updateTheme();
+  }
 
   return (
     <MaterialDialog
@@ -46,14 +84,14 @@ export default function UserSettingsDialog(
             onClick={() => { }}
           />
           <ItemOption
-            label="Theme: System"
+            label={"Theme: " + themeName}
             icon='dark_mode'
-            onClick={() => { }}
+            onClick={toggleTheme}
           />
           <ItemOption
             label="Sign Out"
             icon='logout'
-            onClick={() => { }}
+            onClick={() => signUserOut(auth, setUser, navigate)}
           />
         </div>,
       ]}
