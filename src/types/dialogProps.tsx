@@ -1,7 +1,7 @@
 import { ButtonProps } from "./buttonProps";
 
 export type DialogProps = {
-    title: string;
+    title?: string;
     content: JSX.Element[];
     additionalContent?: JSX.Element[];
     actions: ButtonProps[];

@@ -14,6 +14,7 @@ import { useSearch } from '../../context/search';
 import Snackbar from '../../components/common/snackbar';
 import MaterialButton from '../../components/common/button';
 import CreateEditWebsiteDialog from '../../components/dialogs/website-create-edit';
+import UserSettingsDialog from '../../components/dialogs/user-settings';
 
 export default function ManagerPage(params: { db: Firestore }) {
   const userContext = useEmailUser();
@@ -26,6 +27,7 @@ export default function ManagerPage(params: { db: Firestore }) {
   const [snackMessage, setSnackMessage] = useState("");
 
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [showUserDialog, setShowUserDialog] = useState(false);
 
   const websitesColRef = collection(params.db, "users", userContext.user!.uid, "websites");
 
@@ -73,7 +75,10 @@ export default function ManagerPage(params: { db: Firestore }) {
         icon='add'
         type='FAB'
       />
-      <Search user={userContext.user!} />
+      <Search
+        user={userContext.user!}
+        openDialog={() => setShowUserDialog(true)}
+      />
     </Navbar>
     <div className='passwords'>
       {
@@ -110,6 +115,18 @@ export default function ManagerPage(params: { db: Firestore }) {
             notify={notify}
             reference={websitesColRef}
             closeDialog={() => setShowCreateDialog(false)}
+          />,
+          document.body,
+        )
+        : null
+    }
+    {
+      showUserDialog
+        ? createPortal(
+          <UserSettingsDialog
+            notify={notify}
+            user={userContext.user!}
+            closeDialog={() => setShowUserDialog(false)}
           />,
           document.body,
         )

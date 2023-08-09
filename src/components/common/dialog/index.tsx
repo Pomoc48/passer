@@ -31,7 +31,7 @@ export default function MaterialDialog(params: DialogProps) {
   return <>
     <div className="scrim" onClick={params.dismissible ? close : undefined} />
     <div className={dialogClasses}>
-      <h3>{params.title}</h3>
+      {params.title ? <h3>params.title</h3> : null}
       <div className="flow-container">
         <div className='content'>
           {params.content.map((content, i) => <div key={i}>{content}</div>)}
@@ -44,27 +44,31 @@ export default function MaterialDialog(params: DialogProps) {
             : null
         }
       </div>
-      <div className='actions'>
-        {
-          params.actions.map((action, index) => {
-            return <MaterialButton
-              key={index}
-              label={action.label}
-              onClick={
-                action.onClick === undefined
-                  ? close
-                  : async () => {
-                    if (await action.onClick!()) {
-                      close();
-                    }
+      {
+        params.actions.length > 0
+          ? <div className='actions'>
+            {
+              params.actions.map((action, index) => {
+                return <MaterialButton
+                  key={index}
+                  label={action.label}
+                  onClick={
+                    action.onClick === undefined
+                      ? close
+                      : async () => {
+                        if (await action.onClick!()) {
+                          close();
+                        }
+                      }
                   }
-              }
-              icon={action.icon}
-              type={action.type}
-            />
-          })
-        }
-      </div>
+                  icon={action.icon}
+                  type={action.type}
+                />
+              })
+            }
+          </div>
+          : null
+      }
     </div>
   </>
 }
