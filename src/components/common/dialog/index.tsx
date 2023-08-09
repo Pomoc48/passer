@@ -31,7 +31,7 @@ export default function MaterialDialog(params: DialogProps) {
   return <>
     <div className="scrim" onClick={params.dismissible ? close : undefined} />
     <div className={dialogClasses}>
-      {params.title ? <h3>params.title</h3> : null}
+      {params.title ? <h3>{params.title}</h3> : null}
       <div className="flow-container">
         <div className='content'>
           {params.content.map((content, i) => <div key={i}>{content}</div>)}
