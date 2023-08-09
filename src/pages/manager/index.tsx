@@ -16,6 +16,8 @@ import MaterialButton from '../../components/common/button';
 import CreateEditWebsiteDialog from '../../components/dialogs/website-create-edit';
 import UserSettingsDialog from '../../components/dialogs/user-settings';
 
+export type Sorting = "alphabetical" | "newest" | "oldest";
+
 export default function ManagerPage(params: { db: Firestore }) {
   const userContext = useEmailUser();
   const cryptoKey = useCryptoKey().key!;
@@ -28,6 +30,8 @@ export default function ManagerPage(params: { db: Firestore }) {
 
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showUserDialog, setShowUserDialog] = useState(false);
+
+  const [sorting, setSorting] = useState<Sorting>("alphabetical");
 
   const websitesColRef = collection(params.db, "users", userContext.user!.uid, "websites");
 
@@ -82,30 +86,53 @@ export default function ManagerPage(params: { db: Firestore }) {
     </Navbar>
     <div className='passwords'>
       {
-        websites.filter(
-          website => {
-            function normalize(value: string): string {
-              return value.trim().toLowerCase();
-            }
-
-            function checkMatch(value: string | null | undefined): boolean {
-              if (value === null || value === undefined) {
-                return false;
+        websites
+          .filter(
+            website => {
+              function normalize(value: string): string {
+                return value.trim().toLowerCase();
               }
 
-              return normalize(value).includes(normalize(search.value));
+              function checkMatch(value: string | null | undefined): boolean {
+                if (value === null || value === undefined) {
+                  return false;
+                }
+
+                return normalize(value).includes(normalize(search.value));
+              }
+
+              return (
+                checkMatch(website.data.name) ||
+                checkMatch(website.data.username) ||
+                checkMatch(website.data.url?.toString())
+              );
+            }
+          )
+          .sort((a, b) => {
+            if (sorting === 'alphabetical') {
+              let nameA = a.data.name.toLowerCase();
+              let nameB = b.data.name.toLowerCase();
+
+              return nameA.localeCompare(nameB);
             }
 
-            return checkMatch(website.data.name) || checkMatch(website.data.username) || checkMatch(website.data.url?.toString());
-          }
-        ).map((data, index) => {
-          return <WebsiteCard
-            key={index}
-            website={data}
-            notify={notify}
-            reference={websitesColRef}
-          />;
-        })
+            let createdA = a.time.created.getTime();
+            let createdB = b.time.created.getTime();
+
+            if (sorting === 'newest') {
+              return createdB - createdA;
+            }
+
+            return createdA - createdB;
+          })
+          .map((data, index) => {
+            return <WebsiteCard
+              key={index}
+              website={data}
+              notify={notify}
+              reference={websitesColRef}
+            />;
+          })
       }
     </div>
     {
@@ -127,6 +154,8 @@ export default function ManagerPage(params: { db: Firestore }) {
             notify={notify}
             user={userContext.user!}
             closeDialog={() => setShowUserDialog(false)}
+            sorting={sorting}
+            setSorting={setSorting}
           />,
           document.body,
         )

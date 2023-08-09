@@ -8,12 +8,15 @@ import { signUserOut } from '../../../functions/auth';
 import { updateTheme } from '../../..';
 import { useEffect, useState } from 'react';
 import { capitalize } from '../../../functions/utils';
+import { Sorting } from '../../../pages/manager';
 
 export default function UserSettingsDialog(
   params: {
     user: User,
+    sorting: Sorting,
     notify: (message: string, long?: boolean) => void,
     closeDialog: () => void,
+    setSorting: (sorting: Sorting) => void,
   }
 ) {
   const auth = getAuth();
@@ -33,6 +36,21 @@ export default function UserSettingsDialog(
 
     setThemeName("System");
   }, []);
+
+  function toggleSorting() {
+    if (params.sorting === "alphabetical") {
+      params.setSorting("newest");
+      return;
+    }
+
+    if (params.sorting === "newest") {
+      params.setSorting("oldest");
+      return;
+    }
+
+    params.setSorting("alphabetical");
+    return;
+  }
 
   function toggleTheme() {
     let theme = localStorage.getItem("theme");
@@ -66,7 +84,7 @@ export default function UserSettingsDialog(
           <Avatar user={params.user} big={true} />
           <div className='text'>
             <p className='name'>
-              {params.user.displayName ?? "Mikołaj Łukawski"}
+              {params.user.displayName ?? "User"}
             </p>
             <p className='email'>{params.user.email}</p>
           </div>
@@ -74,9 +92,9 @@ export default function UserSettingsDialog(
         <div className='separator' />,
         <div className="option-items">
           <ItemOption
-            label="Sorting: Alphabetical"
+            label={"Sorting: " + capitalize(params.sorting)}
             icon='sort'
-            onClick={() => { }}
+            onClick={toggleSorting}
           />
           <ItemOption
             label="Filter: None"
