@@ -16,6 +16,7 @@ import MaterialButton from '../../components/common/button';
 import CreateEditWebsiteDialog from '../../components/dialogs/website-create-edit';
 import UserSettingsDialog from '../../components/dialogs/user-settings';
 import Loading from '../../components/common/loading';
+import NameChangeDialog from '../../components/dialogs/name-change';
 
 export type Sorting = "alphabetical" | "newest" | "oldest";
 
@@ -31,6 +32,7 @@ export default function ManagerPage(params: { db: Firestore }) {
 
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showUserDialog, setShowUserDialog] = useState(false);
+  const [showNameDialog, setShowNameDialog] = useState(false);
 
   const [sorting, setSorting] = useState<Sorting>("alphabetical");
 
@@ -70,6 +72,12 @@ export default function ManagerPage(params: { db: Firestore }) {
 
     setSnackMessage(message);
     setShowSnack(true);
+  }
+
+  function editName() {
+    setTimeout(() => {
+      setShowNameDialog(true);
+    }, 310);
   }
 
   return <>
@@ -159,6 +167,19 @@ export default function ManagerPage(params: { db: Firestore }) {
             closeDialog={() => setShowUserDialog(false)}
             sorting={sorting}
             setSorting={setSorting}
+            editName={editName}
+          />,
+          document.body,
+        )
+        : null
+    }
+    {
+      showNameDialog
+        ? createPortal(
+          <NameChangeDialog
+            closeDialog={() => setShowNameDialog(false)}
+            notify={notify}
+            user={userContext.user!}
           />,
           document.body,
         )

@@ -37,10 +37,15 @@
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                        width: 100%;
                         
                         &.name {
                             font-size: 16px;
+                            cursor: pointer;
+                            transition: color 0.2s;
+                            
+                            &:hover {
+                                color: var(--primary-color);
+                            }
                         }
                         
                         &.email {

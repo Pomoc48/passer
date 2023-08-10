@@ -51,7 +51,13 @@ export default function Search(
         onClick={params.openDialog}
       >
         <Avatar user={params.user} />
-        <p className='display-name'>{params.user.email!}</p>
+        <p className='display-name'>
+          {
+            params.user.displayName === null
+              ? params.user.email
+              : params.user.displayName
+          }
+        </p>
       </Pill>
     </>
   );

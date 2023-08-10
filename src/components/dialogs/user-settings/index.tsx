@@ -17,6 +17,7 @@ export default function UserSettingsDialog(
     notify: (message: string, long?: boolean) => void,
     closeDialog: () => void,
     setSorting: (sorting: Sorting) => void,
+    editName: () => void,
   }
 ) {
   const auth = getAuth();
@@ -83,7 +84,13 @@ export default function UserSettingsDialog(
         <div className='user-info'>
           <Avatar user={params.user} big={true} />
           <div className='text'>
-            <p className='name'>
+            <p
+              className='name'
+              onClick={() => {
+                params.editName();
+                params.closeDialog();
+              }}
+            >
               {params.user.displayName ?? "Passer user"}
             </p>
             <p className='email'>{params.user.email}</p>
@@ -96,11 +103,11 @@ export default function UserSettingsDialog(
             icon='sort'
             onClick={toggleSorting}
           />
-          <ItemOption
+          {/* <ItemOption
             label="Filter: None"
             icon='filter_list'
             onClick={() => { }}
-          />
+          /> */}
           <ItemOption
             label={"Theme: " + themeName}
             icon='dark_mode'
