@@ -25,6 +25,8 @@ export default function HomePage() {
 
   const navigate = useNavigate();
 
+  let projectId = getProjectId()
+
   useEffect(() => {
     autoLogin({ setUser, setCryptoKey, navigate });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,6 +50,20 @@ export default function HomePage() {
     return true;
   }
 
+  function getProjectId(): string | null {
+    let projectId = localStorage.getItem('projectId');
+
+    if (projectId !== null) {
+      return projectId;
+    }
+
+    if (isThirdPartyHosted()) {
+      return process.env.REACT_APP_PROJECT_ID!;
+    }
+
+    return null;
+  }
+
   return <>
     <Navbar>
       <MaterialButton
@@ -67,6 +83,11 @@ export default function HomePage() {
     <main>
       <section>
         <h1>Passer</h1>
+        {
+          projectId !== null
+            ? <p className='instance'>Custom instance ({projectId})</p>
+            : null
+        }
         <p>
           Free, open-source and self-hosted password manager.
           Every password with its site data is client-side encrypted before being stored in the cloud.
@@ -76,7 +97,7 @@ export default function HomePage() {
               ? null
               : <>
                 <br /><br />
-                Create a new testing account to check out the features, learn more by visiting the project's GitHub repository or configure the app to use your own Firebase project.
+                Create a new testing account to check out the features, learn more by visiting the project's GitHub repository or configure the app to use your own Firebase project instance.
               </>
           }
         </p>
@@ -96,12 +117,16 @@ export default function HomePage() {
               window.open("https://github.com/Pomoc48/passer", '_blank')!.focus();
             }}
           />
-          <MaterialButton
-            label='Configure'
-            onClick={() => window.location.reload()}
-            icon='settings'
-            type='tonal'
-          />
+          {
+            isThirdPartyHosted()
+              ? null
+              : <MaterialButton
+                label='Configure'
+                onClick={() => window.location.reload()}
+                icon='settings'
+                type='tonal'
+              />
+          }
         </div>
       </section>
     </main>
