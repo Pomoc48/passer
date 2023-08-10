@@ -59,16 +59,43 @@ input[type="range"] {
     appearance: none;
     border-radius: 99px;
     height: 6px;
-    background-color: var(--secondary-variant-color);
+    background: var(--secondary-variant-color);
     
-    &::-webkit-slider-thumb, &::-moz-range-thumb {
-        appearance: none;
+    &:focus {
         outline: 0;
+    }
+    
+    @mixin thumb-settings {
         border: 0;
         height: 16px;
         width: 16px;
         cursor: pointer;
         border-radius: 99px;
         background: var(--primary-color);
+    }
+    
+    @mixin progress-settings {
+        border-radius: 99px;
+        height: 6px;
+        background-color: var(--primary-color);
+    }
+    
+    &::-moz-range-thumb {
+        @include thumb-settings;
+    }
+    
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        margin-top: -5px; 
+        @include thumb-settings;
+    }
+    
+    &::-moz-range-progress {
+        @include progress-settings;
+    }
+    
+        
+    &::-webkit-slider-runnable-track {
+        @include progress-settings;
     }
 }

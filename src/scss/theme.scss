@@ -27,7 +27,12 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
     @include mixins.custom-scroll;
+    
+    h1, h2, h3, p, div {
+        font-family: Roboto, sans-serif;
+    }
 }
 
 p {
