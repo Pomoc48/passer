@@ -4,4 +4,5 @@ export type ButtonProps = {
     icon: string;
     type?: "filled" | "tonal" | "text" | "error" | "FAB",
     id?: string,
+    confirmation?: boolean,
 }

@@ -1,21 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
 
 :root {
     --text-color: #111518;
-    --background-color: #F2F3F5;
+    --background-color: #f2f3f5;
     --accent-color: #527a53;
-    --primary-color: #0061A6;
-    --secondary-color: #CEDBEB;
-    --secondary-variant-color: #E1E8F0;
+    --primary-color: #0061a6;
+    --secondary-color: #cedbeb;
+    --secondary-variant-color: #e1e8f0;
     --error-color: #a60000;
 }
 
 [data-theme="dark"] {
-    --text-color: #F0F0F0;
+    --text-color: #f0f0f0;
     --background-color: #141414;
-    --accent-color: #A3C2A4;
-    --primary-color: #A0C9FF;
-    --secondary-color: #2A323D;
+    --accent-color: #a3c2a4;
+    --primary-color: #a0c9ff;
+    --secondary-color: #2a323d;
     --secondary-variant-color: #212429;
     --error-color: #ffa0a0;
 }

@@ -61,6 +61,7 @@ export default function MaterialDialog(params: DialogProps) {
                         }
                       }
                   }
+                  confirmation={action.confirmation}
                   icon={action.icon}
                   type={action.type}
                 />
