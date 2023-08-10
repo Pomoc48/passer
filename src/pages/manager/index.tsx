@@ -15,6 +15,7 @@ import Snackbar from '../../components/common/snackbar';
 import MaterialButton from '../../components/common/button';
 import CreateEditWebsiteDialog from '../../components/dialogs/website-create-edit';
 import UserSettingsDialog from '../../components/dialogs/user-settings';
+import Loading from '../../components/common/loading';
 
 export type Sorting = "alphabetical" | "newest" | "oldest";
 
@@ -23,7 +24,7 @@ export default function ManagerPage(params: { db: Firestore }) {
   const cryptoKey = useCryptoKey().key!;
   const search = useSearch();
 
-  const [websites, updateWebsites] = useState<Website[]>([]);
+  const [websites, updateWebsites] = useState<Website[] | null>(null);
 
   const [showSnack, setShowSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
@@ -86,53 +87,55 @@ export default function ManagerPage(params: { db: Firestore }) {
     </Navbar>
     <div className='passwords'>
       {
-        websites
-          .filter(
-            website => {
-              function normalize(value: string): string {
-                return value.trim().toLowerCase();
-              }
-
-              function checkMatch(value: string | null | undefined): boolean {
-                if (value === null || value === undefined) {
-                  return false;
+        websites === null
+          ? <Loading />
+          : websites
+            .filter(
+              website => {
+                function normalize(value: string): string {
+                  return value.trim().toLowerCase();
                 }
 
-                return normalize(value).includes(normalize(search.value));
+                function checkMatch(value: string | null | undefined): boolean {
+                  if (value === null || value === undefined) {
+                    return false;
+                  }
+
+                  return normalize(value).includes(normalize(search.value));
+                }
+
+                return (
+                  checkMatch(website.data.name) ||
+                  checkMatch(website.data.username) ||
+                  checkMatch(website.data.url?.toString())
+                );
+              }
+            )
+            .sort((a, b) => {
+              if (sorting === 'alphabetical') {
+                let nameA = a.data.name.toLowerCase();
+                let nameB = b.data.name.toLowerCase();
+
+                return nameA.localeCompare(nameB);
               }
 
-              return (
-                checkMatch(website.data.name) ||
-                checkMatch(website.data.username) ||
-                checkMatch(website.data.url?.toString())
-              );
-            }
-          )
-          .sort((a, b) => {
-            if (sorting === 'alphabetical') {
-              let nameA = a.data.name.toLowerCase();
-              let nameB = b.data.name.toLowerCase();
+              let createdA = a.time.created.getTime();
+              let createdB = b.time.created.getTime();
 
-              return nameA.localeCompare(nameB);
-            }
+              if (sorting === 'newest') {
+                return createdB - createdA;
+              }
 
-            let createdA = a.time.created.getTime();
-            let createdB = b.time.created.getTime();
-
-            if (sorting === 'newest') {
-              return createdB - createdA;
-            }
-
-            return createdA - createdB;
-          })
-          .map((data, index) => {
-            return <WebsiteCard
-              key={index}
-              website={data}
-              notify={notify}
-              reference={websitesColRef}
-            />;
-          })
+              return createdA - createdB;
+            })
+            .map((data, index) => {
+              return <WebsiteCard
+                key={index}
+                website={data}
+                notify={notify}
+                reference={websitesColRef}
+              />;
+            })
       }
     </div>
     {
