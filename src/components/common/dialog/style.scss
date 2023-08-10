@@ -1,3 +1,5 @@
+@use "../../../scss/mixins.scss";
+
 .scrim {
     opacity: 0;
     top: 0;
@@ -44,7 +46,7 @@
         gap: 24px;
         padding-top: 12px;
         max-height: calc(100vh - 220px);
-        overflow-x: scroll;
+        @include mixins.custom-scroll;
         
         @media (max-width: 900px) {
             flex-direction: column;

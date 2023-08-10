@@ -16,3 +16,19 @@
         background-color: var(--secondary-color);
     }
 }
+
+@mixin custom-scroll {
+    & {
+        overflow-y: auto;
+    }
+    
+    &::-webkit-scrollbar {
+        width: 2px;
+        background-color: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        opacity: 0.5;
+    }
+}
