@@ -9,6 +9,11 @@ export default function MaterialButton(params: ButtonProps) {
 
   useEffect(() => {
     if (!play) {
+      if (progress > 0) {
+        setTimeout(() => setProgress(progress - 0.01), 5);
+        return;
+      }
+
       setProgress(0);
       return;
     }
@@ -30,7 +35,7 @@ export default function MaterialButton(params: ButtonProps) {
   }, [play, progress]);
 
   function mouseDown() {
-    if (params.confirmation === true) {
+    if (params.confirmation === true && progress === 0) {
       setPlay(true);
     }
   }
