@@ -170,6 +170,7 @@ export default function CreateEditWebsiteDialog(
                 }}
                 icon="auto_fix_high"
                 type="text"
+                confirmation={params.website !== undefined}
               />
             </div>
           </div>

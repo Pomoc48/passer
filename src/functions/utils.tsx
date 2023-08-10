@@ -17,3 +17,7 @@ export function isUrlValid(urlString: string | null): boolean {
 export function capitalize(value: string): string {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }
+
+export function easeOutCubic(x: number): number {
+    return 1 - Math.pow(1 - x, 3);
+}

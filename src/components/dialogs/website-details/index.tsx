@@ -124,6 +124,7 @@ export default function WebsiteDialog(
           label: "Delete",
           icon: "delete",
           type: "error",
+          confirmation: true,
           onClick: async () => {
             await dbDelete(
               doc(params.reference, params.website.uuid),

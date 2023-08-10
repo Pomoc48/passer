@@ -38,16 +38,28 @@ button.material {
     &.tonal {
         background-color: var(--secondary-color);
         color: var(--text-color);
+
+        &.confirm::before {
+            background-color: var(--primary-color);
+        }
     }
     
     &.text {
         color: var(--primary-color);
         @include mixins.text-button;
+        
+        &.confirm::before {
+            background-color: var(--primary-color);
+        }
     }
     
     &.error {
         color: var(--error-color);
         @include mixins.text-button;
+
+        &.confirm::before {
+            background-color: var(--error-color);
+        }
     }
     
     &.FAB {
@@ -64,6 +76,20 @@ button.material {
             &:hover {
                 opacity: 1;
             }
+        }
+    }
+
+    &.confirm {
+        position: relative;
+        overflow: clip;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: var(--button-width, 0%);
+            left: 0;
+            opacity: 0.25;
+            height: 40px;
         }
     }
 }

@@ -1,24 +1,15 @@
-import { useEffect } from 'react';
 import { DialogProps } from '../../../types/dialogProps';
 import './style.scss';
 import MaterialButton from '../button';
+import { useState } from 'react';
 
 export default function MaterialDialog(params: DialogProps) {
-  useEffect(() => {
-    setTimeout(() => {
-      document.getElementsByClassName("dialog")[0].classList.add("open");
-      document.getElementsByClassName("scrim")[0].classList.add("open");
-    }, 1);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [closed, setClosed] = useState(false);
 
   function close() {
     if (params.closeFunction !== null) {
-      document.getElementsByClassName("dialog")[0].classList.remove("open");
-      document.getElementsByClassName("scrim")[0].classList.remove("open");
-
       setTimeout(() => params.closeFunction!(), 300);
+      setClosed(true);
     }
   }
 
@@ -29,8 +20,15 @@ export default function MaterialDialog(params: DialogProps) {
   }
 
   return <>
-    <div className="scrim" onClick={params.dismissible ? close : undefined} />
-    <div className={dialogClasses}>
+    <div
+      className="scrim"
+      onClick={params.dismissible ? close : undefined}
+      style={closed ? { animation: "fade-out 0.3s forwards" } : undefined}
+    />
+    <div
+      className={dialogClasses}
+      style={closed ? { animation: "fade-out 0.3s forwards" } : undefined}
+    >
       {params.title ? <h3>{params.title}</h3> : null}
       <div className="flow-container">
         <div className='content'>
@@ -61,6 +59,7 @@ export default function MaterialDialog(params: DialogProps) {
                         }
                       }
                   }
+                  confirmation={action.confirmation}
                   icon={action.icon}
                   type={action.type}
                 />

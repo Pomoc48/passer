@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './style.scss';
 
 export default function Snackbar(
@@ -9,6 +9,8 @@ export default function Snackbar(
     long?: boolean,
   },
 ) {
+  const [closed, setClosed] = useState(false);
+
   let duration = 3000;
 
   if (params.long) {
@@ -17,19 +19,18 @@ export default function Snackbar(
 
   useEffect(() => {
     setTimeout(() => {
-      document.getElementsByClassName("snackbar")[0].classList.add("open");
-    }, 1);
-
-    setTimeout(() => {
-      document.getElementsByClassName("snackbar")[0].classList.remove("open");
       setTimeout(() => params.close(), 300);
+      setClosed(true);
     }, duration - 300);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className={params.extraSpace ? "snackbar extra-space" : "snackbar"}>
+    <div
+      className={params.extraSpace ? "snackbar extra-space" : "snackbar"}
+      style={closed ? { animation: "fade-out 0.3s forwards" } : undefined}
+    >
       <p>{params.message}</p>
     </div>
   );
