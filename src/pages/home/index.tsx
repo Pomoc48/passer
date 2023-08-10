@@ -10,6 +10,7 @@ import { autoLogin } from '../../functions/auth';
 import MaterialButton from '../../components/common/button';
 import LoginDialog from '../../components/dialogs/login';
 import SignupDialog from '../../components/dialogs/signup';
+import FirebaseConfigDialog from '../../components/dialogs/firebase-config';
 
 export default function HomePage() {
   const [showSnack, setShowSnack] = useState(false);
@@ -19,6 +20,7 @@ export default function HomePage() {
 
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showSignupDialog, setShowSignupDialog] = useState(false);
+  const [showConfigDialog, setShowConfigDialog] = useState(false);
 
   const setUser = useEmailUser().update;
   const setCryptoKey = useCryptoKey().update;
@@ -43,7 +45,7 @@ export default function HomePage() {
   }
 
   function isThirdPartyHosted(): boolean {
-    if (window.location.hostname === "passer.mlukawski.com") {
+    if (window.location.hostname !== "passer.mlukawski.com") {
       return false;
     }
 
@@ -122,7 +124,7 @@ export default function HomePage() {
               ? null
               : <MaterialButton
                 label='Configure'
-                onClick={() => window.location.reload()}
+                onClick={() => setShowConfigDialog(true)}
                 icon='settings'
                 type='tonal'
               />
@@ -147,6 +149,17 @@ export default function HomePage() {
           <SignupDialog
             notify={notify}
             closeDialog={() => setShowSignupDialog(false)}
+          />,
+          document.body,
+        )
+        : null
+    }
+    {
+      showConfigDialog
+        ? createPortal(
+          <FirebaseConfigDialog
+            notify={notify}
+            closeDialog={() => setShowConfigDialog(false)}
           />,
           document.body,
         )
