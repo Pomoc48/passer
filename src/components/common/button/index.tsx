@@ -76,9 +76,12 @@ export default function MaterialButton(params: ButtonProps) {
 
   return (
     <button
-      onMouseUp={mouseUp}
       onMouseDown={mouseDown}
+      onTouchStart={mouseDown}
+      onMouseUp={mouseUp}
+      onTouchCancel={mouseUp}
       onMouseLeave={mouseLeave}
+      onTouchMove={mouseLeave}
       id={params.id}
       type='button'
       className={classList}
