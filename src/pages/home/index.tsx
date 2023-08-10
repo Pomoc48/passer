@@ -40,6 +40,14 @@ export default function HomePage() {
     setShowSnack(true);
   }
 
+  function isThirdPartyHosted(): boolean {
+    if (window.location.hostname === "passer.mlukawski.com") {
+      return false;
+    }
+
+    return true;
+  }
+
   return <>
     <Navbar>
       <MaterialButton
@@ -63,8 +71,14 @@ export default function HomePage() {
           Free, open-source and self-hosted password manager.
           Every password with its site data is client-side encrypted before being stored in the cloud.
           The solution for all your password storing related problems.
-          <br /><br />
-          Create a new testing account to check out the features, or learn more by visiting the project's GitHub repository.
+          {
+            isThirdPartyHosted()
+              ? null
+              : <>
+                <br /><br />
+                Create a new testing account to check out the features, learn more by visiting the project's GitHub repository or configure the app to use your own Firebase project.
+              </>
+          }
         </p>
         <div className="buttons">
           <MaterialButton
@@ -81,6 +95,12 @@ export default function HomePage() {
             onClick={() => {
               window.open("https://github.com/Pomoc48/passer", '_blank')!.focus();
             }}
+          />
+          <MaterialButton
+            label='Configure'
+            onClick={() => window.location.reload()}
+            icon='settings'
+            type='tonal'
           />
         </div>
       </section>
