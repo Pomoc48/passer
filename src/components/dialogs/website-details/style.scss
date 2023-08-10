@@ -10,9 +10,7 @@
         align-items: center;
         
         p {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            @include mixins.text-overflow;
             max-width: 80%;
         }
         

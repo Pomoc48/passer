@@ -17,6 +17,12 @@
     }
 }
 
+@mixin text-overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 @mixin custom-scroll {
     & {
         overflow-y: auto;
