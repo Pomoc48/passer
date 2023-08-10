@@ -43,7 +43,7 @@ export default function WebsiteCard(
               hasURL
                 ? <a href={params.website.data.url!.toString()} target='_blank' rel="noreferrer">
                   {new URL(params.website.data.url!).host}
-                  <span className="material-icons">open_in_new</span>
+                  <span className="material-icons-outlined">open_in_new</span>
                 </a>
                 : "*no website"
             }
@@ -64,9 +64,9 @@ export default function WebsiteCard(
               : null
           }
           <MaterialButton
-            label='Options'
+            label='Details'
             onClick={() => setShowPasswordDialog(true)}
-            icon='settings'
+            icon='description'
             type='tonal'
           />
         </div>

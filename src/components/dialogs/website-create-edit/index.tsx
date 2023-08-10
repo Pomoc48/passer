@@ -147,13 +147,13 @@ export default function CreateEditWebsiteDialog(
               />
             </div>
             <div className="row">
-              <span className="material-icons" onClick={() => setUseNumbers(!useNumbers)}>
+              <span className="material-icons-outlined" onClick={() => setUseNumbers(!useNumbers)}>
                 {useNumbers ? "check_box" : "check_box_outline_blank"}
               </span>
               <p>Include numbers</p>
             </div>
             <div className="row">
-              <span className="material-icons" onClick={() => setUseCharacters(!useCharacters)}>
+              <span className="material-icons-outlined" onClick={() => setUseCharacters(!useCharacters)}>
                 {useCharacters ? "check_box" : "check_box_outline_blank"}
               </span>
               <p>Include special characters</p>

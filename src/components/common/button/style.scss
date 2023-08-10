@@ -12,7 +12,7 @@ button.material {
     transition: 0.3s;
     @include mixins.clickable;
     
-    span.material-icons {
+    span.material-icons-outlined {
         font-size: 18px;
     }
     

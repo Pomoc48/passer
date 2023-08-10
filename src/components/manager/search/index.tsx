@@ -16,7 +16,7 @@ export default function Search(
     <>
       <Pill class='mobile-components'>
         <div className="pill-icon">
-          <span className="material-icons">search</span>
+          <span className="material-icons-outlined">search</span>
         </div>
         <div>
           <input
@@ -35,7 +35,7 @@ export default function Search(
       </Pill>
       <Pill class='desktop-components'>
         <div className="pill-icon">
-          <span className="material-icons">search</span>
+          <span className="material-icons-outlined">search</span>
         </div>
         <div>
           <input

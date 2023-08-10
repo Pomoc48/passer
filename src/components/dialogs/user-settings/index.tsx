@@ -127,7 +127,7 @@ function ItemOption(
 ) {
   return (
     <div className='item-option' onClick={params.onClick}>
-      <span className="material-icons">{params.icon}</span>
+      <span className="material-icons-outlined">{params.icon}</span>
       <p>{params.label}</p>
     </div>
   );

@@ -45,7 +45,7 @@ export default function HomePage() {
   }
 
   function isThirdPartyHosted(): boolean {
-    if (window.location.hostname !== "passer.mlukawski.com") {
+    if (window.location.hostname === "passer.mlukawski.com") {
       return false;
     }
 

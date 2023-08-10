@@ -87,7 +87,7 @@ export default function MaterialButton(params: ButtonProps) {
       className={classList}
       style={{ '--button-width': easeOutCubic(progress) * 100 + "%" } as CSSProperties}
     >
-      <span className="material-icons">{params.icon}</span>
+      <span className="material-icons-outlined">{params.icon}</span>
       <p>{params.label}</p>
     </button>
   );
