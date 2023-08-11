@@ -12,8 +12,9 @@ import LoginDialog from '../../components/dialogs/login';
 import SignupDialog from '../../components/dialogs/signup';
 import FirebaseConfigDialog from '../../components/dialogs/firebase-config';
 import Loading from '../../components/common/loading';
+import { FirebaseApp } from 'firebase/app';
 
-export default function HomePage() {
+export default function HomePage(params: { app: FirebaseApp }) {
   const [loading, setLoading] = useState(false);
   const [showSnack, setShowSnack] = useState(false);
 

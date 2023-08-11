@@ -1,4 +1,4 @@
-import { Firestore, collection, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import './style.scss'
 import { createPortal } from 'react-dom';
@@ -10,7 +10,6 @@ import Navbar from '../../components/common/navbar';
 import { useCryptoKey } from '../../context/key';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
-import { useSearch } from '../../context/search';
 import Snackbar from '../../components/common/snackbar';
 import MaterialButton from '../../components/common/button';
 import CreateEditWebsiteDialog from '../../components/dialogs/website-create-edit';
@@ -18,15 +17,16 @@ import UserSettingsDialog from '../../components/dialogs/user-settings';
 import Loading from '../../components/common/loading';
 import NameChangeDialog from '../../components/dialogs/name-change';
 import ErrorMessage from '../../components/common/error-message';
+import { FirebaseApp } from 'firebase/app';
 
 export type Sorting = "alphabetical" | "newest" | "oldest";
 
-export default function ManagerPage(params: { db: Firestore }) {
+export default function ManagerPage(params: { app: FirebaseApp }) {
   const userContext = useEmailUser();
   const cryptoKey = useCryptoKey().key!;
-  const search = useSearch();
 
   const [websites, updateWebsites] = useState<Website[] | null>(null);
+  const [search, setSearch] = useState("");
 
   const [showSnack, setShowSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
@@ -37,7 +37,7 @@ export default function ManagerPage(params: { db: Firestore }) {
 
   const [sorting, setSorting] = useState<Sorting>("alphabetical");
 
-  const websitesColRef = collection(params.db, "users", userContext.user!.uid, "websites");
+  const websitesColRef = collection(getFirestore(params.app), "users", userContext.user!.uid, "websites");
 
   useEffect(() => {
     const unsubscribe = onSnapshot(websitesColRef, (snapshot) => {
@@ -59,8 +59,8 @@ export default function ManagerPage(params: { db: Firestore }) {
         websiteList.push(newWebsite);
       });
 
+      setSearch("");
       updateWebsites(websiteList);
-      search.update("");
     });
 
     return () => unsubscribe();
@@ -119,7 +119,7 @@ export default function ManagerPage(params: { db: Firestore }) {
             return false;
           }
 
-          return normalize(value).includes(normalize(search.value));
+          return normalize(value).includes(normalize(search));
         }
 
         return (
@@ -158,6 +158,8 @@ export default function ManagerPage(params: { db: Firestore }) {
       <Search
         user={userContext.user!}
         openDialog={() => setShowUserDialog(true)}
+        search={search}
+        setSearch={setSearch}
       />
     </Navbar>
     <div className='passwords'>

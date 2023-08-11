@@ -13,43 +13,40 @@ The [CryptoKey](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey) used
 Authentication with its state persistance is entirely done through Firebase, but in order to decrypt the downloaded data, the generated hash is later stored locally to create the key.
 As the hash is not used for the Firebase account creation, it is not possible to get into someone else's account, if the locally stored hash was compromised.
 
-```mermaid
----
-title: The login process
----
-flowchart TD
-	A{"Key token
-		found in local
-		storage?"}
-	A -->|No| B[/"Get login credentials
-		from the user"/]
-	A -->|Yes| C{"Currently
-		signed in
-		user found?"}
-	C -->|No| B
-	C -->|Yes| J["Create a key
-		using the data
-		from local storage"]
-	J --> K{"Can the data
-		be decrypted?"}
-	K -->|No| L["Remove the token
-		from local storage"]
-	L --> B
-	K -->|Yes| H
-	B --> E{"Sign in
-		with Firebase
-		successful?"}
-	
-	E -->|Yes| F["Generate a token
-		and save it locally"]
-	E -->|No| G["Show a notification
-		with the error message"]
-	G --> B
-	F --> M["Create a key
-		using the token"]
-	M --> H(["Decrypt the
-		downloaded data"])
-```
+## Custom instance
+
+You can easily create your own free Firebase project and use it with Passer to ensure that no one can modify or delete your encrypted data with the following steps:
+
+1. [Create a new Firebase project](https://console.firebase.google.com/?authuser=0)
+
+1. [Create a new Firestore Database](https://console.firebase.google.com/project/_/firestore?authuser=0) and update the [Security Rules](https://console.firebase.google.com/project/_/firestore/rules?authuser=0) with the following:
+
+	```js
+	rules_version = '2';
+
+	service cloud.firestore {
+	  match /databases/{database}/documents {
+
+	    function isUserValid(uid) {
+	      let authenticated = request.auth != null && request.auth.uid == uid;
+	      let verified = request.auth.token.email_verified;
+
+	      return authenticated && verified;
+	    }
+
+	    match /users/{uid} {
+	      match /websites/{pass} {
+	        allow read, write: if isUserValid(uid);
+	      }
+	    }
+	  }
+	}
+	```
+
+1. [Enable Authentication](https://console.firebase.google.com/project/_/authentication?authuser=0) and add the Email/Password sign-in provider
+
+Copy the `Project ID` and the `Web API key` from your [project settings](https://console.firebase.google.com/project/_/settings/general?authuser=0) and paste them into the Passer configuration dialog.
+The page should now be displaying a message about your custom instance.
 
 ## License
 
