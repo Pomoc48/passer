@@ -59,6 +59,7 @@ export default function ManagerPage(params: { db: Firestore }) {
       });
 
       updateWebsites(websiteList);
+      search.update("");
     });
 
     return () => unsubscribe();
