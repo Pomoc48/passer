@@ -35,6 +35,12 @@ section {
         flex-wrap: wrap;
         gap: 12px;
     }
+    
+    p.instance {
+        opacity: 0.25;
+        font-style: italic;
+        margin-top: -28px;
+    }
 }
 
 #home-mobile-button {

@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import './scss/theme.scss';
-import { initializeApp } from 'firebase/app';
+import { FirebaseOptions, initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { getFirestore } from 'firebase/firestore';
@@ -14,7 +14,6 @@ import React from 'react';
 import ErrorPage from './pages/error';
 
 let matcher = window.matchMedia("(prefers-color-scheme: dark)");
-
 matcher.addEventListener("change", () => updateTheme());
 
 let lightSchemeIcon = document.querySelector("link#light-scheme-icon")!;
@@ -51,41 +50,57 @@ export function updateTheme() {
   }
 }
 
-updateTheme();
+function getFirebaseConfig(): FirebaseOptions {
+  let apiKey = localStorage.getItem('apiKey');
+  let projectId = localStorage.getItem('projectId');
+  let appId = localStorage.getItem('appId');
 
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-};
+  if (apiKey === null || projectId === null || appId === null) {
+    return {
+      apiKey: process.env.REACT_APP_API_KEY,
+      projectId: process.env.REACT_APP_PROJECT_ID,
+      appId: process.env.REACT_APP_APP_ID,
+    };
+  }
 
-const app = initializeApp(firebaseConfig);
+  return { apiKey, projectId, appId };
+}
 
 declare global {
   var FIREBASE_APPCHECK_DEBUG_TOKEN: boolean | string | undefined;
 }
 
-if (process.env.REACT_APP_RECAPTCHA_SITE_KEY !== undefined) {
+function enableAppCheck() {
+  let reCaptchaKey = localStorage.getItem("reCaptchaKey");
 
-  if (process.env.NODE_ENV !== 'production') {
-    window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+  if (reCaptchaKey === null) {
+    if (process.env.NODE_ENV !== 'production') {
+      window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+    }
+
+    initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider(process.env.REACT_APP_RECAPTCHA_SITE_KEY!),
+      isTokenAutoRefreshEnabled: true
+    });
+
+    return;
   }
 
   initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(process.env.REACT_APP_RECAPTCHA_SITE_KEY),
+    provider: new ReCaptchaV3Provider(reCaptchaKey),
     isTokenAutoRefreshEnabled: true
   });
 }
 
+const app = initializeApp(getFirebaseConfig());
+const db = getFirestore(app);
+
+updateTheme();
+enableAppCheck();
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-
-const db = getFirestore(app);
 
 const router = createBrowserRouter([
   {

@@ -12,13 +12,12 @@ button.material {
     transition: 0.3s;
     @include mixins.clickable;
     
-    span.material-icons {
+    span.material-symbols-outlined {
         font-size: 18px;
     }
     
     p {
         margin: 0;
-        padding-bottom: 2px;
         @include mixins.button-font;
     }
     

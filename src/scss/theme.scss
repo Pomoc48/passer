@@ -21,13 +21,26 @@
     --error-color: #ffa0a0;
 }
 
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 200,
+    'opsz' 48
+}
+
 body {
     margin: 0;
     font-family: Roboto, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
     @include mixins.custom-scroll;
+    
+    h1, h2, h3, p, div {
+        font-family: Roboto, sans-serif;
+    }
 }
 
 p {

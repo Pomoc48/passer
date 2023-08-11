@@ -34,7 +34,9 @@ header {
     }
     
     p.display-name {
+        max-width: 220px;
         padding-right: 16px;
+        @include mixins.text-overflow;
         @include mixins.button-font;
     }
 }

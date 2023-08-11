@@ -10,12 +10,14 @@ export function createKeyToken(pass: string, email: string): Promise<string> {
     return hashMessage(pass + email);
 }
 
-export async function autoLogin(functions: AuthFunctions) {
+export async function autoLogin(functions: AuthFunctions, setLoading: () => void) {
     let token = localStorage.getItem('keyToken');
 
     if (token === null) {
         return;
     }
+
+    setLoading();
 
     const auth = getAuth();
 
