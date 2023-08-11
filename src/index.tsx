@@ -8,7 +8,6 @@ import ManagerPage from './pages/manager';
 import { RequireAuth } from './components/manager/require-auth';
 import { UserProvider } from './context/user';
 import { KeyProvider } from './context/key';
-import { SearchProvider } from './context/search';
 import React from 'react';
 import ErrorPage from './pages/error';
 
@@ -106,9 +105,7 @@ const router = createBrowserRouter([
   {
     path: "/manager",
     element: <RequireAuth redirectTo="/">
-      <SearchProvider>
-        <ManagerPage app={app} />
-      </SearchProvider>
+      <ManagerPage app={app} />
     </RequireAuth>,
   },
 ]);

@@ -1,5 +1,4 @@
 import { User } from 'firebase/auth';
-import { useSearch } from '../../../context/search';
 import Avatar from '../../common/avatar';
 import Pill from '../../common/pill';
 import './style.scss';
@@ -8,10 +7,10 @@ export default function Search(
   params: {
     user: User,
     openDialog: () => void,
+    search: string,
+    setSearch: (value: string) => void,
   }
 ) {
-  const search = useSearch();
-
   return (
     <>
       <Pill class='mobile-components'>
@@ -20,10 +19,10 @@ export default function Search(
         </div>
         <div>
           <input
-            value={search.value}
+            value={params.search}
             className='search-input mobile'
             placeholder='Search passwords…'
-            onChange={e => search.update(e.target.value)}
+            onChange={e => params.setSearch(e.target.value)}
           />
         </div>
         <div
@@ -39,10 +38,10 @@ export default function Search(
         </div>
         <div>
           <input
-            value={search.value}
+            value={params.search}
             className='search-input'
             placeholder='Search passwords…'
-            onChange={e => search.update(e.target.value)}
+            onChange={e => params.setSearch(e.target.value)}
           />
         </div>
       </Pill>

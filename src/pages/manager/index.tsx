@@ -10,7 +10,6 @@ import Navbar from '../../components/common/navbar';
 import { useCryptoKey } from '../../context/key';
 import { Website } from '../../types/website';
 import { EncryptedData } from '../../types/encryptedData';
-import { useSearch } from '../../context/search';
 import Snackbar from '../../components/common/snackbar';
 import MaterialButton from '../../components/common/button';
 import CreateEditWebsiteDialog from '../../components/dialogs/website-create-edit';
@@ -25,9 +24,9 @@ export type Sorting = "alphabetical" | "newest" | "oldest";
 export default function ManagerPage(params: { app: FirebaseApp }) {
   const userContext = useEmailUser();
   const cryptoKey = useCryptoKey().key!;
-  const search = useSearch();
 
   const [websites, updateWebsites] = useState<Website[] | null>(null);
+  const [search, setSearch] = useState("");
 
   const [showSnack, setShowSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
@@ -60,8 +59,8 @@ export default function ManagerPage(params: { app: FirebaseApp }) {
         websiteList.push(newWebsite);
       });
 
+      setSearch("");
       updateWebsites(websiteList);
-      search.update("");
     });
 
     return () => unsubscribe();
@@ -120,7 +119,7 @@ export default function ManagerPage(params: { app: FirebaseApp }) {
             return false;
           }
 
-          return normalize(value).includes(normalize(search.value));
+          return normalize(value).includes(normalize(search));
         }
 
         return (
@@ -159,6 +158,8 @@ export default function ManagerPage(params: { app: FirebaseApp }) {
       <Search
         user={userContext.user!}
         openDialog={() => setShowUserDialog(true)}
+        search={search}
+        setSearch={setSearch}
       />
     </Navbar>
     <div className='passwords'>
