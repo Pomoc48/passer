@@ -41,12 +41,12 @@ export default function ManagerPage(params: { app: FirebaseApp }) {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(websitesColRef, (snapshot) => {
-      let websiteList: Website[] = [];
+      const websiteList: Website[] = [];
 
       snapshot.forEach(async (doc) => {
         const decrypted = await decrypt(cryptoKey, new EncryptedData(doc.data().data));
 
-        let newWebsite: Website = {
+        const newWebsite: Website = {
           uuid: doc.id,
           data: JSON.parse(decrypted),
           favorite: doc.data().favorite,
@@ -83,16 +83,16 @@ export default function ManagerPage(params: { app: FirebaseApp }) {
   }
 
   function convertData(websites: Website[]): JSX.Element | JSX.Element[] {
-    let sorted = websites.sort((a, b) => {
+    const sorted = websites.sort((a, b) => {
       if (sorting === 'alphabetical') {
-        let nameA = a.data.name.toLowerCase();
-        let nameB = b.data.name.toLowerCase();
+        const nameA = a.data.name.toLowerCase();
+        const nameB = b.data.name.toLowerCase();
 
         return nameA.localeCompare(nameB);
       }
 
-      let createdA = a.time.created.getTime();
-      let createdB = b.time.created.getTime();
+      const createdA = a.time.created.getTime();
+      const createdB = b.time.created.getTime();
 
       if (sorting === 'newest') {
         return createdB - createdA;
@@ -108,7 +108,7 @@ export default function ManagerPage(params: { app: FirebaseApp }) {
       />
     }
 
-    let filtered = sorted.filter(
+    const filtered = sorted.filter(
       website => {
         function normalize(value: string): string {
           return value.trim().toLowerCase();
@@ -137,7 +137,7 @@ export default function ManagerPage(params: { app: FirebaseApp }) {
       />
     }
 
-    return sorted.map((data, index) => {
+    return filtered.map((data, index) => {
       return <WebsiteCard
         key={index}
         website={data}
