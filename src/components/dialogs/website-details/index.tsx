@@ -57,7 +57,7 @@ export default function WebsiteDialog(
               hasURL
                 ? <span
                   onClick={() => window.open(params.website.data.url!, '_blank')!.focus()}
-                  className="material-icons-outlined">open_in_new</span>
+                  className="material-symbols-outlined">open_in_new</span>
                 : null
             }
           </div>
@@ -72,7 +72,7 @@ export default function WebsiteDialog(
               hasUsername
                 ? <span
                   onClick={() => copyContent(params.website.data.username!, "Username")}
-                  className="material-icons-outlined">content_copy</span>
+                  className="material-symbols-outlined">content_copy</span>
                 : null
             }
           </div>
@@ -94,13 +94,13 @@ export default function WebsiteDialog(
                 ? <>
                   <span
                     onClick={() => setShowPassword(!showPassword)}
-                    className="material-icons-outlined"
+                    className="material-symbols-outlined"
                   >
                     {showPassword ? "visibility_off" : "visibility"}
                   </span>
                   <span
                     onClick={() => copyContent(params.website.data.password!, "Password")}
-                    className="material-icons-outlined"
+                    className="material-symbols-outlined"
                   >
                     content_copy
                   </span>

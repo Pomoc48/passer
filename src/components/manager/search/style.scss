@@ -9,7 +9,7 @@
     @include mixins.button-font;
     
     &.mobile {
-        width: 35vw;
+        width: 30vw;
         padding-right: 0;
     }
 }
@@ -22,7 +22,7 @@
     align-items: center;
     justify-content: flex-end;
     
-    span.material-icons-outlined {
+    span.material-symbols-outlined {
         font-size: 22px;
     }
 }

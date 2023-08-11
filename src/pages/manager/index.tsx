@@ -17,6 +17,7 @@ import CreateEditWebsiteDialog from '../../components/dialogs/website-create-edi
 import UserSettingsDialog from '../../components/dialogs/user-settings';
 import Loading from '../../components/common/loading';
 import NameChangeDialog from '../../components/dialogs/name-change';
+import ErrorMessage from '../../components/common/error-message';
 
 export type Sorting = "alphabetical" | "newest" | "oldest";
 
@@ -81,6 +82,71 @@ export default function ManagerPage(params: { db: Firestore }) {
     }, 310);
   }
 
+  function convertData(websites: Website[]): JSX.Element | JSX.Element[] {
+    let sorted = websites.sort((a, b) => {
+      if (sorting === 'alphabetical') {
+        let nameA = a.data.name.toLowerCase();
+        let nameB = b.data.name.toLowerCase();
+
+        return nameA.localeCompare(nameB);
+      }
+
+      let createdA = a.time.created.getTime();
+      let createdB = b.time.created.getTime();
+
+      if (sorting === 'newest') {
+        return createdB - createdA;
+      }
+
+      return createdA - createdB;
+    });
+
+    if (sorted.length === 0) {
+      return <ErrorMessage
+        icon='scan_delete'
+        message='No data to display'
+      />
+    }
+
+    let filtered = sorted.filter(
+      website => {
+        function normalize(value: string): string {
+          return value.trim().toLowerCase();
+        }
+
+        function checkMatch(value: string | null | undefined): boolean {
+          if (value === null || value === undefined) {
+            return false;
+          }
+
+          return normalize(value).includes(normalize(search.value));
+        }
+
+        return (
+          checkMatch(website.data.name) ||
+          checkMatch(website.data.username) ||
+          checkMatch(website.data.url?.toString())
+        );
+      }
+    );
+
+    if (filtered.length === 0) {
+      return <ErrorMessage
+        icon='search_off'
+        message='No search results found'
+      />
+    }
+
+    return sorted.map((data, index) => {
+      return <WebsiteCard
+        key={index}
+        website={data}
+        notify={notify}
+        reference={websitesColRef}
+      />;
+    });
+  }
+
   return <>
     <Navbar>
       <MaterialButton
@@ -98,53 +164,7 @@ export default function ManagerPage(params: { db: Firestore }) {
       {
         websites === null
           ? <Loading />
-          : websites
-            .filter(
-              website => {
-                function normalize(value: string): string {
-                  return value.trim().toLowerCase();
-                }
-
-                function checkMatch(value: string | null | undefined): boolean {
-                  if (value === null || value === undefined) {
-                    return false;
-                  }
-
-                  return normalize(value).includes(normalize(search.value));
-                }
-
-                return (
-                  checkMatch(website.data.name) ||
-                  checkMatch(website.data.username) ||
-                  checkMatch(website.data.url?.toString())
-                );
-              }
-            )
-            .sort((a, b) => {
-              if (sorting === 'alphabetical') {
-                let nameA = a.data.name.toLowerCase();
-                let nameB = b.data.name.toLowerCase();
-
-                return nameA.localeCompare(nameB);
-              }
-
-              let createdA = a.time.created.getTime();
-              let createdB = b.time.created.getTime();
-
-              if (sorting === 'newest') {
-                return createdB - createdA;
-              }
-
-              return createdA - createdB;
-            })
-            .map((data, index) => {
-              return <WebsiteCard
-                key={index}
-                website={data}
-                notify={notify}
-                reference={websitesColRef}
-              />;
-            })
+          : convertData(websites)
       }
     </div>
     {
