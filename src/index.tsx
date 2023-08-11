@@ -1,9 +1,8 @@
 import ReactDOM from 'react-dom/client';
 import './scss/theme.scss';
-import { FirebaseOptions, initializeApp } from 'firebase/app';
+import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { getFirestore } from 'firebase/firestore';
 import HomePage from './pages/home';
 import ManagerPage from './pages/manager';
 import { RequireAuth } from './components/manager/require-auth';
@@ -53,50 +52,46 @@ export function updateTheme() {
 function getFirebaseConfig(): FirebaseOptions {
   let apiKey = localStorage.getItem('apiKey');
   let projectId = localStorage.getItem('projectId');
-  let appId = localStorage.getItem('appId');
 
-  if (apiKey === null || projectId === null || appId === null) {
+  if (apiKey === null || projectId === null) {
+    if (process.env.REACT_APP_PROJECT_ID === "pass-9f64b") {
+      return {
+        apiKey: process.env.REACT_APP_API_KEY,
+        projectId: process.env.REACT_APP_PROJECT_ID,
+        appId: "1:31474752244:web:68a51225edf4bc9786dca1",
+      };
+    }
+
     return {
       apiKey: process.env.REACT_APP_API_KEY,
       projectId: process.env.REACT_APP_PROJECT_ID,
-      appId: process.env.REACT_APP_APP_ID,
     };
   }
 
-  return { apiKey, projectId, appId };
+  return { apiKey, projectId };
 }
 
 declare global {
   var FIREBASE_APPCHECK_DEBUG_TOKEN: boolean | string | undefined;
 }
 
-function enableAppCheck() {
-  let reCaptchaKey = localStorage.getItem("reCaptchaKey");
-
-  if (reCaptchaKey === null) {
+function enableAppCheck(app: FirebaseApp) {
+  if (app.options.projectId === "pass-9f64b") {
     if (process.env.NODE_ENV !== 'production') {
       window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
     }
 
     initializeAppCheck(app, {
-      provider: new ReCaptchaV3Provider(process.env.REACT_APP_RECAPTCHA_SITE_KEY!),
+      provider: new ReCaptchaV3Provider("6Ldb4G0nAAAAAEeiedI4xSCeeAXq_xqz0kiLKCV_"),
       isTokenAutoRefreshEnabled: true
     });
-
-    return;
   }
-
-  initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(reCaptchaKey),
-    isTokenAutoRefreshEnabled: true
-  });
 }
 
 const app = initializeApp(getFirebaseConfig());
-const db = getFirestore(app);
 
+enableAppCheck(app);
 updateTheme();
-enableAppCheck();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -105,14 +100,14 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <HomePage app={app} />,
     errorElement: <ErrorPage />,
   },
   {
     path: "/manager",
     element: <RequireAuth redirectTo="/">
       <SearchProvider>
-        <ManagerPage db={db} />
+        <ManagerPage app={app} />
       </SearchProvider>
     </RequireAuth>,
   },

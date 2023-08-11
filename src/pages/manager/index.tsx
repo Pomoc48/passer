@@ -1,4 +1,4 @@
-import { Firestore, collection, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import './style.scss'
 import { createPortal } from 'react-dom';
@@ -18,10 +18,11 @@ import UserSettingsDialog from '../../components/dialogs/user-settings';
 import Loading from '../../components/common/loading';
 import NameChangeDialog from '../../components/dialogs/name-change';
 import ErrorMessage from '../../components/common/error-message';
+import { FirebaseApp } from 'firebase/app';
 
 export type Sorting = "alphabetical" | "newest" | "oldest";
 
-export default function ManagerPage(params: { db: Firestore }) {
+export default function ManagerPage(params: { app: FirebaseApp }) {
   const userContext = useEmailUser();
   const cryptoKey = useCryptoKey().key!;
   const search = useSearch();
@@ -37,7 +38,7 @@ export default function ManagerPage(params: { db: Firestore }) {
 
   const [sorting, setSorting] = useState<Sorting>("alphabetical");
 
-  const websitesColRef = collection(params.db, "users", userContext.user!.uid, "websites");
+  const websitesColRef = collection(getFirestore(params.app), "users", userContext.user!.uid, "websites");
 
   useEffect(() => {
     const unsubscribe = onSnapshot(websitesColRef, (snapshot) => {
