@@ -19,31 +19,34 @@ You can easily create your own free Firebase project and use it with Passer to e
 
 1. [Create a new Firebase project](https://console.firebase.google.com/?authuser=0)
 
-1. [Create a new Firestore Database](https://console.firebase.google.com/project/_/firestore?authuser=0) and update the [Security Rules](https://console.firebase.google.com/project/_/firestore/rules?authuser=0) to the following:
+1. [Create a new Firestore Database](https://console.firebase.google.com/project/_/firestore?authuser=0) and update the [Security Rules](https://console.firebase.google.com/project/_/firestore/rules?authuser=0) with the following:
 
 	```js
 	rules_version = '2';
-	
-	service cloud.firestore {
-  	  match /databases/{database}/documents {
-  
-  		function isUserValid(uid) {
-		  let authenticated = request.auth != null && request.auth.uid == uid;
-      	  let verified = request.auth.token.email_verified;
-      
-      	  return authenticated && verified;
-    	}
 
-    	match /users/{uid} {
-    	  match /websites/{pass} {
-            allow read, write: if isUserValid(uid);
-          }
-        }
-  	  }
+	service cloud.firestore {
+	  match /databases/{database}/documents {
+
+	    function isUserValid(uid) {
+	      let authenticated = request.auth != null && request.auth.uid == uid;
+	      let verified = request.auth.token.email_verified;
+
+	      return authenticated && verified;
+	    }
+
+	    match /users/{uid} {
+	      match /websites/{pass} {
+	        allow read, write: if isUserValid(uid);
+	      }
+	    }
+	  }
 	}
 	```
 
 1. [Enable Authentication](https://console.firebase.google.com/project/_/authentication?authuser=0) and add the Email/Password sign-in provider
+
+Copy the `Project ID` and the `Web API key` from your [project settings](https://console.firebase.google.com/project/_/settings/general?authuser=0) and paste them into the Passer configuration dialog.
+The page should now be displaying a message about your custom instance.
 
 ## License
 
