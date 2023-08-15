@@ -5,6 +5,8 @@ import { dbDelete } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
 import { hiddenData, isStringValid, isUrlValid } from '../../../functions/utils';
 import DataContainer from '../../manager/data-container';
+import Card from '../../common/card';
+import "./style.scss";
 
 export default function WebsiteDialog(
   params: {
@@ -18,10 +20,13 @@ export default function WebsiteDialog(
   const [showPassword, setShowPassword] = useState(false);
   const [showNote, setShowNote] = useState(false);
 
-  let hasURL = isUrlValid(params.website.data.url);
-  let hasUsername = isStringValid(params.website.data.username);
-  let hasPassword = isStringValid(params.website.data.password);
-  let hasNote = isStringValid(params.website.data.note);
+  const hasURL = isUrlValid(params.website.data.url);
+  const hasUsername = isStringValid(params.website.data.username);
+  const hasPassword = isStringValid(params.website.data.password);
+  const hasNote = isStringValid(params.website.data.note);
+
+  const created = params.website.time.created.toLocaleString();
+  const modified = params.website.time.modified.toLocaleString();
 
   function copyContent(content: string, name: string) {
     navigator.clipboard.writeText(content);
@@ -112,6 +117,21 @@ export default function WebsiteDialog(
         </>,
       ]}
       additionalContent={[
+        <>
+          <label>Details</label>
+          <Card>
+            <p className='date-info'>
+              Created: <span>{created}</span>
+            </p>
+            <p className='date-info'>
+              Modified: {
+                modified === created
+                  ? <span>No modifications done</span>
+                  : <span>{modified}</span>
+              }
+            </p>
+          </Card>
+        </>,
         <>
           <label>Note</label>
           <DataContainer noteFormatting={true} empty={!hasNote}>

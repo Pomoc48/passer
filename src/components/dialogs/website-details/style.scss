@@ -1,0 +1,25 @@
+@use "../../../scss/mixins.scss";
+
+.flow-container .content {
+    div.card p.date-info {
+        height: 32px;
+        line-height: 32px;
+        font-size: 14px;
+        user-select: none;
+        
+        span {
+            margin-left: 4px;
+            opacity: 0.8;
+            user-select: text;
+        }
+    }
+    
+    div.data-container-display {
+        p {
+            @media (min-width: 901px) {
+                max-height: 89px;
+                @include mixins.custom-scroll;
+            }
+        }
+    }
+}

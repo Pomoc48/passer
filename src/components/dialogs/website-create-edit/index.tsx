@@ -57,14 +57,15 @@ export default function CreateEditWebsiteDialog(
 
   async function createWebsite() {
     const encrypted = await encrypt(cryptoKey, serializeData());
+    const nowDate = new Date();
 
     const uploadData: UploadData = {
       uuid: null,
       websiteData: encrypted,
       favorite: false,
       time: {
-        created: new Date(),
-        modified: new Date(),
+        created: nowDate,
+        modified: nowDate,
       }
     }
 
