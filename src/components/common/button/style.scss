@@ -91,4 +91,9 @@ button.material {
             height: 40px;
         }
     }
+    
+    &.outlined {
+        border: 1px solid var(--primary-color);
+        padding-inline: 16px 22px;
+    }
 }

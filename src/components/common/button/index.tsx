@@ -74,6 +74,10 @@ export default function MaterialButton(params: ButtonProps) {
     classList += " confirm";
   }
 
+  if (params.outline === true) {
+    classList += " outlined";
+  }
+
   return (
     <button
       onMouseDown={mouseDown}
