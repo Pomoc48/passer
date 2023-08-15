@@ -177,7 +177,7 @@ export default function CreateEditWebsiteDialog(
         <>
           <label>Attach a note</label>
           <MaterialInput
-            placeholder="Secret notes, recovery keys"
+            placeholder="Secret message, recovery keys"
             type="text"
             isMultiline={true}
             ref={noteRef}

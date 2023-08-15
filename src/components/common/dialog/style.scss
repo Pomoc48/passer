@@ -39,6 +39,7 @@
     h3 {
         font-size: 20px;
         font-weight: 400;
+        user-select: none;
     }
     
     .flow-container {
@@ -50,6 +51,7 @@
         
         @media (max-width: 900px) {
             flex-direction: column;
+            gap: 16px;
         }
     }
     
@@ -58,7 +60,7 @@
         flex-direction: column;
         width: 100%;
         
-        div:nth-child(n + 2) {
+        > div:nth-child(n + 2) {
             margin-top: 16px;
         }
         
@@ -67,6 +69,11 @@
             color: var(--primary-color);
             margin-bottom: 8px;
             font-size: 14px;
+            user-select: none;
+        }
+        
+        div.card {
+            border-radius: 12px;
         }
     }
     

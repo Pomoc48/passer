@@ -1,0 +1,46 @@
+@use "../../../scss/mixins.scss";
+
+div.data-container-display {
+    max-width: 414px;
+    box-sizing: border-box;
+    background-color: var(--secondary-color);
+    height: 56px;
+    border-radius: 12px;
+    padding-inline: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    
+    @media (max-width: 900px) {
+        max-width: 100%;
+    }
+    
+    p {
+        flex-grow: 1;
+        font-size: 16px;
+        line-height: 56px;
+        @include mixins.text-overflow;
+    }
+    
+    span {
+        font-size: 18px;
+        color: var(--primary-color);
+        @include mixins.clickable;
+    }
+    
+    &.empty > p {
+        opacity: 0.4;
+        user-select: none;
+    }
+    
+    &.note-formatting {
+        height: auto;
+        min-height: 56px;
+        padding: 12px 16px;
+        
+        p {
+            white-space: pre-wrap;
+            line-height: 24px;
+        }
+    }
+}

@@ -33,3 +33,13 @@ export function isStringValid(value: string | undefined | null): boolean {
 
     return true;
 }
+
+export function hiddenData() {
+    let mask = "";
+
+    for (let i = 0; i < 16; i++) {
+        mask = mask + "•";
+    }
+
+    return mask;
+}
