@@ -170,10 +170,19 @@ export default function CreateEditWebsiteDialog(
                 }}
                 icon="auto_fix_high"
                 type="text"
+                outline={true}
                 confirmation={params.website !== undefined}
               />
             </div>
           </div>
+        </>,
+        <>
+          <label>Generate secure password:</label>
+          <MaterialInput
+            placeholder="Secret notes, recovery keys"
+            type="text"
+            isMultiline={true}
+          />
         </>,
       ]}
       actions={[

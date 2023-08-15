@@ -11,14 +11,17 @@
         .row {
             user-select: none;
             display: flex;
-            height: 56px;
+            height: 42px;
             gap: 8px;
-            font-size: 16px;
             align-items: center;
             margin-top: 0;
             
+            p {
+                font-size: 14px;
+            }
+            
             span {
-                font-size: 24px;
+                font-size: 20px;
                 color: var(--primary-color);
                 @include mixins.clickable;
             }
@@ -50,7 +53,7 @@
         .action {
             display: flex;
             justify-content: flex-start;
-            margin-top: 16px;
+            margin-top: 8px;
         }
     }
 }
