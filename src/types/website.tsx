@@ -6,6 +6,7 @@ export type Website = {
         password: string | null;
         url: string | null;
         username: string | null;
+        note: string | null;
     },
     time: {
         created: Date;

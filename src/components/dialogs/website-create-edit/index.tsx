@@ -26,6 +26,7 @@ export default function CreateEditWebsiteDialog(
   const urlRef = useRef<HTMLInputElement | null>(null);
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const noteRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [useNumbers, setUseNumbers] = useState(true);
   const [useCharacters, setUseCharacters] = useState(true);
@@ -37,20 +38,25 @@ export default function CreateEditWebsiteDialog(
       urlRef.current!.value = params.website.data.url ?? "";
       usernameRef.current!.value = params.website.data.username ?? "";
       passwordRef.current!.value = params.website.data.password ?? "";
+      noteRef.current!.value = params.website.data.note ?? "";
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function createWebsite() {
+  function serializeData(): string {
     const data = {
       name: nameRef.current!.value.trim(),
       password: passwordRef.current!.value.trim(),
       url: urlRef.current!.value.trim(),
       username: usernameRef.current!.value.trim(),
+      note: noteRef.current!.value.trim(),
     };
 
-    const serialized = JSON.stringify(data);
-    const encrypted = await encrypt(cryptoKey, serialized);
+    return JSON.stringify(data);
+  }
+
+  async function createWebsite() {
+    const encrypted = await encrypt(cryptoKey, serializeData());
 
     const uploadData: UploadData = {
       uuid: null,
@@ -67,15 +73,7 @@ export default function CreateEditWebsiteDialog(
   }
 
   async function updateWebsite() {
-    const data = {
-      name: nameRef.current!.value.trim(),
-      password: passwordRef.current!.value.trim(),
-      url: urlRef.current!.value.trim(),
-      username: usernameRef.current!.value.trim(),
-    };
-
-    const serialized = JSON.stringify(data);
-    const encrypted = await encrypt(cryptoKey, serialized);
+    const encrypted = await encrypt(cryptoKey, serializeData());
 
     const uploadData: UploadData = {
       uuid: params.website!.uuid,
@@ -177,11 +175,12 @@ export default function CreateEditWebsiteDialog(
           </div>
         </>,
         <>
-          <label>Generate secure password:</label>
+          <label>Attach a note:</label>
           <MaterialInput
             placeholder="Secret notes, recovery keys"
             type="text"
             isMultiline={true}
+            ref={noteRef}
           />
         </>,
       ]}
