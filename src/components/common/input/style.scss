@@ -17,10 +17,9 @@ input, textarea {
             white-space: pre-wrap;
             line-height: 24px;
         }
-    }
-    
-    
-    &:focus {
-        border-bottom: 2px solid var(--primary-color);
+        
+        &:focus {
+            border-bottom: 2px solid var(--primary-color);
+        }
     }
 }

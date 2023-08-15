@@ -126,7 +126,7 @@ export default function WebsiteDialog(
             <p className='date-info'>
               Modified: {
                 modified === created
-                  ? <span>No modifications done</span>
+                  ? <span>N/A</span>
                   : <span>{modified}</span>
               }
             </p>
@@ -172,11 +172,13 @@ export default function WebsiteDialog(
           type: "error",
           confirmation: true,
           onClick: async () => {
-            await dbDelete(
-              doc(params.reference, params.website.uuid),
-            );
+            setTimeout(async () => {
+              await dbDelete(
+                doc(params.reference, params.website.uuid),
+              );
 
-            params.notify("Password successfully removed");
+              params.notify("Password successfully removed");
+            }, 400);
             return true;
           },
         },
