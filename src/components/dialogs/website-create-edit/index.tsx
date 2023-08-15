@@ -26,6 +26,7 @@ export default function CreateEditWebsiteDialog(
   const urlRef = useRef<HTMLInputElement | null>(null);
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const noteRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [useNumbers, setUseNumbers] = useState(true);
   const [useCharacters, setUseCharacters] = useState(true);
@@ -37,28 +38,34 @@ export default function CreateEditWebsiteDialog(
       urlRef.current!.value = params.website.data.url ?? "";
       usernameRef.current!.value = params.website.data.username ?? "";
       passwordRef.current!.value = params.website.data.password ?? "";
+      noteRef.current!.value = params.website.data.note ?? "";
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function createWebsite() {
+  function serializeData(): string {
     const data = {
       name: nameRef.current!.value.trim(),
       password: passwordRef.current!.value.trim(),
       url: urlRef.current!.value.trim(),
       username: usernameRef.current!.value.trim(),
+      note: noteRef.current!.value.trim(),
     };
 
-    const serialized = JSON.stringify(data);
-    const encrypted = await encrypt(cryptoKey, serialized);
+    return JSON.stringify(data);
+  }
+
+  async function createWebsite() {
+    const encrypted = await encrypt(cryptoKey, serializeData());
+    const nowDate = new Date();
 
     const uploadData: UploadData = {
       uuid: null,
       websiteData: encrypted,
       favorite: false,
       time: {
-        created: new Date(),
-        modified: new Date(),
+        created: nowDate,
+        modified: nowDate,
       }
     }
 
@@ -67,15 +74,7 @@ export default function CreateEditWebsiteDialog(
   }
 
   async function updateWebsite() {
-    const data = {
-      name: nameRef.current!.value.trim(),
-      password: passwordRef.current!.value.trim(),
-      url: urlRef.current!.value.trim(),
-      username: usernameRef.current!.value.trim(),
-    };
-
-    const serialized = JSON.stringify(data);
-    const encrypted = await encrypt(cryptoKey, serialized);
+    const encrypted = await encrypt(cryptoKey, serializeData());
 
     const uploadData: UploadData = {
       uuid: params.website!.uuid,
@@ -100,7 +99,7 @@ export default function CreateEditWebsiteDialog(
       closeFunction={params.closeDialog}
       content={[
         <>
-          <label>Name:</label>
+          <label>Name</label>
           <MaterialInput
             placeholder="Example Website"
             type="text"
@@ -108,7 +107,7 @@ export default function CreateEditWebsiteDialog(
           />
         </>,
         <>
-          <label>Website URL:</label>
+          <label>Website URL</label>
           <MaterialInput
             placeholder="https://www.example.com/"
             type="url"
@@ -116,7 +115,7 @@ export default function CreateEditWebsiteDialog(
           />
         </>,
         <>
-          <label>Username / e-mail:</label>
+          <label>Username / e-mail</label>
           <MaterialInput
             placeholder="johnSmith94"
             type="text"
@@ -124,7 +123,7 @@ export default function CreateEditWebsiteDialog(
           />
         </>,
         <>
-          <label>Password:</label>
+          <label>Password</label>
           <MaterialInput
             placeholder="0pX<W=gGTZoVRWqIoCMZ"
             type="text"
@@ -134,7 +133,7 @@ export default function CreateEditWebsiteDialog(
       ]}
       additionalContent={[
         <>
-          <label>Generate secure password:</label>
+          <label>Generate secure password</label>
           <div className="card">
             <div className="row expand">
               <p>Password length: {passwordSize}</p>
@@ -170,10 +169,20 @@ export default function CreateEditWebsiteDialog(
                 }}
                 icon="auto_fix_high"
                 type="text"
+                outline={true}
                 confirmation={params.website !== undefined}
               />
             </div>
           </div>
+        </>,
+        <>
+          <label>Attach a note</label>
+          <MaterialInput
+            placeholder="Secret message, recovery keys"
+            type="text"
+            isMultiline={true}
+            ref={noteRef}
+          />
         </>,
       ]}
       actions={[

@@ -3,8 +3,10 @@ import { Website } from '../../../types/website';
 import MaterialDialog from '../../common/dialog';
 import { dbDelete } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
-import './style.scss'
-import { isUrlValid } from '../../../functions/utils';
+import { hiddenData, isStringValid, isUrlValid } from '../../../functions/utils';
+import DataContainer from '../../manager/data-container';
+import Card from '../../common/card';
+import "./style.scss";
 
 export default function WebsiteDialog(
   params: {
@@ -16,23 +18,19 @@ export default function WebsiteDialog(
   },
 ) {
   const [showPassword, setShowPassword] = useState(false);
+  const [showNote, setShowNote] = useState(false);
 
-  let hasURL = isUrlValid(params.website.data.url);
-  let hasUsername = params.website.data.username! !== "";
+  const hasURL = isUrlValid(params.website.data.url);
+  const hasUsername = isStringValid(params.website.data.username);
+  const hasPassword = isStringValid(params.website.data.password);
+  const hasNote = isStringValid(params.website.data.note);
+
+  const created = params.website.time.created.toLocaleString();
+  const modified = params.website.time.modified.toLocaleString();
 
   function copyContent(content: string, name: string) {
     navigator.clipboard.writeText(content);
     params.notify(name + " copied to clipboard");
-  }
-
-  function maskPassword(length: number) {
-    let mask = "";
-
-    for (let i = 0; i < length; i++) {
-      mask = mask + "•";
-    }
-
-    return mask;
   }
 
   function close() {
@@ -46,28 +44,36 @@ export default function WebsiteDialog(
       title={params.website.data.name}
       closeFunction={close}
       dismissible={true}
+      extraWide={true}
       content={[
         <>
-          <label>Website URL:</label>
-          <div className="row">
-            <p className={hasURL ? undefined : "empty"}>
-              {hasURL ? params.website.data.url!.toString() : "*no website"}
-            </p>
+          <label>Website URL</label>
+          <DataContainer empty={!hasURL}>
+            <p>{hasURL ? params.website.data.url!.toString() : "*no website"}</p>
             {
               hasURL
-                ? <span
-                  onClick={() => window.open(params.website.data.url!, '_blank')!.focus()}
-                  className="material-symbols-outlined">open_in_new</span>
+                ? <>
+                  <span
+                    onClick={() => window.open(params.website.data.url!, '_blank')!.focus()}
+                    className="material-symbols-outlined"
+                  >
+                    open_in_new
+                  </span>
+                  <span
+                    onClick={() => copyContent(params.website.data.url!, "Website URL")}
+                    className="material-symbols-outlined"
+                  >
+                    content_copy
+                  </span>
+                </>
                 : null
             }
-          </div>
+          </DataContainer>
         </>,
         <>
-          <label>Username / e-mail:</label>
-          <div className="row">
-            <p className={hasUsername ? undefined : "empty"}>
-              {hasUsername ? params.website.data.username : "*no username"}
-            </p>
+          <label>Username / e-mail</label>
+          <DataContainer empty={!hasUsername}>
+            <p>{hasUsername ? params.website.data.username : "*no username"}</p>
             {
               hasUsername
                 ? <span
@@ -75,22 +81,22 @@ export default function WebsiteDialog(
                   className="material-symbols-outlined">content_copy</span>
                 : null
             }
-          </div>
+          </DataContainer>
         </>,
         <>
-          <label>Password:</label>
-          <div className="row">
-            <p className={params.website.data.password ? undefined : "empty"}>
+          <label>Password</label>
+          <DataContainer empty={!hasPassword}>
+            <p>
               {
-                params.website.data.password
+                hasPassword
                   ? showPassword
                     ? params.website.data.password
-                    : maskPassword(params.website.data.password!.length)
+                    : hiddenData()
                   : "*no password"
               }
             </p>
             {
-              params.website.data.password
+              hasPassword
                 ? <>
                   <span
                     onClick={() => setShowPassword(!showPassword)}
@@ -107,8 +113,48 @@ export default function WebsiteDialog(
                 </>
                 : null
             }
-
-          </div>
+          </DataContainer>
+        </>,
+      ]}
+      additionalContent={[
+        <>
+          <label>Details</label>
+          <Card>
+            <p className='date-info'>
+              Created: <span>{created}</span>
+            </p>
+            <p className='date-info'>
+              Modified: {
+                modified === created
+                  ? <span>N/A</span>
+                  : <span>{modified}</span>
+              }
+            </p>
+          </Card>
+        </>,
+        <>
+          <label>Note</label>
+          <DataContainer noteFormatting={true} empty={!hasNote}>
+            <p>
+              {
+                hasNote
+                  ? showNote
+                    ? params.website.data.note
+                    : hiddenData()
+                  : "*no note"
+              }
+            </p>
+            {
+              hasNote
+                ? <span
+                  onClick={() => setShowNote(!showNote)}
+                  className="material-symbols-outlined"
+                >
+                  {showNote ? "visibility_off" : "visibility"}
+                </span>
+                : null
+            }
+          </DataContainer>
         </>,
       ]}
       actions={[
@@ -126,11 +172,13 @@ export default function WebsiteDialog(
           type: "error",
           confirmation: true,
           onClick: async () => {
-            await dbDelete(
-              doc(params.reference, params.website.uuid),
-            );
+            setTimeout(async () => {
+              await dbDelete(
+                doc(params.reference, params.website.uuid),
+              );
 
-            params.notify("Password successfully removed");
+              params.notify("Password successfully removed");
+            }, 400);
             return true;
           },
         },

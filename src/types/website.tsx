@@ -3,9 +3,10 @@ export type Website = {
     favorite: boolean;
     data: {
         name: string;
-        password: string | null;
-        url: string | null;
-        username: string | null;
+        password: string | undefined;
+        url: string | undefined;
+        username: string | undefined;
+        note: string | undefined;
     },
     time: {
         created: Date;

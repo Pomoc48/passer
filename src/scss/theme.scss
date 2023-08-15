@@ -9,6 +9,7 @@
     --secondary-color: #cedbeb;
     --secondary-variant-color: #e1e8f0;
     --error-color: #a60000;
+    --outline-color: hsl(206, 17%, 68%);
 }
 
 [data-theme="dark"] {
@@ -19,6 +20,7 @@
     --secondary-color: #2a323d;
     --secondary-variant-color: #212429;
     --error-color: #ffa0a0;
+    --outline-color: hsl(0, 0%, 34%);
 }
 
 .material-symbols-outlined {

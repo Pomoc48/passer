@@ -1,5 +1,5 @@
-export function isUrlValid(urlString: string | null): boolean {
-    if (urlString === null) {
+export function isUrlValid(urlString: string | undefined): boolean {
+    if (urlString === undefined) {
         return false;
     }
 
@@ -20,4 +20,26 @@ export function capitalize(value: string): string {
 
 export function easeOutCubic(x: number): number {
     return 1 - Math.pow(1 - x, 3);
+}
+
+export function isStringValid(value: string | undefined | null): boolean {
+    if (value === undefined || value === null) {
+        return false;
+    }
+
+    if (value.trim() === "") {
+        return false;
+    }
+
+    return true;
+}
+
+export function hiddenData() {
+    let mask = "";
+
+    for (let i = 0; i < 16; i++) {
+        mask = mask + "•";
+    }
+
+    return mask;
 }

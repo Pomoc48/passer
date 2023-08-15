@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { CollectionReference } from 'firebase/firestore';
 import Card from '../../common/card';
 import WebsiteDialog from '../../dialogs/website-details';
-import { isUrlValid } from '../../../functions/utils';
+import { isStringValid, isUrlValid } from '../../../functions/utils';
 import CreateEditWebsiteDialog from '../../dialogs/website-create-edit';
 
 export default function WebsiteCard(
@@ -20,7 +20,8 @@ export default function WebsiteCard(
   const [showPasswordEditDialog, setShowPasswordEditDialog] = useState(false);
 
   let hasURL = isUrlValid(params.website.data.url);
-  let hasUsername = params.website.data.username! !== "";
+  let hasUsername = isStringValid(params.website.data.username);
+  let hasPassword = isStringValid(params.website.data.password);
 
   function copyContent(content: string, name: string) {
     navigator.clipboard.writeText(content);
@@ -54,7 +55,7 @@ export default function WebsiteCard(
         </div>
         <div className='password-card-actions'>
           {
-            params.website.data.password
+            hasPassword
               ? <MaterialButton
                 label='Copy'
                 onClick={() => copyContent(params.website.data.password!, "Password")}

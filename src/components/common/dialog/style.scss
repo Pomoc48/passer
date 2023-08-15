@@ -39,17 +39,19 @@
     h3 {
         font-size: 20px;
         font-weight: 400;
+        user-select: none;
     }
     
     .flow-container {
         display: flex;
         gap: 24px;
         padding-top: 12px;
-        max-height: calc(100vh - 220px);
+        max-height: calc(100vh - 268px);
         @include mixins.custom-scroll;
         
         @media (max-width: 900px) {
             flex-direction: column;
+            gap: 16px;
         }
     }
     
@@ -58,7 +60,7 @@
         flex-direction: column;
         width: 100%;
         
-        div:nth-child(n + 2) {
+        > div:nth-child(n + 2) {
             margin-top: 16px;
         }
         
@@ -67,6 +69,7 @@
             color: var(--primary-color);
             margin-bottom: 8px;
             font-size: 14px;
+            user-select: none;
         }
     }
     
@@ -75,6 +78,6 @@
         display: flex;
         flex-direction: row-reverse;
         flex-wrap: wrap;
-        gap: 16px;
+        gap: 8px;
     }
 }
