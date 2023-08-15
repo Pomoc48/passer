@@ -98,7 +98,7 @@ export default function CreateEditWebsiteDialog(
       closeFunction={params.closeDialog}
       content={[
         <>
-          <label>Name:</label>
+          <label>Name</label>
           <MaterialInput
             placeholder="Example Website"
             type="text"
@@ -106,7 +106,7 @@ export default function CreateEditWebsiteDialog(
           />
         </>,
         <>
-          <label>Website URL:</label>
+          <label>Website URL</label>
           <MaterialInput
             placeholder="https://www.example.com/"
             type="url"
@@ -114,7 +114,7 @@ export default function CreateEditWebsiteDialog(
           />
         </>,
         <>
-          <label>Username / e-mail:</label>
+          <label>Username / e-mail</label>
           <MaterialInput
             placeholder="johnSmith94"
             type="text"
@@ -122,7 +122,7 @@ export default function CreateEditWebsiteDialog(
           />
         </>,
         <>
-          <label>Password:</label>
+          <label>Password</label>
           <MaterialInput
             placeholder="0pX<W=gGTZoVRWqIoCMZ"
             type="text"
@@ -132,7 +132,7 @@ export default function CreateEditWebsiteDialog(
       ]}
       additionalContent={[
         <>
-          <label>Generate secure password:</label>
+          <label>Generate secure password</label>
           <div className="card">
             <div className="row expand">
               <p>Password length: {passwordSize}</p>
@@ -175,7 +175,7 @@ export default function CreateEditWebsiteDialog(
           </div>
         </>,
         <>
-          <label>Attach a note:</label>
+          <label>Attach a note</label>
           <MaterialInput
             placeholder="Secret notes, recovery keys"
             type="text"

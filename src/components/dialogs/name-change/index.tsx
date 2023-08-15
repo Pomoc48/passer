@@ -25,7 +25,7 @@ export default function NameChangeDialog(
       dismissible={true}
       content={[
         <>
-          <label>Account display name:</label>
+          <label>Account display name</label>
           <MaterialInput
             placeholder="John Smith"
             type="text"

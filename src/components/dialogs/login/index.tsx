@@ -27,7 +27,7 @@ export default function LoginDialog(
       dismissible={true}
       content={[
         <>
-          <label>E-mail:</label>
+          <label>E-mail</label>
           <MaterialInput
             placeholder="user@example.com"
             type="email"
@@ -35,7 +35,7 @@ export default function LoginDialog(
           />
         </>,
         <>
-          <label>Password:</label>
+          <label>Password</label>
           <MaterialInput
             placeholder="password123"
             type="password"

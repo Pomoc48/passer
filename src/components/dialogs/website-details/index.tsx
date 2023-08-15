@@ -4,7 +4,8 @@ import MaterialDialog from '../../common/dialog';
 import { dbDelete } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
 import './style.scss'
-import { isUrlValid } from '../../../functions/utils';
+import { isStringValid, isUrlValid } from '../../../functions/utils';
+import Card from '../../common/card';
 
 export default function WebsiteDialog(
   params: {
@@ -18,7 +19,8 @@ export default function WebsiteDialog(
   const [showPassword, setShowPassword] = useState(false);
 
   let hasURL = isUrlValid(params.website.data.url);
-  let hasUsername = params.website.data.username! !== "";
+  let hasUsername = isStringValid(params.website.data.username);
+  let hasNote = isStringValid(params.website.data.note);
 
   function copyContent(content: string, name: string) {
     navigator.clipboard.writeText(content);
@@ -46,9 +48,10 @@ export default function WebsiteDialog(
       title={params.website.data.name}
       closeFunction={close}
       dismissible={true}
+      extraWide={true}
       content={[
         <>
-          <label>Website URL:</label>
+          <label>Website URL</label>
           <div className="row">
             <p className={hasURL ? undefined : "empty"}>
               {hasURL ? params.website.data.url!.toString() : "*no website"}
@@ -63,7 +66,7 @@ export default function WebsiteDialog(
           </div>
         </>,
         <>
-          <label>Username / e-mail:</label>
+          <label>Username / e-mail</label>
           <div className="row">
             <p className={hasUsername ? undefined : "empty"}>
               {hasUsername ? params.website.data.username : "*no username"}
@@ -78,7 +81,7 @@ export default function WebsiteDialog(
           </div>
         </>,
         <>
-          <label>Password:</label>
+          <label>Password</label>
           <div className="row">
             <p className={params.website.data.password ? undefined : "empty"}>
               {
@@ -109,6 +112,14 @@ export default function WebsiteDialog(
             }
 
           </div>
+        </>,
+      ]}
+      additionalContent={[
+        <>
+          <label>Note</label>
+          <Card>
+            {hasNote ? params.website.data.note : "*no note"}
+          </Card>
         </>,
       ]}
       actions={[

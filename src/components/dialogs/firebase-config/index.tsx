@@ -25,7 +25,7 @@ export default function FirebaseConfigDialog(
       dismissible={true}
       content={[
         <>
-          <label>Project ID:</label>
+          <label>Project ID</label>
           <MaterialInput
             placeholder="pass-9f64b"
             type="text"
@@ -33,7 +33,7 @@ export default function FirebaseConfigDialog(
           />
         </>,
         <>
-          <label>Web API key:</label>
+          <label>Web API key</label>
           <MaterialInput
             placeholder="AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k"
             type="text"

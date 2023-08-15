@@ -24,7 +24,7 @@ export default function SignupDialog(
           <p>Please create a secure and memorable password, that's at least 12 characters long.</p>
         </div>,
         <>
-          <label>E-mail:</label>
+          <label>E-mail</label>
           <MaterialInput
             placeholder="user@example.com"
             type="email"
@@ -32,7 +32,7 @@ export default function SignupDialog(
           />
         </>,
         <>
-          <label>Password:</label>
+          <label>Password</label>
           <MaterialInput
             placeholder="password123"
             type="password"
@@ -40,7 +40,7 @@ export default function SignupDialog(
           />
         </>,
         <>
-          <label>Repeat password:</label>
+          <label>Repeat password</label>
           <MaterialInput
             placeholder="password123"
             type="password"
