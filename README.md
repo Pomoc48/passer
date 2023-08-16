@@ -13,7 +13,7 @@ The [CryptoKey](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey) used
 Authentication with its state persistance is entirely done through Firebase, but in order to decrypt the downloaded data, the generated hash is later stored locally to create the key.
 As the hash is not used for the Firebase account creation, it is not possible to get into someone else's account, if the locally stored hash was compromised.
 
-## Custom instance
+## Firebase setup
 
 You can easily create your own free Firebase project and use it with Passer to ensure that no one can modify or delete your encrypted data with the following steps:
 
@@ -47,6 +47,24 @@ You can easily create your own free Firebase project and use it with Passer to e
 
 Copy the `Project ID` and the `Web API key` from your [project settings](https://console.firebase.google.com/project/_/settings/general?authuser=0) and paste them into the Passer configuration dialog.
 The page should now be displaying a message about your custom instance.
+
+## Self-hosting
+
+In order to self-host the app, update environment variables in the [.env](.env) file with your values from the [previous section](#firebase-setup).
+
+With this done, you can create and run a docker container:
+
+```console
+docker build -t passer:latest .
+docker run -p 3000:3000 passer:latest
+```
+
+Or just use npm to build or run the app:
+
+```console
+npm run build
+npm start
+```
 
 ## License
 
