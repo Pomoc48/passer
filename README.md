@@ -4,6 +4,8 @@ Free, open-source and self-hosted password manager.
 
 Passer is a [React](https://react.dev/) website with the design inspired by the [Material Design](https://m3.material.io/), and a backend fully managed by [Firebase](https://firebase.google.com/), that can be comfortably hosted with a free account.
 
+![Page screenshot](/screenshots/manager.png)
+
 ## Security
 
 Every password with its site data is serialized and client-side encrypted before being stored in the database, using the [SubtleCrypto](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) interface with the AES-GCM algorithm.
@@ -52,14 +54,14 @@ The page should now be displaying a message about your custom instance.
 
 In order to self-host the app, update environment variables in the [.env](.env) file with your values from the [previous section](#firebase-setup).
 
-With this done, you can create and run a docker container:
+With this done, you can create and run a [Docker](https://www.docker.com/) container:
 
 ```console
 docker build -t passer:latest .
 docker run -p 3000:3000 passer:latest
 ```
 
-Or just use npm to build or run the app:
+Or just use npm to build for production or run the app locally:
 
 ```console
 npm run build
