@@ -43,3 +43,11 @@ export function hiddenData() {
 
     return mask;
 }
+
+export function thirdPartyHosted(): boolean {
+    if (window.location.hostname === "passer.mlukawski.com") {
+        return false;
+    }
+
+    return true;
+} 

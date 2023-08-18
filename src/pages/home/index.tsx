@@ -13,8 +13,9 @@ import SignupDialog from '../../components/dialogs/signup';
 import FirebaseConfigDialog from '../../components/dialogs/firebase-config';
 import Loading from '../../components/common/loading';
 import { FirebaseApp } from 'firebase/app';
+import { thirdPartyHosted } from '../../functions/utils';
 
-export default function HomePage(params: { app: FirebaseApp }) {
+export default function HomePage(params: { app: FirebaseApp | null }) {
   const [loading, setLoading] = useState(false);
   const [showSnack, setShowSnack] = useState(false);
 
@@ -47,26 +48,12 @@ export default function HomePage(params: { app: FirebaseApp }) {
     setShowSnack(true);
   }
 
-  function isThirdPartyHosted(): boolean {
-    if (window.location.hostname === "passer.mlukawski.com") {
-      return false;
-    }
-
-    return true;
-  }
-
   function getProjectId(): string | null {
-    let projectId = localStorage.getItem('projectId');
-
-    if (projectId !== null) {
-      return projectId;
+    if (params.app === null) {
+      return null;
     }
 
-    if (isThirdPartyHosted()) {
-      return process.env.REACT_APP_PROJECT_ID!;
-    }
-
-    return null;
+    return localStorage.getItem('projectId');
   }
 
   return <>
@@ -75,19 +62,25 @@ export default function HomePage(params: { app: FirebaseApp }) {
         ? <Loading />
         : <>
           <Navbar>
-            <MaterialButton
-              label='Log In'
-              onClick={() => setShowLoginDialog(true)}
-              icon='login'
-              type='tonal'
-            />
-            <MaterialButton
-              id='home-desktop-button'
-              label='Create account'
-              onClick={() => setShowSignupDialog(true)}
-              icon='person_add'
-              type='filled'
-            />
+            {
+              projectId !== null
+                ? <>
+                  <MaterialButton
+                    label='Log In'
+                    onClick={() => setShowLoginDialog(true)}
+                    icon='login'
+                    type='tonal'
+                  />
+                  <MaterialButton
+                    id='home-desktop-button'
+                    label='Create account'
+                    onClick={() => setShowSignupDialog(true)}
+                    icon='person_add'
+                    type='filled'
+                  />
+                </>
+                : null
+            }
           </Navbar>
           <main>
             <section>
@@ -95,19 +88,19 @@ export default function HomePage(params: { app: FirebaseApp }) {
               {
                 projectId !== null
                   ? <p className='instance'>Custom instance ({projectId})</p>
-                  : null
+                  : <p className='instance'>Configure your Firebase instance to log in</p>
               }
               <p>
                 Free, open-source and self-hosted password manager.
                 Every password with its site data is client-side encrypted before being stored in the cloud.
                 The solution for all your password storing related problems.
                 {
-                  isThirdPartyHosted()
+                  thirdPartyHosted()
                     ? null
                     : <>
                       <br /><br />
                       Create a new testing account to check out the features,
-                      learn more by visiting the project's GitHub repository
+                      learn more about self-hosting by visiting the project's GitHub repository
                       or configure the app to use your own Firebase project instance.
                     </>
                 }
@@ -128,16 +121,12 @@ export default function HomePage(params: { app: FirebaseApp }) {
                     window.open("https://github.com/Pomoc48/passer", '_blank')!.focus();
                   }}
                 />
-                {
-                  isThirdPartyHosted()
-                    ? null
-                    : <MaterialButton
-                      label='Configure'
-                      onClick={() => setShowConfigDialog(true)}
-                      icon='settings'
-                      type='tonal'
-                    />
-                }
+                <MaterialButton
+                  label='Configure'
+                  onClick={() => setShowConfigDialog(true)}
+                  icon='settings'
+                  type='tonal'
+                />
               </div>
             </section>
           </main>
