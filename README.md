@@ -52,21 +52,21 @@ The page should now be displaying a message about your custom instance.
 
 ## Self-hosting
 
-In order to self-host the app, update environment variables in the [.env](.env) file with your values from the [previous section](#firebase-setup).
-
-With this done, you can create and run a [Docker](https://www.docker.com/) container:
+Using [Docker](https://www.docker.com/):
 
 ```console
-docker build -t passer:latest .
-docker run -p 3000:3000 passer:latest
+docker pull pomoc48/passer
+docker run -p 3000:80 -d pomoc48/passer
 ```
 
-Or just use npm to build for production or run the app locally:
+Using NPM:
 
 ```console
 npm run build
 npm start
 ```
+
+To finish configuring the app, see to the [previous section](#firebase-setup).
 
 ## License
 
