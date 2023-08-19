@@ -63,7 +63,7 @@ export default function HomePage(params: { app: FirebaseApp | null }) {
         : <>
           <Navbar>
             {
-              projectId !== null
+              params.app !== null
                 ? <>
                   <MaterialButton
                     label='Log In'
@@ -86,9 +86,11 @@ export default function HomePage(params: { app: FirebaseApp | null }) {
             <section>
               <h1>Passer</h1>
               {
-                projectId !== null
-                  ? <p className='instance'>Custom instance ({projectId})</p>
-                  : <p className='instance'>Configure your Firebase instance to log in</p>
+                params.app === null
+                  ? <p className='instance'>Configure your Firebase instance to log in</p>
+                  : thirdPartyHosted()
+                    ? <p className='instance'>Custom instance ({projectId})</p>
+                    : <p className='instance'>Public instance (testing purposes only)</p>
               }
               <p>
                 Free, open-source and self-hosted password manager.
