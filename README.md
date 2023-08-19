@@ -55,8 +55,8 @@ The page should now be displaying a message about your custom instance.
 Using [Docker](https://www.docker.com/):
 
 ```console
-docker pull pomoc48/passer:1.1.0
-docker run -p 3000:80 -d pomoc48/passer:1.1.0
+docker pull pomoc48/passer
+docker run -p 3000:80 -d pomoc48/passer
 ```
 
 Using NPM:
