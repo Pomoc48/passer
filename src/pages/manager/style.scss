@@ -5,6 +5,11 @@
     padding: 16px;
     padding-top: 72px;
     
+    @media (max-width: 900px) {
+        padding-inline: 12px;
+        grid-gap: 12px;
+    }
+    
     @media only screen and (max-width: 500px) {
         grid-template-columns: 1fr;
     }
