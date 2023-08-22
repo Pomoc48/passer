@@ -190,8 +190,18 @@ export default function CreateEditWebsiteDialog(
           label: "Confirm",
           icon: "check",
           onClick: async () => {
-            if (nameRef.current!.value.trim() === "") {
+            let name = nameRef.current!.value.trim();
+            let username = usernameRef.current!.value.trim();
+            let password = passwordRef.current!.value.trim();
+            let note = noteRef.current!.value.trim();
+
+            if (name === "") {
               params.notify("Please enter a valid name");
+              return false;
+            }
+
+            if (name.length > 32) {
+              params.notify("Website name is too long");
               return false;
             }
 
@@ -199,6 +209,26 @@ export default function CreateEditWebsiteDialog(
 
             if ((urlInput !== "") && (!isUrlValid(urlInput))) {
               params.notify("Provided URL is not valid");
+              return false;
+            }
+
+            if (urlInput.length > 256) {
+              params.notify("Website URL is too long");
+              return false;
+            }
+
+            if (username.length > 64) {
+              params.notify("Username is too long");
+              return false;
+            }
+
+            if (password.length > 128) {
+              params.notify("Password is too long");
+              return false;
+            }
+
+            if (note.length > 2048) {
+              params.notify("Note is too long");
               return false;
             }
 
