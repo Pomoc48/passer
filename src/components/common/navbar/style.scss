@@ -14,6 +14,10 @@ header {
     background-color: var(--background-color);
     z-index: 1;
     
+    @media (max-width: 900px) {
+        padding: 12px;
+    }
+    
     @supports (backdrop-filter: blur(12px)) {
         background-color: transparent;
         backdrop-filter: blur(12px);

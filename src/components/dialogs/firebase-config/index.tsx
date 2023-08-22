@@ -55,6 +55,16 @@ export default function FirebaseConfigDialog(
               return false;
             }
 
+            if (projectId.length > 64) {
+              params.notify("Project ID is too long");
+              return false;
+            }
+
+            if (webApiKey.length > 48) {
+              params.notify("Web API key is too long");
+              return false;
+            }
+
             localStorage.setItem("projectId", projectId);
             localStorage.setItem("apiKey", webApiKey);
 

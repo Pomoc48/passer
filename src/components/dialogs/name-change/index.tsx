@@ -41,8 +41,13 @@ export default function NameChangeDialog(
           onClick: async () => {
             let name = nameRef.current!.value.trim();
 
-            if (name === "") {
+            if (name.length < 3) {
               params.notify("Account name too short");
+              return false;
+            }
+
+            if (name.length > 32) {
+              params.notify("Account name too long");
               return false;
             }
 

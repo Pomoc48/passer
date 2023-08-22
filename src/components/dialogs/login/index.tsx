@@ -57,12 +57,17 @@ export default function LoginDialog(
               return false;
             }
 
+            if (emailInput.length > 64) {
+              params.notify("E-mail is too long");
+              return false;
+            }
+
             if (passwordInput.length < 12) {
               params.notify("Password is too short");
               return false;
             }
 
-            if (passwordInput.length > 200) {
+            if (passwordInput.length > 128) {
               params.notify("Password is too long");
               return false;
             }
