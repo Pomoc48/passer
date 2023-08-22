@@ -19,6 +19,43 @@ export default function LoginDialog(
   const setCryptoKey = useCryptoKey().update;
   const navigate = useNavigate();
 
+  async function submit(): Promise<boolean> {
+    let emailInput = emailRef.current!.value.trim();
+    let passwordInput = passwordRef.current!.value.trim();
+
+    if (!emailInput.match(emailRegex)) {
+      params.notify("Invalid e-mail address");
+      return false;
+    }
+
+    if (emailInput.length > 64) {
+      params.notify("E-mail is too long");
+      return false;
+    }
+
+    if (passwordInput.length < 12) {
+      params.notify("Password is too short");
+      return false;
+    }
+
+    if (passwordInput.length > 128) {
+      params.notify("Password is too long");
+      return false;
+    }
+
+    let outcome = await logUserIn(
+      emailInput,
+      passwordInput,
+      { navigate, setCryptoKey, setUser },
+    );
+
+    if (outcome !== true) {
+      params.notify(outcome);
+    }
+
+    return true;
+  }
+
   return (
     <MaterialDialog
       class='login'
@@ -32,6 +69,7 @@ export default function LoginDialog(
             placeholder="user@example.com"
             type="email"
             ref={emailRef}
+            onSubmit={() => passwordRef.current!.focus()}
           />
         </>,
         <>
@@ -40,6 +78,11 @@ export default function LoginDialog(
             placeholder="password123"
             type="password"
             ref={passwordRef}
+            onSubmit={async () => {
+              if (await submit()) {
+                params.closeDialog();
+              }
+            }}
           />
         </>,
         <div />,
@@ -48,42 +91,7 @@ export default function LoginDialog(
         {
           label: "Continue",
           icon: "check",
-          onClick: async () => {
-            let emailInput = emailRef.current!.value.trim();
-            let passwordInput = passwordRef.current!.value.trim();
-
-            if (!emailInput.match(emailRegex)) {
-              params.notify("Invalid e-mail address");
-              return false;
-            }
-
-            if (emailInput.length > 64) {
-              params.notify("E-mail is too long");
-              return false;
-            }
-
-            if (passwordInput.length < 12) {
-              params.notify("Password is too short");
-              return false;
-            }
-
-            if (passwordInput.length > 128) {
-              params.notify("Password is too long");
-              return false;
-            }
-
-            let outcome = await logUserIn(
-              emailInput,
-              passwordInput,
-              { navigate, setCryptoKey, setUser },
-            );
-
-            if (outcome !== true) {
-              params.notify(outcome);
-            }
-
-            return false;
-          }
+          onClick: submit,
         },
         {
           label: "Cancel",

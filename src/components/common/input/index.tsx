@@ -7,6 +7,7 @@ export const MaterialInput = forwardRef(
       placeholder: string,
       type: React.HTMLInputTypeAttribute,
       isMultiline?: boolean,
+      onSubmit?: () => void,
     },
     ref: any,
   ) {
@@ -28,6 +29,17 @@ export const MaterialInput = forwardRef(
         name="input"
         placeholder={props.placeholder}
         ref={ref}
+        onKeyDown={
+          (e) => {
+            if (props.onSubmit === undefined) {
+              return;
+            }
+
+            if (e.code === "Enter") {
+              props.onSubmit();
+            }
+          }
+        }
       />
     );
   }
