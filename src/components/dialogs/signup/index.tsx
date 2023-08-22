@@ -13,6 +13,45 @@ export default function SignupDialog(
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const password2Ref = useRef<HTMLInputElement | null>(null);
 
+  async function submit(): Promise<boolean> {
+    let emailInput = emailRef.current!.value.trim();
+    let passwordInput = passwordRef.current!.value.trim();
+    let password2Input = password2Ref.current!.value.trim();
+
+    if (!emailInput.match(emailRegex)) {
+      params.notify("Invalid e-mail address");
+      return false;
+    }
+
+    if (emailInput.length > 64) {
+      params.notify("E-mail is too long");
+      return false;
+    }
+
+    if (passwordInput.length < 12) {
+      params.notify("Password is too short");
+      return false;
+    }
+
+    if (passwordInput.length > 128) {
+      params.notify("Password is too long");
+      return false;
+    }
+
+    if (passwordInput !== password2Input) {
+      params.notify("Passwords do not match");
+      return false;
+    }
+
+    let outcome = await createUserAccount(emailInput, passwordInput);
+
+    if (outcome !== true) {
+      params.notify(outcome, true);
+    }
+
+    return true;
+  }
+
   return (
     <MaterialDialog
       class='details'
@@ -29,6 +68,7 @@ export default function SignupDialog(
             placeholder="user@example.com"
             type="email"
             ref={emailRef}
+            onSubmit={() => passwordRef.current!.focus()}
           />
         </>,
         <>
@@ -37,6 +77,7 @@ export default function SignupDialog(
             placeholder="password123"
             type="password"
             ref={passwordRef}
+            onSubmit={() => password2Ref.current!.focus()}
           />
         </>,
         <>
@@ -45,6 +86,11 @@ export default function SignupDialog(
             placeholder="password123"
             type="password"
             ref={password2Ref}
+            onSubmit={async () => {
+              if (await submit()) {
+                params.closeDialog();
+              }
+            }}
           />
         </>,
         <div />,
@@ -53,44 +99,7 @@ export default function SignupDialog(
         {
           label: "Continue",
           icon: "check",
-          onClick: async () => {
-            let emailInput = emailRef.current!.value.trim();
-            let passwordInput = passwordRef.current!.value.trim();
-            let password2Input = password2Ref.current!.value.trim();
-
-            if (!emailInput.match(emailRegex)) {
-              params.notify("Invalid e-mail address");
-              return false;
-            }
-
-            if (emailInput.length > 64) {
-              params.notify("E-mail is too long");
-              return false;
-            }
-
-            if (passwordInput.length < 12) {
-              params.notify("Password is too short");
-              return false;
-            }
-
-            if (passwordInput.length > 128) {
-              params.notify("Password is too long");
-              return false;
-            }
-
-            if (passwordInput !== password2Input) {
-              params.notify("Passwords do not match");
-              return false;
-            }
-
-            let outcome = await createUserAccount(emailInput, passwordInput);
-
-            if (outcome !== true) {
-              params.notify(outcome, true);
-            }
-
-            return true;
-          }
+          onClick: submit,
         },
         {
           label: "Cancel",

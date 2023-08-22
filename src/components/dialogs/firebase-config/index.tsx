@@ -17,6 +17,32 @@ export default function FirebaseConfigDialog(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function submit(): boolean {
+    let projectId = projectIdRef.current!.value.trim();
+    let webApiKey = webApiKeyRef.current!.value.trim();
+
+    if (projectId === "" || webApiKey === "") {
+      params.notify("All fields are required");
+      return false;
+    }
+
+    if (projectId.length > 64) {
+      params.notify("Project ID is too long");
+      return false;
+    }
+
+    if (webApiKey.length > 48) {
+      params.notify("Web API key is too long");
+      return false;
+    }
+
+    localStorage.setItem("projectId", projectId);
+    localStorage.setItem("apiKey", webApiKey);
+
+    window.location.reload();
+    return true;
+  }
+
   return (
     <MaterialDialog
       class='firebase-config'
@@ -30,6 +56,7 @@ export default function FirebaseConfigDialog(
             placeholder="pass-9f64b"
             type="text"
             ref={projectIdRef}
+            onSubmit={() => webApiKeyRef.current!.focus()}
           />
         </>,
         <>
@@ -38,6 +65,11 @@ export default function FirebaseConfigDialog(
             placeholder="AIzaSyC6v6N8InH2SNyjoGnfgQ_DPmV2Xw30f4k"
             type="text"
             ref={webApiKeyRef}
+            onSubmit={() => {
+              if (submit()) {
+                params.closeDialog();
+              }
+            }}
           />
         </>,
         <div />,
@@ -47,29 +79,7 @@ export default function FirebaseConfigDialog(
           label: "Save",
           icon: "check",
           onClick: async () => {
-            let projectId = projectIdRef.current!.value.trim();
-            let webApiKey = webApiKeyRef.current!.value.trim();
-
-            if (projectId === "" || webApiKey === "") {
-              params.notify("All fields are required");
-              return false;
-            }
-
-            if (projectId.length > 64) {
-              params.notify("Project ID is too long");
-              return false;
-            }
-
-            if (webApiKey.length > 48) {
-              params.notify("Web API key is too long");
-              return false;
-            }
-
-            localStorage.setItem("projectId", projectId);
-            localStorage.setItem("apiKey", webApiKey);
-
-            window.location.reload();
-            return true;
+            return submit();
           }
         },
         {

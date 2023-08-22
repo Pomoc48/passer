@@ -17,6 +17,30 @@ export default function NameChangeDialog(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  async function submit(): Promise<boolean> {
+    let name = nameRef.current!.value.trim();
+
+    if (name.length < 3) {
+      params.notify("Account name too short");
+      return false;
+    }
+
+    if (name.length > 32) {
+      params.notify("Account name too long");
+      return false;
+    }
+
+    updateProfile(params.user, {
+      displayName: name,
+    }).then(() => {
+      params.notify("Account name updated successfully");
+    }).catch((error) => {
+      params.notify(error);
+    });
+
+    return true;
+  }
+
   return (
     <MaterialDialog
       class='name-change'
@@ -30,6 +54,11 @@ export default function NameChangeDialog(
             placeholder="John Smith"
             type="text"
             ref={nameRef}
+            onSubmit={async () => {
+              if (await submit()) {
+                params.closeDialog();
+              }
+            }}
           />
         </>,
         <div />,
@@ -38,29 +67,7 @@ export default function NameChangeDialog(
         {
           label: "Accept",
           icon: "check",
-          onClick: async () => {
-            let name = nameRef.current!.value.trim();
-
-            if (name.length < 3) {
-              params.notify("Account name too short");
-              return false;
-            }
-
-            if (name.length > 32) {
-              params.notify("Account name too long");
-              return false;
-            }
-
-            updateProfile(params.user, {
-              displayName: name,
-            }).then(() => {
-              params.notify("Account name updated successfully");
-            }).catch((error) => {
-              params.notify(error);
-            });
-
-            return true;
-          }
+          onClick: submit,
         },
         {
           label: "Cancel",
