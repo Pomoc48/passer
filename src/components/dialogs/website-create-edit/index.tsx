@@ -104,6 +104,7 @@ export default function CreateEditWebsiteDialog(
             placeholder="Example Website"
             type="text"
             ref={nameRef}
+            onSubmit={() => urlRef.current!.focus()}
           />
         </>,
         <>
@@ -112,6 +113,7 @@ export default function CreateEditWebsiteDialog(
             placeholder="https://www.example.com/"
             type="url"
             ref={urlRef}
+            onSubmit={() => usernameRef.current!.focus()}
           />
         </>,
         <>
@@ -120,6 +122,7 @@ export default function CreateEditWebsiteDialog(
             placeholder="johnSmith94"
             type="text"
             ref={usernameRef}
+            onSubmit={() => passwordRef.current!.focus()}
           />
         </>,
         <>
@@ -128,6 +131,7 @@ export default function CreateEditWebsiteDialog(
             placeholder="0pX<W=gGTZoVRWqIoCMZ"
             type="text"
             ref={passwordRef}
+            onSubmit={() => noteRef.current!.focus()}
           />
         </>,
       ]}
