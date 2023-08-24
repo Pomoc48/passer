@@ -38,7 +38,14 @@ export default function WebsiteCard(
     <>
       <Card variant={true}>
         <div className='password-card-content'>
-          <p className='title'>{params.website.data.name}</p>
+          <div className='title'>
+            <p>{params.website.data.name}</p>
+            {
+              params.website.favorite
+                ? <span className="material-symbols-outlined filled">favorite</span>
+                : null
+            }
+          </div>
           <p className={hasURL ? 'url' : "url empty"}>
             {
               hasURL

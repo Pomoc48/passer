@@ -5,9 +5,30 @@
         margin: 0;
     }
     
-    .title {
-        font-size: 18px;
-        margin-top: 4px;
+    div.title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        
+        p {
+            flex-grow: 1;
+            font-size: 18px;
+            margin-top: 4px;
+        }
+        
+        span.material-symbols-outlined {
+            color: var(--primary-color);
+            user-select: none;
+            font-size: 20px;
+            
+            &.filled {
+                font-variation-settings:
+                'FILL' 1,
+                'wght' 500,
+                'GRAD' 200,
+                'opsz' 48 
+            }
+        }
     }
     
     .url {

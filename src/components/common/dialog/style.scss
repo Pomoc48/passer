@@ -50,6 +50,7 @@
         
         span.material-symbols-outlined {
             color: var(--primary-color);
+            font-size: 22px;
             @include mixins.clickable;
             
             &.filled {
