@@ -101,14 +101,18 @@ export default function ManagerPage(params: { app: FirebaseApp }) {
       return createdA - createdB;
     });
 
-    if (sorted.length === 0) {
+    const sortedFavorite = sorted.sort((a, b) => {
+      return (a.favorite === b.favorite) ? 0 : a.favorite ? -1 : 1;
+    });
+
+    if (sortedFavorite.length === 0) {
       return <ErrorMessage
         icon='scan_delete'
         message='No data to display'
       />
     }
 
-    const filtered = sorted.filter(
+    const filtered = sortedFavorite.filter(
       website => {
         function normalize(value: string): string {
           return value.trim().toLowerCase();
