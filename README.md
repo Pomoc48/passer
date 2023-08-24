@@ -4,7 +4,9 @@ Free, open-source and self-hosted password manager.
 
 Passer is a [React](https://react.dev/) website with the design inspired by the [Material Design](https://m3.material.io/), and a backend fully managed by [Firebase](https://firebase.google.com/), that can be comfortably hosted with a free account.
 
-![Page screenshot](/screenshots/manager.png)
+![Passer v1.3.0](/screenshots/manager-v1.3.0.png)
+
+More screenshots available in the [screenshots directory](/screenshots/).
 
 ## Security
 

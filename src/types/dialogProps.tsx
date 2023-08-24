@@ -9,4 +9,9 @@ export type DialogProps = {
     extraWide?: boolean;
     dismissible: boolean;
     class: string;
+    icons?: {
+        icon: string;
+        filled: boolean;
+        onClick: () => void;
+    }[];
 }

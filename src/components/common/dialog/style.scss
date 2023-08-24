@@ -36,10 +36,31 @@
         width: min(100vw - 32px, 600px);
     }
     
-    h3 {
-        font-size: 20px;
-        font-weight: 400;
-        user-select: none;
+    div.title {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        
+        h3 {
+            flex-grow: 1;
+            font-size: 20px;
+            font-weight: 400;
+            user-select: none;
+        }
+        
+        span.material-symbols-outlined {
+            color: var(--primary-color);
+            font-size: 22px;
+            @include mixins.clickable;
+            
+            &.filled {
+                font-variation-settings:
+                'FILL' 1,
+                'wght' 500,
+                'GRAD' 200,
+                'opsz' 48 
+            }
+        }
     }
     
     .flow-container {
