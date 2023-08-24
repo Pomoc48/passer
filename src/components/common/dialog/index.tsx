@@ -29,7 +29,30 @@ export default function MaterialDialog(params: DialogProps) {
       className={dialogClasses}
       style={closed ? { animation: "fade-out 0.3s forwards" } : undefined}
     >
-      {params.title ? <h3>{params.title}</h3> : null}
+      <div className="title">
+        {params.title ? <h3>{params.title}</h3> : null}
+        {
+          params.icons
+            ? params.icons.map((e, i) => {
+              let iconClasses = "material-symbols-outlined";
+
+              if (e.filled) {
+                iconClasses += " filled";
+              }
+
+              return (
+                <span
+                  key={i}
+                  className={iconClasses}
+                  onClick={e.onClick}
+                >
+                  {e.icon}
+                </span>
+              );
+            })
+            : null
+        }
+      </div>
       <div className="flow-container">
         <div className='content'>
           {params.content.map((content, i) => <div key={i}>{content}</div>)}
