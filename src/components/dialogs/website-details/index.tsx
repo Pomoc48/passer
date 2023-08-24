@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Website } from '../../../types/website';
 import MaterialDialog from '../../common/dialog';
-import { dbDelete } from '../../../functions/firestore';
+import { dbDelete, dbFavorite } from '../../../functions/firestore';
 import { CollectionReference, doc } from 'firebase/firestore';
 import { hiddenData, isStringValid, isUrlValid } from '../../../functions/utils';
 import DataContainer from '../../manager/data-container';
@@ -45,6 +45,26 @@ export default function WebsiteDialog(
       closeFunction={close}
       dismissible={true}
       extraWide={true}
+      icons={[
+        {
+          icon: "favorite",
+          onClick: async () => {
+            await dbFavorite(
+              params.reference,
+              params.website.uuid,
+              !params.website.favorite,
+            );
+
+            if (!params.website.favorite) {
+              params.notify("Password added to favorites");
+              return;
+            }
+
+            params.notify("Password removed from favorites");
+          },
+          filled: params.website.favorite,
+        }
+      ]}
       content={[
         <>
           <label>Website URL</label>
