@@ -19,6 +19,7 @@ export default function WebsiteDialog(
 ) {
   const [showPassword, setShowPassword] = useState(false);
   const [showNote, setShowNote] = useState(false);
+  const [favorite, setFavorite] = useState(params.website.favorite);
 
   const hasURL = isUrlValid(params.website.data.url);
   const hasUsername = isStringValid(params.website.data.username);
@@ -36,6 +37,14 @@ export default function WebsiteDialog(
   function close() {
     params.closeDialog();
     setShowPassword(false);
+
+    if (params.website.favorite !== favorite) {
+      dbFavorite(
+        params.reference,
+        params.website.uuid,
+        favorite,
+      );
+    }
   }
 
   return (
@@ -48,21 +57,17 @@ export default function WebsiteDialog(
       icons={[
         {
           icon: "favorite",
-          onClick: async () => {
-            await dbFavorite(
-              params.reference,
-              params.website.uuid,
-              !params.website.favorite,
-            );
-
-            if (!params.website.favorite) {
-              params.notify("Password added to favorites");
+          onClick: () => {
+            if (favorite) {
+              params.notify("Password removed from favorites");
+              setFavorite(!favorite);
               return;
             }
 
-            params.notify("Password removed from favorites");
+            params.notify("Password added to favorites");
+            setFavorite(!favorite);
           },
-          filled: params.website.favorite,
+          filled: favorite,
         }
       ]}
       content={[
