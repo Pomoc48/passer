@@ -1,0 +1,19 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isUserValid(uid) {
+      let authenticated = request.auth != null && request.auth.uid == uid;
+      let verified = request.auth.token.email_verified;
+
+      return authenticated && verified;
+    }
+
+    match /users/{uid} {
+      match /websites/{pass} {
+        allow read, write: if isUserValid(uid);
+      }
+    }
+  }
+}
