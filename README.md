@@ -1,3 +1,6 @@
+> [!WARNING]
+> This repo is not maintained, doing a complete project rewrite
+
 # Passer
 
 Free, open-source and self-hosted password manager.
